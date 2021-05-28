@@ -19,7 +19,7 @@ class Songs extends Component {
             genresText: "",
         }
 
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this)
         this.handleGenreCheckboxChange = this.handleGenreCheckboxChange.bind(this)
     }
 
@@ -76,10 +76,6 @@ class Songs extends Component {
         }, this.createGenresString);
     }
 
-    handleSubmit() {
-
-    }
-
     createGenresString() {
         let genresString = this.state.genresInput.join(',')
         this.setState({
@@ -128,10 +124,9 @@ class Songs extends Component {
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={"Większa"} name={'markMore'} checked={this.state.markMore} id={2}/>
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={"Równa"} name={'markEqual'} checked={this.state.markEqual} id={3}/>
                         </Col>
-                    <Button onClick={this.handleSubmit}>Szukaj</Button>
                     </Form.Row>
                 </Form>
-                <SongList name={this.state.nameInput} genres={this.state.genresText}/>
+                <SongList name={this.state.nameInput} genres={this.state.genresText} yearSince={this.state.yearSince} yearTo={this.state.yearTo}/>
             </div>
         );
     }
