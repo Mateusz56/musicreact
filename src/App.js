@@ -2,25 +2,17 @@ import logo from './logo.svg';
 import './App.css';
 import NavBar from "./NavBar";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Registration from "./Registration";
+import SongList from "./SongList";
+import Songs from "./Songs";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <NavBar></NavBar>
+        <NavBar/>
+        <br/>
+        {/*<Registration/>*/}
+        <Songs/>
     </div>
   );
 }
