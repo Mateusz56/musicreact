@@ -20,14 +20,14 @@ class NavBar extends Component {
     navBarLoggedIn() {
         return (
             <div>
-                <Navbar fixed="top" bg="dark" variant="dark">
+                <Navbar bg="dark" variant="dark">
                     <Navbar.Brand href="#home">Navbar</Navbar.Brand>
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Piosenki</Nav.Link>
                         <Nav.Link href="#features">Albumy</Nav.Link>
                         <Nav.Link href="#pricing">Moje albumy</Nav.Link>
                     </Nav>
-                    <Nav.Link href="#pricing">Asdf</Nav.Link>
+                    <Nav.Link href="#pricing">{this.state.token}</Nav.Link>
                     <Button onClick={this.logout.bind(this)} variant="outline-info">Wyloguj</Button>
                 </Navbar>
             </div>
@@ -37,16 +37,21 @@ class NavBar extends Component {
     navBarLoggedOut() {
         return (
             <div>
-                <Navbar fixed="top" bg="dark" variant="dark">
+                <Navbar bg="dark" variant="dark">
                     <Navbar.Brand href="#home">Navbar</Navbar.Brand>
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Piosenki</Nav.Link>
                         <Nav.Link href="#features">Albumy</Nav.Link>
                     </Nav>
                     <Form inline>
-                        <FormControl type="text" value={this.state.username} onChange={e => this.setState({ username: e.target.value })} placeholder="Nazwa użytkownika" className="mr-sm-2"/>
-                        <FormControl type="password" value={this.state.password} onChange={e => this.setState({ password: e.target.value })} placeholder="Hasło" className="mr-sm-2"/>
-                        <Button onClick={() => this.login(this.state.username, this.state.password)} variant="outline-success">Zaloguj</Button>
+                        <FormControl type="text" value={this.state.username}
+                                     onChange={e => this.setState({username: e.target.value})}
+                                     placeholder="Nazwa użytkownika" className="mr-sm-2"/>
+                        <FormControl type="password" value={this.state.password}
+                                     onChange={e => this.setState({password: e.target.value})} placeholder="Hasło"
+                                     className="mr-sm-2"/>
+                        <Button onClick={() => this.login(this.state.username, this.state.password)}
+                                variant="outline-success">Zaloguj</Button>
                     </Form>
                     <Button variant="outline-info">Zarejestruj</Button>
                 </Navbar>
@@ -64,16 +69,28 @@ class NavBar extends Component {
                 username: username,
                 password: password
             })
-        }).then((respone) => respone.json())
-            .then((json) => {
+        }).then((respone) => {
+            if (respone.status === 200)
+                return respone.json()
+                    .then((json) => {
+                        this.setState(
+                            {
+                                token: json.token,
+                                username: "",
+                                password: ""
+                            })
+                        this.cookies.set("token", json.token)
+                    })
+            else
+                alert("Błąd logowania")
                 this.setState(
                     {
-                        token: json.token,
+                        token: "",
                         username: "",
                         password: ""
                     })
-                this.cookies.set("token", json.token)
-            })
+        })
+
     }
 
     logout() {
