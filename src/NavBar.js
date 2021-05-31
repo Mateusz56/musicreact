@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
 import Navbar from "react-bootstrap/Navbar";
 import {Button, Form, FormControl, Nav} from "react-bootstrap";
-import {withCookies, Cookies} from 'react-cookie';
-import {instanceOf} from 'prop-types';
+import {withCookies} from 'react-cookie';
 
 class NavBar extends Component {
-    static propTypes = {
-        cookies: instanceOf(Cookies).isRequired
-    };
-
     constructor(props) {
         super(props);
         this.cookies = props.cookies;
@@ -73,13 +68,13 @@ class NavBar extends Component {
             if (respone.status === 200)
                 return respone.json()
                     .then((json) => {
+                        this.cookies.set("token", json.token)
                         this.setState(
                             {
                                 token: json.token,
                                 username: "",
                                 password: ""
-                            })
-                        this.cookies.set("token", json.token)
+                            }, () => window.location.reload())
                     })
             else
                 alert("Błąd logowania")
@@ -97,7 +92,7 @@ class NavBar extends Component {
         this.cookies.remove("token")
         this.setState({
             token: null
-        })
+        }, () => window.location.reload())
     }
 
     render() {
