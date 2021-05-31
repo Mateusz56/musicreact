@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Registration from "./Registration";
 import SongList from "./SongList";
 import Songs from "./Songs";
+import SongDetail from "./SongDetail";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <NavBar/>
         <br/>
         {/*<Registration/>*/}
-        <Songs/>
+        <SongDetail songId={15}/>
     </div>
   );
 }
