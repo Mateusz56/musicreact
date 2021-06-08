@@ -45,7 +45,7 @@ class SongDetail extends Component {
         }).then((response) => response.json())
             .then((json) =>
                 this.setState({
-                songMark: json.avg.toPrecision(2)
+                songMark: json.avg ? json.avg.toPrecision(2) : "Brak ocen"
             }))
 
         if(this.state.token)

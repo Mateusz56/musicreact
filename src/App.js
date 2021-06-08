@@ -6,6 +6,7 @@ import Registration from "./Registration";
 import SongList from "./SongList";
 import Songs from "./Songs";
 import SongDetail from "./SongDetail";
+import AlbumList from "./AlbumList";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <NavBar/>
         <br/>
         {/*<Registration/>*/}
-        <SongDetail songId={15}/>
+        {/*<SongDetail songId={15}/>*/}
+        <AlbumList/>
     </div>
   );
 }
