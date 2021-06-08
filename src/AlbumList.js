@@ -44,7 +44,7 @@ class AlbumList extends Component {
                 let newAlbumsArray = state.albums.concat(json)
                 if(albumsCount === newAlbumsArray.length)
                     return {
-                        loadMoreButtonText: 'Załadowano wszystkie piosenki spełniające warunki wyszukiwania',
+                        loadMoreButtonText: 'Załadowano wszystkie albumy spełniające warunki wyszukiwania',
                         canLoadMoreAlbums: false
                     }
 
@@ -55,10 +55,10 @@ class AlbumList extends Component {
     }
 
     loadMore() {
-        if(this.state.canLoadMoreSongs)
+        if(this.state.canLoadMoreAlbums)
             this.setState((state, props) => {
                 return {
-                    page: state.page + 20,
+                    page: state.page + 1,
                 };
             }, this.fetchData);
     }
