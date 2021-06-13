@@ -14,7 +14,7 @@ class Mark extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8000/${this.props.markAPILink}/?${this.props.targetId}`, {
+        fetch(`http://localhost:8000/${this.props.markAPILink}/?${this.props.targetId ? "&targetId=" + this.props.targetId : ""}`, {
             method: "GET",
             headers: {
                 'content-type': "application/json",
@@ -26,7 +26,7 @@ class Mark extends Component {
                 }))
 
         if(this.props.token)
-            fetch(`http://localhost:8000/${this.props.markAuthorAPILink}/?${this.props.token ? "token=" + this.props.token : ""}${this.props.targetId ? "&songId=" + this.props.targetId : ""}`, {
+            fetch(`http://localhost:8000/${this.props.markAuthorAPILink}/?${this.props.token ? "token=" + this.props.token : ""}${this.props.targetId ? "&targetId=" + this.props.targetId : ""}`, {
                 method: "GET",
                 headers: {
                     'content-type': "application/json",
@@ -39,7 +39,7 @@ class Mark extends Component {
     }
 
     sendMark(mark) {
-        fetch(`http://localhost:8000/song_mark_author/`, {
+        fetch(`http://localhost:8000/${this.props.markAuthorAPILink}/`, {
             method: "PUT",
             headers: {
                 'content-type': "application/json",
@@ -47,7 +47,7 @@ class Mark extends Component {
             body: JSON.stringify({
                 author: this.props.token,
                 song: this.props.targetId,
-                album: this.props.album,
+                album: this.props.targetId,
                 mark: mark
             })
         }).then((response) => response.json())
