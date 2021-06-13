@@ -13,22 +13,6 @@ class Comment extends Component {
             </React.Fragment>
         );
     }
-
-    renderHeader(username, date) {
-        return (
-        <tr>
-            <td align={"left"}>{username} {date}</td>
-        </tr>
-        )
-    }
-
-    renderBody(text) {
-        return (
-            <tr>
-                <td align={"left"}>{text}</td>
-            </tr>
-        )
-    }
 }
 
 export default Comment;
