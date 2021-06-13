@@ -36,7 +36,10 @@ class CommentsList extends Component {
         }).then((respone) => respone.json())
             .then((json) => this.setState((state, props) => {
                 let commentsCount = state.comments.length
-                let newCommentsArray = state.comments.concat(json)
+                let fetchedData = json
+                fetchedData.forEach(x => x.date = new Date(x.create_date))
+                fetchedData = fetchedData.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
+                let newCommentsArray = state.comments.concat(fetchedData)
                 if(commentsCount === newCommentsArray.length)
                     return {
                         canLoadMoreComments: false
@@ -54,7 +57,7 @@ class CommentsList extends Component {
                 <Table striped hover>
                     <tbody>
                     {this.state.comments.map(x => {
-                        return <Comment username={x.username} text={x.content} date={new Date(x.create_date).toLocaleString()}/>
+                        return <Comment username={x.username} text={x.content} date={x.date.toLocaleString()}/>
                     })}
                     {this.state.canLoadMoreComments ?
                         <tr>
