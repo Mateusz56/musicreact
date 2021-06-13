@@ -28,7 +28,7 @@ class CommentsList extends Component {
     }
 
     fetchData() {
-        fetch(`http://localhost:8000/song_comment/?${this.props.songId ? "songId=" + this.props.songId : ""}${'&offset=' + this.state.offset}`, {
+        fetch(`http://localhost:8000/${this.props.commentAPILink}/?${this.props.targetId ? "targetId=" + this.props.targetId : ""}${'&offset=' + this.state.offset}`, {
             method: "GET",
             headers: {
                 'content-type': "application/json",

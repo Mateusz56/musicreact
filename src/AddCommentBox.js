@@ -14,7 +14,7 @@ class AddCommentBox extends Component {
     sendComment(event) {
         event.preventDefault()
         console.log(this.state)
-        fetch(`http://localhost:8000/song_comment/`, {
+        fetch(`http://localhost:8000/${this.props.commentAPILink}/`, {
             method: "POST",
             headers: {
                 'content-type': "application/json",
@@ -22,6 +22,7 @@ class AddCommentBox extends Component {
             body: JSON.stringify({
                 token: this.props.token,
                 song: this.props.songId,
+                album: this.props.albumId,
                 content: this.state.textboxContent
             })
         }).then((response) => {

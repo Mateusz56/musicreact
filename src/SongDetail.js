@@ -48,9 +48,9 @@ class SongDetail extends Component {
                     </tbody>
                 </Table>
                 {this.state.token ?
-                <AddCommentBox songId={this.props.songId} token={this.state.token}/>
+                <AddCommentBox commentAPILink={"song_comment"} songId={this.props.songId} token={this.state.token}/>
                     : "Zaloguj się, żeby dodać komentarz"}
-                <CommentsList songId={this.props.songId}/>
+                <CommentsList commentAPILink={"song_comment"} targetId={this.props.songId}/>
             </div>
         );
     };
