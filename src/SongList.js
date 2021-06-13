@@ -33,7 +33,7 @@ class SongList extends Component {
     }
 
     fetchData() {
-        fetch(`http://localhost:8000/song/?${this.props.name ? "name=" + this.props.name : ""}${this.props.genres ? '&genres=' + this.props.genres : ''}${this.props.yearSince ? '&yearSince=' + this.props.yearSince : ''}${this.props.yearTo ? '&yearTo=' + this.props.yearTo : ''}${'&offset=' + this.state.offset}`, {
+        fetch(`http://localhost:8000/song/?${this.props.name ? "name=" + this.props.name : ""}${this.props.genres ? '&genres=' + this.props.genres : ''}${this.props.yearSince ? '&yearSince=' + this.props.yearSince : ''}${this.props.yearTo ? '&yearTo=' + this.props.yearTo : ''}${this.props.albumId ? '&albumId=' + this.props.albumId : ''}${'&offset=' + this.state.offset}`, {
             method: "GET",
             headers: {
                 'content-type': "application/json",
@@ -80,7 +80,7 @@ class SongList extends Component {
                     </thead>
                     <tbody>
                     {this.state.songs.map(x =>
-                        <SongListRow songName={x.title} performer={x.performer} genre={x.genre} year={x.year} mark='4.7' commentsCount='7'/>)}
+                        <SongListRow songName={x.title} performer={x.performer} genre={x.genre} year={x.year} mark={x.marks_avg.toPrecision(2)} commentsCount={x.comments_count}/>)}
                     <tr>
                         <td colSpan={7} onClick={this.loadMore.bind(this)}>
                             {this.state.loadMoreButtonText}
