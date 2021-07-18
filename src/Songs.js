@@ -126,7 +126,9 @@ class Songs extends Component {
                         </Col>
                     </Form.Row>
                 </Form>
-                <SongList name={this.state.nameInput} genres={this.state.genresText} yearSince={this.state.yearSince} yearTo={this.state.yearTo}/>
+                <SongList name={this.state.nameInput} genres={this.state.genresText} yearSince={this.state.yearSince}
+                          yearTo={this.state.yearTo} markInput={this.state.markInput} markLess={this.state.markLess}
+                          markMore={this.state.markMore} markEqual={this.state.markEqual}/>
             </div>
         );
     }

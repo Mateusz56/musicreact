@@ -8,7 +8,8 @@ class NavBar extends Component {
         super(props);
         this.cookies = props.cookies;
         this.state = {
-            token: this.cookies.get('token')
+            token: this.cookies.get('token'),
+            user_id: this.cookies.get('user_id')
         };
     }
 
@@ -69,9 +70,11 @@ class NavBar extends Component {
                 return respone.json()
                     .then((json) => {
                         this.cookies.set("token", json.token)
+                        this.cookies.set("user_id", json.user_id)
                         this.setState(
                             {
                                 token: json.token,
+                                user_id: json.user_id,
                                 username: "",
                                 password: ""
                             }, () => window.location.reload())
@@ -81,6 +84,7 @@ class NavBar extends Component {
                 this.setState(
                     {
                         token: "",
+                        user_id: "",
                         username: "",
                         password: ""
                     })
@@ -90,8 +94,10 @@ class NavBar extends Component {
 
     logout() {
         this.cookies.remove("token")
+        this.cookies.remove("user_id")
         this.setState({
-            token: null
+            token: null,
+            user_id: null
         }, () => window.location.reload())
     }
 

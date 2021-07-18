@@ -15,11 +15,11 @@ function App() {
     <div className="App">
         <NavBar/>
         <br/>
-        {/*<Songs/>*/}
+        <Songs/>
         {/*<Registration/>*/}
         {/*<SongDetail songId={15}/>*/}
         {/*<Albums/>*/}
-        <AlbumDetail albumId={1}/>
+        {/*<AlbumDetail albumId={1}/>*/}
     </div>
   );
 }
