@@ -21,7 +21,7 @@ class SongDetail extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8000/song/${this.props.songId}/`, {
+        fetch(`http://localhost:8000/song/${this.props.match.params.id}/`, {
             method: "GET",
             headers: {
                 'content-type': "application/json",
@@ -44,13 +44,13 @@ class SongDetail extends Component {
                         <tr><td align={"left"} colSpan={5}>{this.state.songPerformer}</td></tr>
                         <tr><td align={"left"} colSpan={5}>{this.state.songYear}</td></tr>
                         <tr><td align={"left"} colSpan={5}>{this.state.songGenre}</td></tr>
-                        <Mark targetId={this.props.songId} token={this.state.token} markAPILink={"song_mark"} markAuthorAPILink={"song_mark_author"}/>
+                        <Mark targetId={this.props.match.params.id} token={this.state.token} markAPILink={"song_mark"} markAuthorAPILink={"song_mark_author"}/>
                     </tbody>
                 </Table>
                 {this.state.token ?
-                <AddCommentBox commentAPILink={"song_comment"} songId={this.props.songId} token={this.state.token}/>
+                <AddCommentBox commentAPILink={"song_comment"} songId={this.props.match.params.id} token={this.state.token}/>
                     : "Zaloguj się, żeby dodać komentarz"}
-                <CommentsList commentAPILink={"song_comment"} targetId={this.props.songId}/>
+                <CommentsList commentAPILink={"song_comment"} targetId={this.props.match.params.id}/>
             </div>
         );
     };

@@ -9,17 +9,28 @@ import SongDetail from "./SongDetail";
 import AlbumList from "./AlbumList";
 import Albums from "./Albums";
 import AlbumDetail from "./AlbumDetail";
+import {BrowserRouter, Switch, Route, useParams} from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
+        <BrowserRouter>
+
         <NavBar/>
         <br/>
-        <Songs/>
+            <Switch>
+                <Route path="/songs" component={Songs}/>
+                <Route path="/register" component={Registration}/>
+                <Route path="/song/:id" component={SongDetail}/>
+                <Route path="/albums" component={Albums}/>
+                <Route path="/album/:id" component={AlbumDetail}/>
+            </Switch>
         {/*<Registration/>*/}
         {/*<SongDetail songId={15}/>*/}
         {/*<Albums/>*/}
         {/*<AlbumDetail albumId={1}/>*/}
+        </BrowserRouter>
+
     </div>
   );
 }

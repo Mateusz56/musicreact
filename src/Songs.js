@@ -97,7 +97,7 @@ class Songs extends Component {
                                     Gatunki
                                 </Dropdown.Toggle>
                                 <DropdownMenu style={{margin: '100'}}>
-                                    {this.state.genres.map(x => <Form.Check onChange={this.handleGenreCheckboxChange} name={x} style={{marginLeft: 10}} label={x} type={'checkbox'}/>)}
+                                    {this.state.genres.map(x => <Form.Check onChange={this.handleGenreCheckboxChange} key={x} name={x} style={{marginLeft: 10}} label={x} type={'checkbox'}/>)}
                                 </DropdownMenu>
                             </Dropdown>
                         </Col>
@@ -128,7 +128,7 @@ class Songs extends Component {
                 </Form>
                 <SongList name={this.state.nameInput} genres={this.state.genresText} yearSince={this.state.yearSince}
                           yearTo={this.state.yearTo} markInput={this.state.markInput} markLess={this.state.markLess}
-                          markMore={this.state.markMore} markEqual={this.state.markEqual}/>
+                          markMore={this.state.markMore} markEqual={this.state.markEqual} history={this.props.history}/>
             </div>
         );
     }

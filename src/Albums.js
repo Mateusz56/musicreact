@@ -30,7 +30,7 @@ class Albums extends Component {
                         </Col>
                     </Form.Row>
                 </Form>
-                <AlbumList name={this.state.name}/>
+                <AlbumList name={this.state.name} history={this.props.history}/>
             </div>
         );
     }

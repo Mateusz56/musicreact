@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Navbar from "react-bootstrap/Navbar";
-import {Button, Form, FormControl, Nav} from "react-bootstrap";
+import {Button, Form, FormControl, Nav, NavLink} from "react-bootstrap";
 import {withCookies} from 'react-cookie';
+import {BrowserRouter, Link} from "react-router-dom";
 
 class NavBar extends Component {
     constructor(props) {
@@ -19,9 +20,9 @@ class NavBar extends Component {
                 <Navbar bg="dark" variant="dark">
                     <Navbar.Brand href="#home">Navbar</Navbar.Brand>
                     <Nav className="mr-auto">
-                        <Nav.Link href="#home">Piosenki</Nav.Link>
-                        <Nav.Link href="#features">Albumy</Nav.Link>
-                        <Nav.Link href="#pricing">Moje albumy</Nav.Link>
+                        <Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>
+                        <Nav.Link as={Link} to="/albums">Albumy</Nav.Link>
+                        <Nav.Link to="" href="#pricing">Moje albumy</Nav.Link>
                     </Nav>
                     <Nav.Link href="#pricing">{this.state.token}</Nav.Link>
                     <Button onClick={this.logout.bind(this)} variant="outline-info">Wyloguj</Button>
@@ -33,24 +34,24 @@ class NavBar extends Component {
     navBarLoggedOut() {
         return (
             <div>
-                <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-                    <Nav className="mr-auto">
-                        <Nav.Link href="#home">Piosenki</Nav.Link>
-                        <Nav.Link href="#features">Albumy</Nav.Link>
-                    </Nav>
-                    <Form inline>
-                        <FormControl type="text" value={this.state.username}
-                                     onChange={e => this.setState({username: e.target.value})}
-                                     placeholder="Nazwa użytkownika" className="mr-sm-2"/>
-                        <FormControl type="password" value={this.state.password}
-                                     onChange={e => this.setState({password: e.target.value})} placeholder="Hasło"
-                                     className="mr-sm-2"/>
-                        <Button onClick={() => this.login(this.state.username, this.state.password)}
-                                variant="outline-success">Zaloguj</Button>
-                    </Form>
-                    <Button variant="outline-info">Zarejestruj</Button>
-                </Navbar>
+                    <Navbar bg="dark" variant="dark">
+                        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+                        <Nav className="mr-auto">
+                            {/*<Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>*/}
+                            {/*<Nav.Link as={Link} to="/albums">Albumy</Nav.Link>*/}
+                        </Nav>
+                        <Form inline>
+                            <FormControl type="text" value={this.state.username}
+                                         onChange={e => this.setState({username: e.target.value})}
+                                         placeholder="Nazwa użytkownika" className="mr-sm-2"/>
+                            <FormControl type="password" value={this.state.password}
+                                         onChange={e => this.setState({password: e.target.value})} placeholder="Hasło"
+                                         className="mr-sm-2"/>
+                            <Button onClick={() => this.login(this.state.username, this.state.password)}
+                                    variant="outline-success">Zaloguj</Button>
+                        </Form>
+                        <Button variant="outline-info">Zarejestruj</Button>
+                    </Navbar>
             </div>
         )
     }

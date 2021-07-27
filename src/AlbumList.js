@@ -78,7 +78,8 @@ class AlbumList extends Component {
                     </thead>
                     <tbody>
                     {this.state.albums.map(x =>
-                        <AlbumListRow albumName={x.name} songsCount={x.songs_count} mark={x.marks_avg} commentsCount={x.comments_count}/>)}
+                        <AlbumListRow key={x.id} albumName={x.name} songsCount={x.songs_count} mark={x.marks_avg}
+                                      commentsCount={x.comments_count} albumId={x.id} history={this.props.history}/>)}
                     <tr>
                         <td colSpan={5} onClick={this.loadMore.bind(this)}>
                             {this.state.loadMoreButtonText}

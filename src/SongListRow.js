@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {HeartFill} from "react-bootstrap-icons";
+import {Link} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 class SongListRow extends Component {
     constructor(props) {
@@ -38,11 +40,15 @@ class SongListRow extends Component {
             }, () => console.log(this.state)))
     }
 
+    navigateToSongDetail(songId) {
+        this.props.history.push(`/song/${songId}`)
+    }
+
     render() {
         return (
             <tr>
                 <td><HeartFill color={this.state.favourite ? "red" : "black"} onClick={this.setFavourite.bind(this)}/></td>
-                <td>{this.props.songName}</td>
+                <td onClick={() => this.navigateToSongDetail(this.props.songId)}>{this.props.songName}</td>
                 <td>{this.props.performer}</td>
                 <td>{this.props.genre}</td>
                 <td>{this.props.year}</td>
