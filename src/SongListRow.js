@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {HeartFill} from "react-bootstrap-icons";
-import {Link} from "react-router-dom";
-import { useHistory } from "react-router-dom";
 
 class SongListRow extends Component {
     constructor(props) {
@@ -13,6 +11,7 @@ class SongListRow extends Component {
     }
 
     setFavourite() {
+        if(!this.props.userId) return;
         if(!this.state.favourite)
             fetch(`http://localhost:8000/favourite_song/`, {
                 method: "POST",
@@ -28,7 +27,7 @@ class SongListRow extends Component {
                  .then((json) =>
                      this.setState({
                          favourite: json.id
-                     }, () => console.log(this.state)))
+                     }))
         else
             fetch(`http://localhost:8000/favourite_song/${this.state.favourite}`, {
                 method: "DELETE",
@@ -37,7 +36,7 @@ class SongListRow extends Component {
                 },
             }).then(() => this.setState({
                 favourite: null
-            }, () => console.log(this.state)))
+            }))
     }
 
     navigateToSongDetail(songId) {

@@ -29,7 +29,8 @@ class SongList extends Component {
         if (prevProps.name !== this.props.name || prevProps.genres !== this.props.genres ||
             prevProps.yearTo !== this.props.yearTo || prevProps.yearSince !== this.props.yearSince ||
             prevProps.markInput !== this.props.markInput || prevProps.markLess !== this.props.markLess ||
-            prevProps.markEqual !== this.props.markEqual || prevProps.markMore !== this.props.markMore) {
+            prevProps.markEqual !== this.props.markEqual || prevProps.markMore !== this.props.markMore ||
+            prevProps.favourite !== this.props.favourite) {
             this.setState({
                 offset: 0,
                 songs: [],
@@ -68,6 +69,7 @@ ${this.props.albumId ? '&albumId=' + this.props.albumId : ''}
 ${this.sendMarkInput()}
 ${this.props.albumId ? '&albumId=' + this.props.albumId : ''}
 ${this.state.userId ? '&user=' + this.state.userId : ''}
+${this.props.favourite ? '&favourite=' + this.props.favourite : ''}
 ${'&offset=' + this.state.offset}`, {
             method: "GET",
             headers: {

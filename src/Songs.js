@@ -16,6 +16,7 @@ class Songs extends Component {
             markLess: false,
             markMore: false,
             markEqual: false,
+            favourite: false,
             genresText: "",
         }
 
@@ -80,7 +81,7 @@ class Songs extends Component {
         let genresString = this.state.genresInput.join(',')
         this.setState({
             genresText: genresString
-        }, () => console.log(this.state))
+        })
     }
 
     render() {
@@ -124,11 +125,15 @@ class Songs extends Component {
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={"Większa"} name={'markMore'} checked={this.state.markMore} id={2}/>
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={"Równa"} name={'markEqual'} checked={this.state.markEqual} id={3}/>
                         </Col>
+                        <Col md={0.25}>
+                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 20}} label={"Ulubione"} name={"favourite"} checked={this.state.favourite} id={4}/>
+                        </Col>
                     </Form.Row>
                 </Form>
                 <SongList name={this.state.nameInput} genres={this.state.genresText} yearSince={this.state.yearSince}
                           yearTo={this.state.yearTo} markInput={this.state.markInput} markLess={this.state.markLess}
-                          markMore={this.state.markMore} markEqual={this.state.markEqual} history={this.props.history}/>
+                          markMore={this.state.markMore} markEqual={this.state.markEqual} history={this.props.history}
+                          favourite={this.state.favourite}/>
             </div>
         );
     }

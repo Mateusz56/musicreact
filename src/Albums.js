@@ -8,7 +8,8 @@ class Albums extends Component {
         super(props);
 
         this.state = {
-            name: ""
+            nameInput: "",
+            favourite: false,
         }
 
         this.handleInputChange = this.handleInputChange.bind(this)
@@ -16,7 +17,7 @@ class Albums extends Component {
 
     handleInputChange(event) {
         this.setState({
-            name: event.target.value
+            [event.target.name]: event.target.type === 'checkbox' ? event.target.checked : event.target.value
         })
     }
 
@@ -28,9 +29,12 @@ class Albums extends Component {
                         <Col md={2}>
                             <Form.Control onChange={this.handleInputChange} name={'nameInput'} placeholder="Nazwa albumu" />
                         </Col>
+                        <Col md={0.25}>
+                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={"Ulubione"} name={'favourite'} checked={this.state.favourite} id={0}/>
+                        </Col>
                     </Form.Row>
                 </Form>
-                <AlbumList name={this.state.name} history={this.props.history}/>
+                <AlbumList name={this.state.nameInput} history={this.props.history} favourite={this.state.favourite}/>
             </div>
         );
     }

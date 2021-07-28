@@ -13,7 +13,6 @@ class AddCommentBox extends Component {
 
     sendComment(event) {
         event.preventDefault()
-        console.log(this.state)
         fetch(`http://localhost:8000/${this.props.commentAPILink}/`, {
             method: "POST",
             headers: {
