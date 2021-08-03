@@ -31,10 +31,10 @@ class Mark extends Component {
                 headers: {
                     'content-type': "application/json",
                 }
-            }).then((response) => response.json())
+            }).then((response) => response.status === 200 ? response.json() : false)
                 .then((json) =>
                     this.setState({
-                        myMark: json.mark
+                        myMark: json ? json.mark : '-'
                     }, () => this.onMouseEnterStar(json.mark - 1)))
     }
 
@@ -75,7 +75,7 @@ class Mark extends Component {
                 <td width={250} align={"left"} colSpan={1} className={'m-auto'}>Ocena: {this.state.mark}<br/>Twoja ocena: {this.state.myMark}</td>
                 {this.props.token ?
                     <td width={200} align={"left"} colSpan={1}
-                        onMouseLeave={() => this.onMouseEnterStar(this.state.myMark ? this.state.myMark - 1 : -1)}>
+                        onMouseLeave={() => this.onMouseEnterStar(typeof this.state.myMark == 'number' ? this.state.myMark - 1 : -1)}>
                         <StarFill onMouseEnter={() => this.onMouseEnterStar(0)} onClick={() => this.sendMark(1)} size={35}
                                   color={this.state.starsColor[0]}/>
                         <StarFill onMouseEnter={() => this.onMouseEnterStar(1)} onClick={() => this.sendMark(2)} size={35}

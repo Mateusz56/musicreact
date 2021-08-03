@@ -57,7 +57,7 @@ class CommentsList extends Component {
                 <Table striped hover>
                     <tbody>
                     {this.state.comments.map(x => {
-                        return <Comment username={x.username} text={x.content} date={x.date.toLocaleString()}/>
+                        return <Comment key={x.id} username={x.username} text={x.content} date={x.date.toLocaleString()}/>
                     })}
                     {this.state.canLoadMoreComments ?
                         <tr>
