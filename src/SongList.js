@@ -118,7 +118,7 @@ ${'&offset=' + this.state.offset}`, {
                     <tbody>
                     {this.state.songs.map(x =>
                         <SongListRow key={x.id} userId={this.state.userId} songId={x.id} songName={x.title} performer={x.performer}
-                                     genre={x.genre} year={x.year} mark={x.marks_avg.toPrecision(2)}
+                                     genre={x.genre} year={x.year} mark={x.marks_avg ? x.marks_avg.toPrecision(2) : '-'}
                                      commentsCount={x.comments_count} favourite={x.favourite} history={this.props.history}/>)}
                     <tr>
                         <td colSpan={7} onClick={this.loadMore.bind(this)}>
