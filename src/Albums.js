@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Dropdown, Form} from "react-bootstrap";
-import DropdownMenu from "react-bootstrap/DropdownMenu";
+import {Col, Form} from "react-bootstrap";
 import AlbumList from "./AlbumList";
 
 class Albums extends Component {
@@ -34,7 +33,7 @@ class Albums extends Component {
                         </Col>
                     </Form.Row>
                 </Form>
-                <AlbumList name={this.state.nameInput} history={this.props.history} favourite={this.state.favourite}/>
+                <AlbumList name={this.state.nameInput} history={this.props.history} favourite={this.state.favourite} myAlbums={this.props.myAlbums}/>
             </div>
         );
     }

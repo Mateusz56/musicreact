@@ -22,7 +22,8 @@ class NavBar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>
                         <Nav.Link as={Link} to="/albums">Albumy</Nav.Link>
-                        <Nav.Link to="" href="#pricing">Moje albumy</Nav.Link>
+                        <Nav.Link as={Link} to="/my_albums">Moje albumy</Nav.Link>
+                        <Nav.Link as={Link} to="/add_song">Dodaj piosenkę</Nav.Link>
                     </Nav>
                     <Nav.Link href="#pricing">{this.state.token}</Nav.Link>
                     <Button onClick={this.logout.bind(this)} variant="outline-info">Wyloguj</Button>
@@ -37,8 +38,8 @@ class NavBar extends Component {
                     <Navbar bg="dark" variant="dark">
                         <Navbar.Brand href="#home">Navbar</Navbar.Brand>
                         <Nav className="mr-auto">
-                            {/*<Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>*/}
-                            {/*<Nav.Link as={Link} to="/albums">Albumy</Nav.Link>*/}
+                            <Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>
+                            <Nav.Link as={Link} to="/albums">Albumy</Nav.Link>
                         </Nav>
                         <Form inline>
                             <FormControl type="text" value={this.state.username}
@@ -50,7 +51,7 @@ class NavBar extends Component {
                             <Button onClick={() => this.login(this.state.username, this.state.password)}
                                     variant="outline-success">Zaloguj</Button>
                         </Form>
-                        <Button variant="outline-info">Zarejestruj</Button>
+                        <Button href={"/register"} variant="outline-info">Zarejestruj</Button>
                     </Navbar>
             </div>
         )

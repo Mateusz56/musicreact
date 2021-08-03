@@ -40,7 +40,8 @@ class AlbumList extends Component {
         fetch(`http://localhost:8000/album/?${this.props.name ? "name=" + this.props.name : ""}
 ${'&page=' + this.state.page}
 ${this.props.favourite ? "&favourite=" + this.props.favourite : ""}
-${this.state.userId ? '&user=' + this.state.userId : ''}`, {
+${this.state.userId ? '&user=' + this.state.userId : ''}
+${this.props.myAlbums ? '&private=' + this.props.myAlbums : ''}`, {
             method: "GET",
             headers: {
                 'content-type': "application/json",

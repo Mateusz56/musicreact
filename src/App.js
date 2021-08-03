@@ -10,6 +10,7 @@ import AlbumList from "./AlbumList";
 import Albums from "./Albums";
 import AlbumDetail from "./AlbumDetail";
 import {BrowserRouter, Switch, Route, useParams} from "react-router-dom";
+import AddSong from "./AddSong";
 
 function App() {
   return (
@@ -22,13 +23,16 @@ function App() {
                 <Route path="/songs" component={Songs}/>
                 <Route path="/register" component={Registration}/>
                 <Route path="/song/:id" component={SongDetail}/>
-                <Route path="/albums" component={Albums}/>
+                <Route path="/albums" render={(props) => (
+                    <Albums {...props} myAlbums={false} />
+                )}/>
+                <Route path="/my_albums" render={(props) => (
+                    <Albums {...props} myAlbums={true} />
+                )}/>
                 <Route path="/album/:id" component={AlbumDetail}/>
+                <Route path="/register" component={Registration}/>
+                <Route path="/add_song" component={AddSong}/>
             </Switch>
-        {/*<Registration/>*/}
-        {/*<SongDetail songId={15}/>*/}
-        {/*<Albums/>*/}
-        {/*<AlbumDetail albumId={1}/>*/}
         </BrowserRouter>
 
     </div>
