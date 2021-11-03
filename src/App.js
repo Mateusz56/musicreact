@@ -11,6 +11,7 @@ import Albums from "./Albums";
 import AlbumDetail from "./AlbumDetail";
 import {BrowserRouter, Switch, Route, useParams} from "react-router-dom";
 import AddSong from "./AddSong";
+import AddAlbum from "./AddAlbum";
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
                 )}/>
                 <Route path="/album/:id" component={AlbumDetail}/>
                 <Route path="/register" component={Registration}/>
-                <Route path="/add_song" component={AddSong}/>
+                <Route path="/" component={Songs}/>
             </Switch>
         </BrowserRouter>
 

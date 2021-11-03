@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 
 class Registration extends Component {
     constructor(props) {
@@ -92,7 +92,7 @@ class Registration extends Component {
                         onChange={this.handleInputChange} />
                 </Form.Label>
                 <br />
-                <input type="submit" value="Wyślij" onSubmit={this.handleSubmit.bind(this)}/>
+                <Button type={'submit'}>Wyślij</Button>
             </Form>
         );
     }

@@ -3,27 +3,36 @@ import Navbar from "react-bootstrap/Navbar";
 import {Button, Form, FormControl, Nav, NavLink} from "react-bootstrap";
 import {withCookies} from 'react-cookie';
 import {BrowserRouter, Link} from "react-router-dom";
-
+import Modal from "./Modal";
+import AddSong from "./AddSong"
+import AddAlbum from "./AddAlbum";
 class NavBar extends Component {
     constructor(props) {
         super(props);
         this.cookies = props.cookies;
         this.state = {
             token: this.cookies.get('token'),
-            user_id: this.cookies.get('user_id')
+            user_id: this.cookies.get('user_id'),
+            showAddSongModal: false
         };
     }
 
     navBarLoggedIn() {
         return (
             <div>
+                <Modal enabled={this.state.showAddSongModal} hideModal={() => this.setState({showAddSongModal: false})}>
+                    <AddSong/>
+                </Modal>
+                <Modal enabled={this.state.showAddAlbumModal} hideModal={() => this.setState({showAddAlbumModal: false})}>
+                    <AddAlbum/>
+                </Modal>
                 <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>
                         <Nav.Link as={Link} to="/albums">Albumy</Nav.Link>
                         <Nav.Link as={Link} to="/my_albums">Moje albumy</Nav.Link>
-                        <Nav.Link as={Link} to="/add_song">Dodaj piosenkę</Nav.Link>
+                        <Nav.Link onClick={() => this.setState({showAddSongModal: true, showAddAlbumModal: false})}>Dodaj piosenkę</Nav.Link>
+                        <Nav.Link onClick={() => this.setState({showAddAlbumModal: true, showAddSongModal: false})}>Dodaj album</Nav.Link>
                     </Nav>
                     <Nav.Link href="#pricing">{this.state.token}</Nav.Link>
                     <Button onClick={this.logout.bind(this)} variant="outline-info">Wyloguj</Button>
@@ -36,7 +45,7 @@ class NavBar extends Component {
         return (
             <div>
                     <Navbar bg="dark" variant="dark">
-                        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+                        {/*<Navbar.Brand href="#home">Navbar</Navbar.Brand>*/}
                         <Nav className="mr-auto">
                             <Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>
                             <Nav.Link as={Link} to="/albums">Albumy</Nav.Link>

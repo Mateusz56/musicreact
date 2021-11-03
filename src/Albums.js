@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Form} from "react-bootstrap";
+import {Button, Col, Form} from "react-bootstrap";
 import AlbumList from "./AlbumList";
 
 class Albums extends Component {
@@ -9,9 +9,18 @@ class Albums extends Component {
         this.state = {
             nameInput: "",
             favourite: false,
+            public: false,
+            myAlbums: this.props.myAlbums
         }
 
         this.handleInputChange = this.handleInputChange.bind(this)
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.myAlbums !== this.props.myAlbums)
+            this.setState({
+                myAlbums: this.props.myAlbums
+            })
     }
 
     handleInputChange(event) {
@@ -33,7 +42,7 @@ class Albums extends Component {
                         </Col>
                     </Form.Row>
                 </Form>
-                <AlbumList name={this.state.nameInput} history={this.props.history} favourite={this.state.favourite} myAlbums={this.props.myAlbums}/>
+                <AlbumList name={this.state.nameInput} history={this.props.history} favourite={this.state.favourite} myAlbums={this.state.myAlbums}/>
             </div>
         );
     }

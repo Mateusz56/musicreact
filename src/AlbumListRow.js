@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {HeartFill} from "react-bootstrap-icons";
+import {Envelope, EnvelopeFill, HeartFill} from "react-bootstrap-icons";
 
 class AlbumListRow extends Component {
     constructor(props) {
@@ -51,6 +51,7 @@ class AlbumListRow extends Component {
                 <td>{this.props.songsCount}</td>
                 <td>{this.props.mark}</td>
                 <td>{this.props.commentsCount}</td>
+                {this.props.showModal ? <td onClick={this.props.showModal}><EnvelopeFill/></td> : ""}
             </tr>
         );
     }
