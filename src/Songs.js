@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, Dropdown, Form} from "react-bootstrap";
 import SongList from "./SongList";
 import DropdownMenu from "react-bootstrap/DropdownMenu";
-
+import FetchFunctions from "./FetchFunctions";
 class Songs extends Component {
     constructor(props) {
         super(props);
@@ -25,15 +25,9 @@ class Songs extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8000/genres/", {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-            }
-        }).then((respone) => respone.json())
-            .then((json) => this.setState({
-                genres: json
-            }))
+        FetchFunctions.Get("genres", null, (json) => this.setState({
+            genres: json
+        }));
     }
 
     handleInputChange(event) {

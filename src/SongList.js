@@ -3,6 +3,7 @@ import {Table} from "react-bootstrap";
 import { HeartFill, StarFill, ChatRightDots } from 'react-bootstrap-icons';
 import SongListRow from "./SongListRow";
 import {withCookies} from "react-cookie";
+import FetchFunctions from "./FetchFunctions";
 
 class SongList extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class SongList extends Component {
         }
 
         this.fetchData = this.fetchData.bind(this)
-        this.sendMarkInput = this.sendMarkInput.bind(this)
+        this.handleFetch = this.handleFetch.bind(this)
     }
 
     componentDidMount() {
@@ -40,55 +41,71 @@ class SongList extends Component {
         }
     }
 
-    sendMarkInput() {
+    chooseMarkInput() {
         if(this.props.markEqual && this.props.markLess)
-            return `&mark=${this.props.markInput}&mark_filter=lte`
+            return 'lte'
+            //return `&mark=${this.props.markInput}&mark_filter=lte`
 
         if(this.props.markEqual && this.props.markMore)
-            return `&mark=${this.props.markInput}&mark_filter=gte`
+            return 'gte'
+           // return `&mark=${this.props.markInput}&mark_filter=gte`
 
         if(this.props.markEqual)
-            return `&mark=${this.props.markInput}&mark_filter=exact`
+            return 'exact'
+           // return `&mark=${this.props.markInput}&mark_filter=exact`
 
         if(this.props.markLess)
-            return `&mark=${this.props.markInput}&mark_filter=lt`
+            return 'lt'
+          //  return `&mark=${this.props.markInput}&mark_filter=lt`
 
         if(this.props.markMore)
-            return `&mark=${this.props.markInput}&mark_filter=gt`
+            return 'gt'
+           // return `&mark=${this.props.markInput}&mark_filter=gt`
 
-        return ""
+        return false
+    }
+
+    prepareParams() {
+        let params = {};
+
+        params.name = this.props.name;
+        params.genres = this.props.genres;
+        params.yearSince = this.props.yearSince;
+        params.yearTo = this.props.yearTo;
+        params.albumId = this.props.albumId;
+        params.userId = this.state.userId;
+        params.favourite = this.props.favourite;
+        params.offset = this.state.offset;
+
+        let markFilter = this.chooseMarkInput()
+        if(markFilter)
+        {
+            params.mark = this.props.markInput;
+            params.mark_filter = markFilter;
+        }
+
+        return params;
+        console.log(params)
+    }
+
+    handleFetch(json) {
+        this.setState((state) => {
+            let songsCount = state.songs.length
+            let newSongsArray = state.songs.concat(json)
+            if (songsCount === newSongsArray.length)
+                return {
+                    loadMoreButtonText: 'Załadowano wszystkie piosenki spełniające warunki wyszukiwania',
+                    canLoadMoreSongs: false
+                }
+
+            return {
+                songs: state.songs.concat(json)
+            }
+        })
     }
 
     fetchData() {
-        fetch(`http://localhost:8000/song/?
-${this.props.name ? "name=" + this.props.name : ""}
-${this.props.genres ? '&genres=' + this.props.genres : ''}
-${this.props.yearSince ? '&yearSince=' + this.props.yearSince : ''}
-${this.props.yearTo ? '&yearTo=' + this.props.yearTo : ''}
-${this.props.albumId ? '&albumId=' + this.props.albumId : ''}
-${this.sendMarkInput()}
-${this.props.albumId ? '&albumId=' + this.props.albumId : ''}
-${this.state.userId ? '&user=' + this.state.userId : ''}
-${this.props.favourite ? '&favourite=' + this.props.favourite : ''}
-${'&offset=' + this.state.offset}`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-            }
-        }).then((respone) => respone.json())
-            .then((json) => this.setState((state, props) => {
-                let songsCount = state.songs.length
-                let newSongsArray = state.songs.concat(json)
-                if(songsCount === newSongsArray.length)
-                    return {
-                        loadMoreButtonText: 'Załadowano wszystkie piosenki spełniające warunki wyszukiwania',
-                        canLoadMoreSongs: false
-                    }
-
-                return {
-                    songs: state.songs.concat(json)
-                }
-            }))
+        FetchFunctions.Get("song", this.prepareParams(), this.handleFetch)
     }
 
     loadMore() {
