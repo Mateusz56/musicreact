@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
+import FetchFunctions from "./FetchFunctions";
 
 class Registration extends Component {
     constructor(props) {
@@ -24,21 +25,14 @@ class Registration extends Component {
     handleSubmit(event) {
         event.preventDefault()
 
-        fetch("http://localhost:8000/user/", {
-            method: "POST",
-            headers: {
-                'content-type': "application/json",
-            },
-            body: JSON.stringify({
-                username: this.state.username,
-                password: this.state.password,
-                email: this.state.email,
-                first_name: this.state.name,
-                last_name: this.state.surname
-            })
-        }).then((respone) => alert(respone.status))
-
-
+        let body = {
+            username: this.state.username,
+            password: this.state.password,
+            email: this.state.email,
+            first_name: this.state.name,
+            last_name: this.state.surname
+        }
+        FetchFunctions.Post('user', body, (json) => alert(json))
     }
 
     render() {

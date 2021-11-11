@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StarFill} from "react-bootstrap-icons";
+import FetchFunctions from "./FetchFunctions";
 
 class Mark extends Component {
     constructor(props) {
@@ -14,47 +15,38 @@ class Mark extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8000/${this.props.markAPILink}/?${this.props.targetId ? "&targetId=" + this.props.targetId : ""}`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-            }
-        }).then((response) => response.json())
-            .then((json) =>
-                this.setState({
-                    mark: json.avg ? json.avg.toPrecision(2) : "Brak ocen"
-                }))
+        let params = {
+            targetId: this.props.targetId
+        }
+        FetchFunctions.Get(this.props.markAPILink, params, (json) =>
+            this.setState({
+                mark: json.avg ? json.avg.toPrecision(2) : "Brak ocen"
+            }))
 
         if(this.props.token)
-            fetch(`http://localhost:8000/${this.props.markAuthorAPILink}/?${this.props.token ? "token=" + this.props.token : ""}${this.props.targetId ? "&targetId=" + this.props.targetId : ""}`, {
-                method: "GET",
-                headers: {
-                    'content-type': "application/json",
-                }
-            }).then((response) => response.status === 200 ? response.json() : false)
-                .then((json) =>
-                    this.setState({
-                        myMark: json ? json.mark : '-'
-                    }, () => this.onMouseEnterStar(json.mark - 1)))
+        {
+            let params = {
+                token: this.props.token,
+                targetId: this.props.targetId
+            }
+            FetchFunctions.Get(this.props.markAuthorAPILink, params, (json) =>
+                this.setState({
+                    myMark: json ? json.mark : '-'
+                }, () => this.onMouseEnterStar(json.mark - 1)))
+        }
     }
 
     sendMark(mark) {
-        fetch(`http://localhost:8000/${this.props.markAuthorAPILink}/`, {
-            method: "PUT",
-            headers: {
-                'content-type': "application/json",
-            },
-            body: JSON.stringify({
-                author: this.props.token,
-                song: this.props.targetId,
-                album: this.props.targetId,
-                mark: mark
-            })
-        }).then((response) => response.json())
-            .then((json) =>
-                this.setState({
-                    myMark: json.mark
-                }))
+        let body = {
+            author: this.props.token,
+            song: this.props.targetId,
+            album: this.props.targetId,
+            mark: mark
+        }
+
+        FetchFunctions.Put(this.props.markAuthorAPILink, body, (json) => this.setState({
+            myMark: json.mark
+        }))
     }
 
     onMouseEnterStar(starIndex) {

@@ -5,6 +5,7 @@ import AddCommentBox from "./AddCommentBox";
 import CommentsList from "./CommentsList";
 import {withCookies} from "react-cookie";
 import SongList from "./SongList";
+import FetchFunctions from "./FetchFunctions";
 
 class AlbumDetail extends Component {
     constructor(props) {
@@ -23,15 +24,9 @@ class AlbumDetail extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8000/album/${this.props.match.params.id}/`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-            }
-        }).then((respone) => respone.json())
-            .then((json) => this.setState({
-                albumName: json.name,
-            }))
+        FetchFunctions.Get(`album/${this.props.match.params.id}`, null, (json) => this.setState({
+            albumName: json.name,
+        }))
     }
 
     render() {

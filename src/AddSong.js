@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
+import FetchFunctions from "./FetchFunctions";
 
 class AddSong extends Component {
     constructor(props) {
@@ -12,15 +13,9 @@ class AddSong extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8000/genres/", {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-            }
-        }).then((respone) => respone.json())
-            .then((json) => this.setState({
-                genres: json
-            }))
+        FetchFunctions.Get('genres', null, (json) => this.setState({
+            genres: json
+        }))
     }
 
     handleInputChange(event) {
@@ -36,18 +31,13 @@ class AddSong extends Component {
     handleSubmit(event) {
         event.preventDefault()
 
-        fetch("http://localhost:8000/song/", {
-            method: "POST",
-            headers: {
-                'content-type': "application/json",
-            },
-            body: JSON.stringify({
-                title: this.state.title,
-                performer: this.state.performer,
-                year: this.state.year,
-                genre: this.state.genre,
-            })
-        }).then((respone) => alert(respone.status))
+        let body = {
+            title: this.state.title,
+            performer: this.state.performer,
+            year: this.state.year,
+            genre: this.state.genre,
+        }
+        FetchFunctions.Post('song', body, (response) => alert(response.status))
     }
 
     render() {

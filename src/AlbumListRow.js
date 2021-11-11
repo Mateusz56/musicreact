@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Envelope, EnvelopeFill, HeartFill} from "react-bootstrap-icons";
+import FetchFunctions from "./FetchFunctions";
 
 class AlbumListRow extends Component {
     constructor(props) {
@@ -13,28 +14,18 @@ class AlbumListRow extends Component {
     setFavourite() {
         if(!this.props.userId) return;
         if(!this.state.favourite)
-            fetch(`http://localhost:8000/favourite_album/`, {
-                method: "POST",
-                headers: {
-                    'content-type': "application/json",
-                },
-                body: JSON.stringify({
-                    author: this.props.userId,
-                    album: this.props.albumId,
-                })
-            })
-                .then((response) => response.json())
-                .then((json) =>
-                    this.setState({
-                        favourite: json.id
-                    }))
+        {
+            let body = {
+                author: this.props.userId,
+                album: this.props.albumId,
+            }
+            FetchFunctions.Post('favourite_album', body, (response) => response.json()
+                .then((json) => this.setState({
+                favourite: json.id
+            })))
+        }
         else
-            fetch(`http://localhost:8000/favourite_album/${this.state.favourite}`, {
-                method: "DELETE",
-                headers: {
-                    'content-type': "application/json",
-                },
-            }).then(() => this.setState({
+            FetchFunctions.Delete(`favourite_album/${this.state.favourite}`, () => this.setState({
                 favourite: null
             }))
     }

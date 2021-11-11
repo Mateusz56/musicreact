@@ -6,6 +6,7 @@ import {BrowserRouter, Link} from "react-router-dom";
 import Modal from "./Modal";
 import AddSong from "./AddSong"
 import AddAlbum from "./AddAlbum";
+import FetchFunctions from "./FetchFunctions";
 class NavBar extends Component {
     constructor(props) {
         super(props);
@@ -67,30 +68,24 @@ class NavBar extends Component {
     }
 
     login(username, password) {
-        fetch("http://localhost:8000/api-token-auth/", {
-            method: "POST",
-            headers: {
-                'content-type': "application/json",
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        }).then((respone) => {
-            if (respone.status === 200)
-                return respone.json()
-                    .then((json) => {
-                        this.cookies.set("token", json.token)
-                        this.cookies.set("user_id", json.user_id)
-                        this.setState(
-                            {
-                                token: json.token,
-                                user_id: json.user_id,
-                                username: "",
-                                password: ""
-                            }, () => window.location.reload())
-                    })
-            else
+        let body = {
+            username: username,
+            password: password
+        }
+
+        FetchFunctions.Post('api-token-auth', body,
+            (response) => response.json().then((json) => {
+            this.cookies.set("token", json.token)
+            this.cookies.set("user_id", json.user_id)
+            this.setState(
+                {
+                    token: json.token,
+                    user_id: json.user_id,
+                    username: "",
+                    password: ""
+                }, () => window.location.reload())
+            }),
+            () => {
                 alert("Błąd logowania")
                 this.setState(
                     {
@@ -99,8 +94,7 @@ class NavBar extends Component {
                         username: "",
                         password: ""
                     })
-        })
-
+            })
     }
 
     logout() {

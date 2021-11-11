@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
+import FetchFunctions from "./FetchFunctions";
 
 class AddCommentBox extends Component {
     constructor(props) {
@@ -13,21 +14,15 @@ class AddCommentBox extends Component {
 
     sendComment(event) {
         event.preventDefault()
-        fetch(`http://localhost:8000/${this.props.commentAPILink}/`, {
-            method: "POST",
-            headers: {
-                'content-type': "application/json",
-            },
-            body: JSON.stringify({
-                token: this.props.token,
-                song: this.props.songId,
-                album: this.props.albumId,
-                content: this.state.textboxContent
-            })
-        }).then((response) => {
-            if(response.status === 201)
-                window.location.reload()
-        })
+
+        let body = {
+            token: this.props.token,
+            song: this.props.songId,
+            album: this.props.albumId,
+            content: this.state.textboxContent
+        }
+
+        FetchFunctions.Post(this.props.commentAPILink, body, () => window.location.reload())
     }
 
     handleOnChange(event) {

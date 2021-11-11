@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Envelope} from "react-bootstrap-icons";
 import {Button, Col, Form} from "react-bootstrap";
+import FetchFunctions from "./FetchFunctions";
 
 class AlbumInvitation extends Component {
     constructor(props) {
@@ -28,29 +29,23 @@ class AlbumInvitation extends Component {
     handleSubmit(event) {
         event.preventDefault()
 
-        fetch("http://localhost:8000/album_invitation/", {
-            method: "POST",
-            headers: {
-                'content-type': "application/json",
-            },
-            body: JSON.stringify({
-                username: this.state.username,
-                album: this.props.albumId
-            })
-        }).then((response) => {
-            if(response.status === 201)
-                this.setState({
-                    errorMessage: '',
-                    successMessage: 'Wysłano zaproszenie.'
-                })
-            else if(response.status === 406 || response.status === 404)
+        let body = {
+            username: this.state.username,
+            album: this.props.albumId
+        }
+        FetchFunctions.Post('album_invitation', body,
+            () => this.setState({
+                errorMessage: '',
+                successMessage: 'Wysłano zaproszenie.'
+            }),
+            (response) => {
                 response.json().then(json => this.setState(
                     {
                         errorMessage: json,
                         successMessage: ''
                     }
                 ))
-        })
+            })
     }
 
     render() {

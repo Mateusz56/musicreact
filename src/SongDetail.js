@@ -5,6 +5,7 @@ import AddCommentBox from "./AddCommentBox";
 import CommentsList from "./CommentsList";
 import {withCookies} from "react-cookie";
 import Mark from "./Mark";
+import FetchFunctions from "./FetchFunctions";
 
 class SongDetail extends Component {
     constructor(props) {
@@ -26,29 +27,20 @@ class SongDetail extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:8000/song/${this.props.match.params.id}/`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-            }
-        }).then((respone) => respone.json())
-            .then((json) => this.setState({
-                songName: json.title,
-                songPerformer: json.performer,
-                songYear: json.year,
-                songGenre: json.genre,
-            }))
+        FetchFunctions.Get(`song/${this.props.match.params.id}`, null, (json) => this.setState({
+            songName: json.title,
+            songPerformer: json.performer,
+            songYear: json.year,
+            songGenre: json.genre,
+        }))
 
         if(this.state.token) {
-                fetch(`http://localhost:8000/album/?
-${this.state.userId ? '&user=' + this.state.userId : ''}
-&private=true&get_all=true`, {
-                    method: "GET",
-                    headers: {
-                        'content-type': "application/json",
-                    }
-                }).then((respone) => respone.json())
-                .then((json) => this.setState({
+                let params = {
+                    user: this.state.userId,
+                    private: true,
+                    get_all: true,
+                }
+                FetchFunctions.Get('album', params, (json) => this.setState({
                     albums: json,
                     albumId: json[0] ? json[0].id : 0
                 }))
@@ -68,15 +60,9 @@ ${this.state.userId ? '&user=' + this.state.userId : ''}
     submitAddToAlbum(event) {
         event.preventDefault()
 
-        fetch(`http://localhost:8000/album/${this.state.albumId}/`, {
-            method: "PUT",
-            headers: {
-                'content-type': "application/json",
-            },
-            body: JSON.stringify({
-                add_song: this.props.match.params.id
-            })
-        }).then((respone) => alert(respone.status))
+        FetchFunctions.Put(`album/${this.state.albumId}`, {
+            add_song: this.props.match.params.id
+        }, (response) => alert(response))
     }
 
     renderAddToAlbum() {

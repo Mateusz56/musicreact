@@ -6,6 +6,7 @@ import AlbumListRow from "./AlbumListRow";
 import {withCookies} from "react-cookie";
 import Modal from "./Modal";
 import AlbumInvitation from "./AlbumInvitation";
+import FetchFunctions from "./FetchFunctions";
 
 class AlbumList extends Component {
     constructor(props) {
@@ -22,6 +23,8 @@ class AlbumList extends Component {
         }
 
         this.fetchData = this.fetchData.bind(this)
+        this.prepareParams = this.prepareParams.bind(this)
+        this.handleFetch = this.handleFetch.bind(this)
     }
 
     componentDidMount() {
@@ -40,30 +43,36 @@ class AlbumList extends Component {
         }
     }
 
-    fetchData() {
-        fetch(`http://localhost:8000/album/?${this.props.name ? "name=" + this.props.name : ""}
-${'&page=' + this.state.page}
-${this.props.favourite ? "&favourite=" + this.props.favourite : ""}
-${this.state.userId ? '&user=' + this.state.userId : ''}
-${this.props.myAlbums ? '&private=' + this.props.myAlbums : ''}`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-            }
-        }).then((respone) => respone.json())
-            .then((json) => this.setState((state, props) => {
-                let albumsCount = state.albums.length
-                let newAlbumsArray = state.albums.concat(json)
-                if(albumsCount === newAlbumsArray.length)
-                    return {
-                        loadMoreButtonText: 'Załadowano wszystkie albumy spełniające warunki wyszukiwania',
-                        canLoadMoreAlbums: false
-                    }
+    prepareParams() {
+        let params = {};
 
+        params.name = this.props.name;
+        params.page = this.state.page;
+        params.favourite = this.props.favourite;
+        params.user = this.state.userId;
+        params.private = this.props.myAlbums;
+
+        return params;
+    }
+
+    fetchData() {
+        FetchFunctions.Get('album', this.prepareParams(), this.handleFetch)
+    }
+
+    handleFetch(json) {
+        this.setState((state) => {
+            let albumsCount = state.albums.length
+            let newAlbumsArray = state.albums.concat(json)
+            if(albumsCount === newAlbumsArray.length)
                 return {
-                    albums: state.albums.concat(json)
+                    loadMoreButtonText: 'Załadowano wszystkie albumy spełniające warunki wyszukiwania',
+                    canLoadMoreAlbums: false
                 }
-            }))
+
+            return {
+                albums: state.albums.concat(json)
+            }
+        })
     }
 
     loadMore() {

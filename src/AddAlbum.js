@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, Form} from "react-bootstrap";
 import {withCookies} from "react-cookie";
 import AlbumInvitation from "./AlbumInvitation";
+import FetchFunctions from "./FetchFunctions";
 
 class AddAlbum extends Component {
     constructor(props) {
@@ -30,17 +31,12 @@ class AddAlbum extends Component {
     handleSubmit(event) {
         event.preventDefault()
 
-        fetch("http://localhost:8000/album/", {
-            method: "POST",
-            headers: {
-                'content-type': "application/json",
-            },
-            body: JSON.stringify({
-                name: this.state.albumName,
-                public: this.state.isPublic,
-                owners: [this.state.userId]
-            })
-        }).then((respone) => alert(respone.status))
+        let body = {
+            name: this.state.albumName,
+            public: this.state.isPublic,
+            owners: [this.state.userId]
+        }
+        FetchFunctions.Post("album", body, (response) => alert(response))
     }
 
     render() {

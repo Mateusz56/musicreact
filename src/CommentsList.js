@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Table} from "react-bootstrap";
 import Comment from "./Comment";
+import FetchFunctions from "./FetchFunctions";
 
 class CommentsList extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class CommentsList extends Component {
         }
 
         this.loadMoreComments = this.loadMoreComments.bind(this)
+        this.handleFetch = this.handleFetch.bind(this)
     }
 
     componentDidMount() {
@@ -27,28 +29,30 @@ class CommentsList extends Component {
         }, this.fetchData)
     }
 
-    fetchData() {
-        fetch(`http://localhost:8000/${this.props.commentAPILink}/?${this.props.targetId ? "targetId=" + this.props.targetId : ""}${'&offset=' + this.state.offset}`, {
-            method: "GET",
-            headers: {
-                'content-type': "application/json",
-            }
-        }).then((respone) => respone.json())
-            .then((json) => this.setState((state, props) => {
-                let commentsCount = state.comments.length
-                let fetchedData = json
-                fetchedData.forEach(x => x.date = new Date(x.create_date))
-                fetchedData = fetchedData.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
-                let newCommentsArray = state.comments.concat(fetchedData)
-                if(commentsCount === newCommentsArray.length)
-                    return {
-                        canLoadMoreComments: false
-                    }
-
+    handleFetch(json) {
+        this.setState((state) => {
+            let commentsCount = state.comments.length
+            let fetchedData = json
+            fetchedData.forEach(x => x.date = new Date(x.create_date))
+            fetchedData = fetchedData.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0)
+            let newCommentsArray = state.comments.concat(fetchedData)
+            if(commentsCount === newCommentsArray.length)
                 return {
-                    comments: newCommentsArray
+                    canLoadMoreComments: false
                 }
-            }))
+
+            return {
+                comments: newCommentsArray
+            }
+        })
+    }
+
+    fetchData() {
+        let params = {
+            targetId: this.props.targetId,
+            offset: this.state.offset
+        }
+        FetchFunctions.Get(this.props.commentAPILink, params, this.handleFetch)
     }
 
     render() {

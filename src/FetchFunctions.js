@@ -8,15 +8,55 @@ class FetchFunctions {
                     paramsString += `${key}=${value}&`
             }
 
-        console.log(params)
-        console.log(paramsString)
         fetch(`http://localhost:8000/${route}/?${paramsString}`, {
             method: "GET",
             headers: {
                 'content-type': "application/json",
             }
-        }).then((respone) => respone.json())
+        }).then((response) => response.json())
             .then((json) => successCallback(json))
+    }
+
+    static Post(route, body, successCallback, failCallback = null) {
+        fetch(`http://localhost:8000/${route}/`, {
+            method: "POST",
+            headers: {
+                'content-type': "application/json",
+            },
+            body: JSON.stringify(body)
+        }).then((response) => {
+            if(response.status >= 200 && response.status <= 299)
+                successCallback(response);
+            else
+            {
+                if(failCallback != null)
+                    failCallback(response)
+                else
+                    alert(response)
+            }
+        })
+    }
+
+    static Delete(route, successCallback) {
+        fetch(`http://localhost:8000/${route}`, {
+            method: "DELETE",
+            headers: {
+                'content-type': "application/json",
+            },
+        }).then(() => successCallback())
+    }
+
+    static Put(route, body, successCallback) {
+        fetch(`http://localhost:8000/${route}/`, {
+            method: "PUT",
+            headers: {
+                'content-type': "application/json",
+            },
+            body: JSON.stringify(body)
+        }).then((response) => {
+            if(response.status >= 200 && response.status <= 299)
+                response.json().then((json) => successCallback(json));
+        })
     }
 }
 

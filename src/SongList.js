@@ -44,23 +44,18 @@ class SongList extends Component {
     chooseMarkInput() {
         if(this.props.markEqual && this.props.markLess)
             return 'lte'
-            //return `&mark=${this.props.markInput}&mark_filter=lte`
 
         if(this.props.markEqual && this.props.markMore)
             return 'gte'
-           // return `&mark=${this.props.markInput}&mark_filter=gte`
 
         if(this.props.markEqual)
             return 'exact'
-           // return `&mark=${this.props.markInput}&mark_filter=exact`
 
         if(this.props.markLess)
             return 'lt'
-          //  return `&mark=${this.props.markInput}&mark_filter=lt`
 
         if(this.props.markMore)
             return 'gt'
-           // return `&mark=${this.props.markInput}&mark_filter=gt`
 
         return false
     }
@@ -73,7 +68,7 @@ class SongList extends Component {
         params.yearSince = this.props.yearSince;
         params.yearTo = this.props.yearTo;
         params.albumId = this.props.albumId;
-        params.userId = this.state.userId;
+        params.user = this.state.userId;
         params.favourite = this.props.favourite;
         params.offset = this.state.offset;
 
@@ -85,7 +80,6 @@ class SongList extends Component {
         }
 
         return params;
-        console.log(params)
     }
 
     handleFetch(json) {
