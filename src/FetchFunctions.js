@@ -1,14 +1,16 @@
 class FetchFunctions {
     static Get(route, params, successCallback) {
-        let paramsString = '';
+        let paramsString = '/';
 
-        if(params)
+        if(params) {
+            paramsString += '?';
             for (const [key, value] of Object.entries(params)) {
                 if(value || value === false)
                     paramsString += `${key}=${value}&`
             }
+        }
 
-        fetch(`http://localhost:8000/${route}/?${paramsString}`, {
+        fetch(`http://localhost:8000/${route}${paramsString}`, {
             method: "GET",
             headers: {
                 'content-type': "application/json",
