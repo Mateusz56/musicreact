@@ -39,7 +39,7 @@ class AlbumInvitation extends Component {
                 successMessage: 'Wysłano zaproszenie.'
             }),
             (response) => {
-                response.json().then(json => this.setState(
+                response.json().then((json) => this.setState(
                     {
                         errorMessage: json,
                         successMessage: ''

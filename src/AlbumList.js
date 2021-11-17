@@ -114,7 +114,6 @@ class AlbumList extends Component {
                     </tr>
                     </tbody>
                 </Table>
-                <h2 style={{textAlign: 'left', marginLeft: '15px'}}>Zaproszenia</h2>
                 {this.props.myAlbums ? <AlbumInvitationList/> : ""}
             </div>
         );
