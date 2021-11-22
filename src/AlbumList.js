@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Table} from "react-bootstrap";
-import { HeartFill, StarFill, ChatRightDots, Envelope } from 'react-bootstrap-icons';
+import {Button, Table} from "react-bootstrap";
+import {HeartFill, StarFill, ChatRightDots, Envelope, Star, ArrowUpShort, ArrowDownShort} from 'react-bootstrap-icons';
 import SongListRow from "./SongListRow";
 import AlbumListRow from "./AlbumListRow";
 import {withCookies} from "react-cookie";
@@ -8,6 +8,7 @@ import Modal from "./Modal";
 import AlbumInvitation from "./AlbumInvitation";
 import FetchFunctions from "./FetchFunctions";
 import AlbumInvitationList from "./AlbumInvitationList";
+import TableHeadersUtility from "./TableHeadersUtility";
 
 class AlbumList extends Component {
     constructor(props) {
@@ -21,11 +22,15 @@ class AlbumList extends Component {
             canLoadMoreAlbums: true,
             userId: this.cookies.get('user_id'),
             showModal: false,
+            sortMode: '',
         }
 
         this.fetchData = this.fetchData.bind(this)
         this.prepareParams = this.prepareParams.bind(this)
         this.handleFetch = this.handleFetch.bind(this)
+        this.changeSortMode = TableHeadersUtility.changeSortMode.bind(this)
+        this.getSortButtonVariant = TableHeadersUtility.getSortButtonVariant.bind(this)
+        this.renderTableHeader = TableHeadersUtility.renderTableHeader.bind(this)
     }
 
     componentDidMount() {
@@ -34,7 +39,7 @@ class AlbumList extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.name !== this.props.name || prevProps.favourite !== this.props.favourite
-            || prevProps.myAlbums !== this.props.myAlbums) {
+            || prevProps.myAlbums !== this.props.myAlbums || prevState.sortMode !== this.state.sortMode) {
             this.setState({
                 page: 0,
                 albums: [],
@@ -52,6 +57,7 @@ class AlbumList extends Component {
         params.favourite = this.props.favourite;
         params.user = this.state.userId;
         params.private = this.props.myAlbums;
+        params.sortMode = this.state.sortMode;
 
         return params;
     }
@@ -95,10 +101,18 @@ class AlbumList extends Component {
                     <thead>
                     <tr>
                         <th><HeartFill/></th>
-                        <th>Nazwa</th>
-                        <th>Piosenki</th>
-                        <th>Ocena</th>
-                        <th>Komentarze</th>
+                        <th>
+                            {this.renderTableHeader('Nazwa', TableHeadersUtility.sortOptions.nameUp, TableHeadersUtility.sortOptions.nameDown)}
+                        </th>
+                        <th>
+                            {this.renderTableHeader('Piosenki', TableHeadersUtility.sortOptions.songsCountUp, TableHeadersUtility.sortOptions.songsCountDown)}
+                        </th>
+                        <th>
+                            {this.renderTableHeader(<StarFill/>, TableHeadersUtility.sortOptions.marksUp, TableHeadersUtility.sortOptions.marksDown)}
+                        </th>
+                        <th>
+                            {this.renderTableHeader(<ChatRightDots/>, TableHeadersUtility.sortOptions.commentsUp, TableHeadersUtility.sortOptions.commentsDown)}
+                        </th>
                         {this.props.myAlbums ? <th><Envelope/></th> : ""}
                     </tr>
                     </thead>

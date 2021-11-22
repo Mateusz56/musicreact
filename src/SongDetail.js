@@ -67,13 +67,13 @@ class SongDetail extends Component {
 
     renderAddToAlbum() {
         return(
-            <Form style={{marginBottom: 20, marginLeft: 20, marginRight: 20}} onSubmit={this.submitAddToAlbum}>
-                <Form.Row>
+            <Form style={{marginBottom: 20, marginLeft: 8, marginRight: 20}} onSubmit={this.submitAddToAlbum}>
+                <Form.Row style={{paddingLeft: 4}}>
                     <Form.Label>Nazwa albumu:</Form.Label>
                 </Form.Row>
                 <Form.Row>
                     <select className="form-control" style={{width: '25%'}} name="albumId" value={this.state.albumId} onChange={this.handleInputChange}>
-                        {this.state.albums.map((x, i) => <option value={x.id}>{x.name}</option>)}
+                        {this.state.albums.map((x, i) => <option key={x.id} value={x.id}>{x.name}</option>)}
                     </select>
                     <Button type={'submit'}>Dodaj do album</Button>
                 </Form.Row>

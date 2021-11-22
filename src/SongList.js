@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Table} from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { HeartFill, StarFill, ChatRightDots } from 'react-bootstrap-icons';
 import SongListRow from "./SongListRow";
 import {withCookies} from "react-cookie";
 import FetchFunctions from "./FetchFunctions";
+import TableHeadersUtility from "./TableHeadersUtility";
 
 class SongList extends Component {
     constructor(props) {
@@ -15,11 +16,15 @@ class SongList extends Component {
             offset: 0,
             loadMoreButtonText: 'Załaduj kolejne',
             canLoadMoreSongs: true,
-            userId: this.cookies.get('user_id')
+            userId: this.cookies.get('user_id'),
+            sortMode: ''
         }
 
         this.fetchData = this.fetchData.bind(this)
         this.handleFetch = this.handleFetch.bind(this)
+        this.changeSortMode = TableHeadersUtility.changeSortMode.bind(this)
+        this.getSortButtonVariant = TableHeadersUtility.getSortButtonVariant.bind(this)
+        this.renderTableHeader = TableHeadersUtility.renderTableHeader.bind(this)
     }
 
     componentDidMount() {
@@ -31,7 +36,7 @@ class SongList extends Component {
             prevProps.yearTo !== this.props.yearTo || prevProps.yearSince !== this.props.yearSince ||
             prevProps.markInput !== this.props.markInput || prevProps.markLess !== this.props.markLess ||
             prevProps.markEqual !== this.props.markEqual || prevProps.markMore !== this.props.markMore ||
-            prevProps.favourite !== this.props.favourite) {
+            prevProps.favourite !== this.props.favourite || prevState.sortMode !== this.state.sortMode) {
             this.setState({
                 offset: 0,
                 songs: [],
@@ -71,6 +76,7 @@ class SongList extends Component {
         params.user = this.state.userId;
         params.favourite = this.props.favourite;
         params.offset = this.state.offset;
+        params.sortMode = this.state.sortMode;
 
         let markFilter = this.chooseMarkInput()
         if(markFilter)
@@ -118,12 +124,24 @@ class SongList extends Component {
                     <thead>
                     <tr>
                         <th><HeartFill/></th>
-                        <th>Nazwa</th>
-                        <th>Wykonawca</th>
-                        <th>Gatunek</th>
-                        <th>Rok</th>
-                        <th><StarFill/></th>
-                        <th><ChatRightDots/></th>
+                        <th>
+                            {this.renderTableHeader('Nazwa', TableHeadersUtility.sortOptions.titleUp, TableHeadersUtility.sortOptions.titleDown)}
+                        </th>
+                        <th>
+                            {this.renderTableHeader('Wykonawca', TableHeadersUtility.sortOptions.performerUp, TableHeadersUtility.sortOptions.performerDown)}
+                        </th>
+                        <th>
+                            {this.renderTableHeader('Gatunek', TableHeadersUtility.sortOptions.genreUp, TableHeadersUtility.sortOptions.genreDown)}
+                        </th>
+                        <th>
+                            {this.renderTableHeader('Rok', TableHeadersUtility.sortOptions.yearUp, TableHeadersUtility.sortOptions.yearDown)}
+                        </th>
+                        <th>
+                            {this.renderTableHeader(<StarFill/>, TableHeadersUtility.sortOptions.marksUp, TableHeadersUtility.sortOptions.marksDown)}
+                        </th>
+                        <th>
+                            {this.renderTableHeader(<ChatRightDots/>, TableHeadersUtility.sortOptions.commentsUp, TableHeadersUtility.sortOptions.commentsDown)}
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
