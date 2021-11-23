@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
 import FetchFunctions from "./FetchFunctions";
+import MessageBar from "./MessageBar";
 
 class Registration extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class Registration extends Component {
             first_name: this.state.name,
             last_name: this.state.surname
         }
-        FetchFunctions.Post('user', body, (json) => alert(json))
+        FetchFunctions.Post('user', body, (json) => MessageBar.ShowMessage('Zarejestrowano użytkownika.'))
     }
 
     render() {

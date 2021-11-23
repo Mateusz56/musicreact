@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
 import FetchFunctions from "./FetchFunctions";
+import MessageBar from "./MessageBar";
 
 class AddSong extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class AddSong extends Component {
             year: this.state.year,
             genre: this.state.genre,
         }
-        FetchFunctions.Post('song', body, (response) => alert(response.status))
+        FetchFunctions.Post('song', body, (response) => MessageBar.ShowMessage('Dodano piosenkę.'))
     }
 
     render() {

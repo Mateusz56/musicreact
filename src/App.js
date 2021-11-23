@@ -12,14 +12,15 @@ import AlbumDetail from "./AlbumDetail";
 import {BrowserRouter, Switch, Route, useParams} from "react-router-dom";
 import AddSong from "./AddSong";
 import AddAlbum from "./AddAlbum";
+import MessageBar from "./MessageBar";
 
 function App() {
   return (
     <div className="App">
         <BrowserRouter>
-
-        <NavBar/>
-        <br/>
+            <MessageBar/>
+            <NavBar/>
+            <br/>
             <Switch>
                 <Route path="/songs" component={Songs}/>
                 <Route path="/register" component={Registration}/>

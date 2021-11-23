@@ -1,3 +1,5 @@
+import MessageBar from "./MessageBar";
+
 class FetchFunctions {
     static Get(route, params, successCallback) {
         let paramsString = '/';
@@ -16,7 +18,7 @@ class FetchFunctions {
                 'content-type': "application/json",
             }
         }).then((response) => response.json())
-            .then((json) => successCallback(json))
+            .then((json) => successCallback(json)).catch(() => MessageBar.ShowError(`Coś poszło nie tak! GET ${route}`))
     }
 
     static Post(route, body, successCallback, failCallback = null) {
@@ -34,9 +36,9 @@ class FetchFunctions {
                 if(failCallback != null)
                     failCallback(response)
                 else
-                    alert(response)
+                    MessageBar.ShowError(`Coś poszło nie tak! POST ${route}`)
             }
-        })
+        }).catch(() => MessageBar.ShowError(`Coś poszło nie tak! POST ${route}`))
     }
 
     static Delete(route, successCallback) {
@@ -45,7 +47,7 @@ class FetchFunctions {
             headers: {
                 'content-type': "application/json",
             },
-        }).then(() => successCallback())
+        }).then(() => successCallback()).catch(() => MessageBar.ShowError(`Coś poszło nie tak! DELETE ${route}`))
     }
 
     static Put(route, body, successCallback) {
@@ -58,7 +60,7 @@ class FetchFunctions {
         }).then((response) => {
             if(response.status >= 200 && response.status <= 299)
                 response.json().then((json) => successCallback(json));
-        })
+        }).catch(() => MessageBar.ShowError(`Coś poszło nie tak! DELETE ${route}`))
     }
 }
 

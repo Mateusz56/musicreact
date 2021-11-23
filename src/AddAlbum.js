@@ -3,6 +3,7 @@ import {Button, Col, Form} from "react-bootstrap";
 import {withCookies} from "react-cookie";
 import AlbumInvitation from "./AlbumInvitation";
 import FetchFunctions from "./FetchFunctions";
+import MessageBar from "./MessageBar";
 
 class AddAlbum extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class AddAlbum extends Component {
             public: this.state.isPublic,
             owners: [this.state.userId]
         }
-        FetchFunctions.Post("album", body, (response) => alert(response))
+        FetchFunctions.Post("album", body, (response) => MessageBar.ShowMessage('Dodano album.'))
     }
 
     render() {
