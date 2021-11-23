@@ -7,15 +7,28 @@ import Modal from "./Modal";
 import AddSong from "./AddSong"
 import AddAlbum from "./AddAlbum";
 import FetchFunctions from "./FetchFunctions";
+import MessageBar from "./MessageBar";
+import AuthToken from "./AuthToken";
 class NavBar extends Component {
     constructor(props) {
         super(props);
         this.cookies = props.cookies;
         this.state = {
+            displayName: '',
             token: this.cookies.get('token'),
-            user_id: this.cookies.get('user_id'),
+            user_id: '',
             showAddSongModal: false
         };
+
+        AuthToken.token = this.cookies.get('token')
+    }
+
+    componentDidMount() {
+        if(this.state.token)
+            FetchFunctions.Get('user_info', null, (json) => this.setState({
+                displayName: json.username,
+                user_id: json.id,
+            }))
     }
 
     navBarLoggedIn() {
@@ -35,7 +48,7 @@ class NavBar extends Component {
                         <Nav.Link onClick={() => this.setState({showAddSongModal: true, showAddAlbumModal: false})}>Dodaj piosenkę</Nav.Link>
                         <Nav.Link onClick={() => this.setState({showAddAlbumModal: true, showAddSongModal: false})}>Dodaj album</Nav.Link>
                     </Nav>
-                    <Nav.Link href="#pricing">{this.state.token}</Nav.Link>
+                    <Nav.Link href="#pricing">{this.state.displayName}</Nav.Link>
                     <Button onClick={this.logout.bind(this)} variant="outline-info">Wyloguj</Button>
                 </Navbar>
             </div>
@@ -76,38 +89,32 @@ class NavBar extends Component {
         FetchFunctions.Post('api-token-auth', body,
             (response) => response.json().then((json) => {
             this.cookies.set("token", json.token)
-            this.cookies.set("user_id", json.user_id)
-            this.setState(
-                {
-                    token: json.token,
-                    user_id: json.user_id,
-                    username: "",
-                    password: ""
-                }, () => window.location.reload())
+            window.location.reload()
             }),
             () => {
-                alert("Błąd logowania")
+                MessageBar.ShowError("Błąd logowania")
                 this.setState(
                     {
                         token: "",
                         user_id: "",
                         username: "",
-                        password: ""
+                        password: "",
                     })
             })
     }
 
     logout() {
         this.cookies.remove("token")
-        this.cookies.remove("user_id")
+
         this.setState({
             token: null,
-            user_id: null
+            user_id: null,
+            displayName: null,
         }, () => window.location.reload())
     }
 
     render() {
-        if (this.state.token)
+        if (this.state.displayName)
             return this.navBarLoggedIn()
         else
             return this.navBarLoggedOut()

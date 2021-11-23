@@ -1,4 +1,6 @@
 import MessageBar from "./MessageBar";
+import NavBar from "./NavBar";
+import AuthToken from "./AuthToken";
 
 class FetchFunctions {
     static Get(route, params, successCallback) {
@@ -16,6 +18,7 @@ class FetchFunctions {
             method: "GET",
             headers: {
                 'content-type': "application/json",
+                'Authorization': AuthToken.token ? `Token ${AuthToken.token}` : ''
             }
         }).then((response) => response.json())
             .then((json) => successCallback(json)).catch(() => MessageBar.ShowError(`Coś poszło nie tak! GET ${route}`))
