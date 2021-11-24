@@ -89,6 +89,7 @@ class NavBar extends Component {
         FetchFunctions.Post('api-token-auth', body,
             (response) => response.json().then((json) => {
             this.cookies.set("token", json.token)
+            this.cookies.set("user_id", json.user_id)
             window.location.reload()
             }),
             () => {
@@ -105,7 +106,7 @@ class NavBar extends Component {
 
     logout() {
         this.cookies.remove("token")
-
+        this.cookies.remove("user_id")
         this.setState({
             token: null,
             user_id: null,

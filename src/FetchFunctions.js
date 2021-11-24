@@ -3,6 +3,9 @@ import NavBar from "./NavBar";
 import AuthToken from "./AuthToken";
 
 class FetchFunctions {
+    //static backendUrl = 'http://127.0.0.1:8000/'
+    static backendUrl = 'https://inzynierka.bieda.it/'
+
     static Get(route, params, successCallback) {
         let paramsString = '/';
 
@@ -14,7 +17,7 @@ class FetchFunctions {
             }
         }
 
-        fetch(`http://localhost:8000/${route}${paramsString}`, {
+        fetch(`${this.backendUrl}${route}${paramsString}`, {
             method: "GET",
             headers: {
                 'content-type': "application/json",
@@ -25,7 +28,7 @@ class FetchFunctions {
     }
 
     static Post(route, body, successCallback, failCallback = null) {
-        fetch(`http://localhost:8000/${route}/`, {
+        fetch(`${this.backendUrl}${route}/`, {
             method: "POST",
             headers: {
                 'content-type': "application/json",
@@ -45,7 +48,7 @@ class FetchFunctions {
     }
 
     static Delete(route, successCallback) {
-        fetch(`http://localhost:8000/${route}`, {
+        fetch(`${this.backendUrl}${route}`, {
             method: "DELETE",
             headers: {
                 'content-type': "application/json",
@@ -54,7 +57,7 @@ class FetchFunctions {
     }
 
     static Put(route, body, successCallback) {
-        fetch(`http://localhost:8000/${route}/`, {
+        fetch(`${this.backendUrl}${route}/`, {
             method: "PUT",
             headers: {
                 'content-type': "application/json",
