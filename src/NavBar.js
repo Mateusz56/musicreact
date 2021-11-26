@@ -48,7 +48,7 @@ class NavBar extends Component {
                         <Nav.Link onClick={() => this.setState({showAddSongModal: true, showAddAlbumModal: false})}>Dodaj piosenkę</Nav.Link>
                         <Nav.Link onClick={() => this.setState({showAddAlbumModal: true, showAddSongModal: false})}>Dodaj album</Nav.Link>
                     </Nav>
-                    <Nav.Link href="#pricing">{this.state.displayName}</Nav.Link>
+                    <Nav.Link as={Link} to="/user">{this.state.displayName}</Nav.Link>
                     <Button onClick={this.logout.bind(this)} variant="outline-info">Wyloguj</Button>
                 </Navbar>
             </div>

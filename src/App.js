@@ -13,6 +13,8 @@ import {BrowserRouter, Switch, Route, useParams} from "react-router-dom";
 import AddSong from "./AddSong";
 import AddAlbum from "./AddAlbum";
 import MessageBar from "./MessageBar";
+import PageNotFound from "./PageNotFound";
+import UserPanel from "./UserPanel";
 
 function App() {
   return (
@@ -33,7 +35,9 @@ function App() {
                 )}/>
                 <Route path="/album/:id" component={AlbumDetail}/>
                 <Route path="/register" component={Registration}/>
-                <Route path="/" component={Songs}/>
+                <Route path="/user" component={UserPanel}/>
+                <Route exact path="/" component={Songs}/>
+                <Route component={PageNotFound} />
             </Switch>
         </BrowserRouter>
 
