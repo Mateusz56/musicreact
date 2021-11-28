@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Form} from "react-bootstrap";
 
 class Modal extends Component {
     constructor(props) {
@@ -47,7 +46,7 @@ class Modal extends Component {
     render() {
         return (this.props.enabled ?
                 <div style={this.outerDivStyle} onClick={(event) => {
-                    if(event.currentTarget == event.target) this.props.hideModal()
+                    if(event.currentTarget === event.target) this.props.hideModal()
                     }
                 }>
                     <div style={this.innerDivStyle}>

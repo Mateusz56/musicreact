@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import FetchFunctions from "./FetchFunctions";
-import NavBar from "./NavBar";
 import {withCookies} from "react-cookie";
 import {CheckLg, XLg} from "react-bootstrap-icons";
-import AlbumListRow from "./AlbumListRow";
 import {Table} from "react-bootstrap";
 import AlbumInvitationListRow from "./AlbumInvitationListRow";
 

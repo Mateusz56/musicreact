@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
 import MessageBar from "./MessageBar";
-import FetchFunctions from "./FetchFunctions";
 
 class ConfirmPassword extends Component {
     constructor(props) {

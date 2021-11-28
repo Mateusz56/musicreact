@@ -1,5 +1,4 @@
 import MessageBar from "./MessageBar";
-import NavBar from "./NavBar";
 import AuthToken from "./AuthToken";
 
 class FetchFunctions {
@@ -91,7 +90,7 @@ class FetchFunctions {
             if(response.status >= 200 && response.status <= 299)
                 response.json().then((json) => successCallback(json))
             else
-                throw 'Wrong status';
+                throw new Error('Wrong status')
         }).catch(() => MessageBar.ShowError(`Coś poszło nie tak! PUT ${route}`))
     }
 }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Envelope, EnvelopeFill, HeartFill} from "react-bootstrap-icons";
+import { EnvelopeFill, HeartFill} from "react-bootstrap-icons";
 import FetchFunctions from "./FetchFunctions";
 
 class AlbumListRow extends Component {

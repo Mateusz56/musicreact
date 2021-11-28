@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Col, Form} from "react-bootstrap";
 import {withCookies} from "react-cookie";
-import AlbumInvitation from "./AlbumInvitation";
 import FetchFunctions from "./FetchFunctions";
 import MessageBar from "./MessageBar";
 

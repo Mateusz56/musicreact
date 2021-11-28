@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Navbar from "react-bootstrap/Navbar";
-import {Button, Form, FormControl, Nav, NavLink} from "react-bootstrap";
+import {Button, Form, FormControl, Nav} from "react-bootstrap";
 import {withCookies} from 'react-cookie';
-import {BrowserRouter, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Modal from "./Modal";
 import AddSong from "./AddSong"
 import AddAlbum from "./AddAlbum";

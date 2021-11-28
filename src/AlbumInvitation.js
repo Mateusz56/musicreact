@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Envelope} from "react-bootstrap-icons";
 import {Button, Col, Form} from "react-bootstrap";
 import FetchFunctions from "./FetchFunctions";
 

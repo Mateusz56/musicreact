@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, Table} from "react-bootstrap";
-import {HeartFill, StarFill, ChatRightDots, Envelope, Star, ArrowUpShort, ArrowDownShort} from 'react-bootstrap-icons';
-import SongListRow from "./SongListRow";
+import {Table} from "react-bootstrap";
+import {HeartFill, StarFill, ChatRightDots, Envelope } from 'react-bootstrap-icons';
 import AlbumListRow from "./AlbumListRow";
 import {withCookies} from "react-cookie";
 import Modal from "./Modal";

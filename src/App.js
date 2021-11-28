@@ -1,17 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
 import NavBar from "./NavBar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Registration from "./Registration";
-import SongList from "./SongList";
 import Songs from "./Songs";
 import SongDetail from "./SongDetail";
-import AlbumList from "./AlbumList";
 import Albums from "./Albums";
 import AlbumDetail from "./AlbumDetail";
-import {BrowserRouter, Switch, Route, useParams} from "react-router-dom";
-import AddSong from "./AddSong";
-import AddAlbum from "./AddAlbum";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import MessageBar from "./MessageBar";
 import PageNotFound from "./PageNotFound";
 import UserPanel from "./UserPanel";

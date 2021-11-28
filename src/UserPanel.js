@@ -3,7 +3,6 @@ import FetchFunctions from "./FetchFunctions";
 import MessageBar from "./MessageBar";
 import {Button, Form} from "react-bootstrap";
 import Modal from "./Modal";
-import AddSong from "./AddSong";
 import ConfirmPassword from "./ConfirmPassword";
 
 class UserPanel extends Component {

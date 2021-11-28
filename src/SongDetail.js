@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Form, Table} from "react-bootstrap";
-import {StarFill} from "react-bootstrap-icons";
+import {Button, Form, Table} from "react-bootstrap";
 import AddCommentBox from "./AddCommentBox";
 import CommentsList from "./CommentsList";
 import {withCookies} from "react-cookie";
