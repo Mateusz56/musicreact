@@ -42,7 +42,7 @@ class AlbumListRow extends Component {
                 <td>{this.props.songsCount}</td>
                 <td>{this.props.mark}</td>
                 <td>{this.props.commentsCount}</td>
-                {this.props.showModal ? <td onClick={this.props.showModal}><EnvelopeFill/></td> : ""}
+                {this.props.showModal ? <td onClick={this.props.showModal}><EnvelopeFill/></td> : null}
             </tr>
         );
     }

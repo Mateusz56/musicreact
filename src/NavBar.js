@@ -17,7 +17,9 @@ class NavBar extends Component {
             displayName: '',
             token: this.cookies.get('token'),
             user_id: '',
-            showAddSongModal: false
+            showAddSongModal: false,
+            username: '',
+            password: ''
         };
 
         AuthToken.token = this.cookies.get('token')

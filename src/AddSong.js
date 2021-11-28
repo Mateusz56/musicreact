@@ -72,7 +72,7 @@ class AddSong extends Component {
                 <Form.Label>
                     Gatunek:
                     <select className="form-control" name="genre" value={this.state.genre} onChange={this.handleInputChange}>
-                        {this.state.genres.map(x => <option value={x}>{x}</option>)}
+                        {this.state.genres.map(x => <option key={x} value={x}>{x}</option>)}
                     </select>
                 </Form.Label>
                 <br />

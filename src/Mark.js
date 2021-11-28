@@ -6,6 +6,9 @@ class Mark extends Component {
     constructor(props) {
         super(props);
 
+        this.cancelFlagMarks = null
+        this.cancelFlagAuthor = null
+
         this.state = {
             starsColor: ['black', 'black', 'black', 'black', 'black'],
             mark: 5
@@ -18,7 +21,11 @@ class Mark extends Component {
         let params = {
             targetId: this.props.targetId
         }
-        FetchFunctions.Get(this.props.markAPILink, params, (json) =>
+
+        if(this.cancelFlagMarks)
+            this.cancelFlagMarks.cancel = true
+
+        this.cancelFlagMarks = FetchFunctions.Get(this.props.markAPILink, params, (json) =>
             this.setState({
                 mark: json.avg ? json.avg.toPrecision(2) : "Brak ocen"
             }))
@@ -29,11 +36,21 @@ class Mark extends Component {
                 token: this.props.token,
                 targetId: this.props.targetId
             }
-            FetchFunctions.Get(this.props.markAuthorAPILink, params, (json) =>
+            if(this.cancelFlagAuthor)
+                this.cancelFlagAuthor = true
+
+            this.cancelFlagAuthor = FetchFunctions.Get(this.props.markAuthorAPILink, params, (json) =>
                 this.setState({
                     myMark: json ? json.mark : '-'
                 }, () => this.onMouseEnterStar(json.mark - 1)))
         }
+    }
+
+    componentWillUnmount() {
+        if(this.cancelFlagMarks)
+            this.cancelFlagMarks.cancel = true
+        if(this.cancelFlagAuthor)
+            this.cancelFlagAuthor.cancel = true
     }
 
     sendMark(mark) {

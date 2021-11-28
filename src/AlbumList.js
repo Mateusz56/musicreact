@@ -14,6 +14,7 @@ class AlbumList extends Component {
     constructor(props) {
         super(props);
         this.cookies = props.cookies
+        this.cancelFlag = null
 
         this.state = {
             albums: [],
@@ -35,6 +36,11 @@ class AlbumList extends Component {
 
     componentDidMount() {
         this.fetchData()
+    }
+
+    componentWillUnmount() {
+        if(this.cancelFlag)
+            this.cancelFlag.cancel = true
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -63,10 +69,13 @@ class AlbumList extends Component {
     }
 
     fetchData() {
-        FetchFunctions.Get('album', this.prepareParams(), this.handleFetch)
+        if(this.cancelFlag)
+            this.cancelFlag.cancel = true
+        this.cancelFlag = FetchFunctions.Get('album', this.prepareParams(), this.handleFetch)
     }
 
     handleFetch(json) {
+        this.cancelFlag = null
         this.setState((state) => {
             let albumsCount = state.albums.length
             let newAlbumsArray = state.albums.concat(json)
@@ -99,22 +108,22 @@ class AlbumList extends Component {
                 </Modal>
                 <Table striped bordered hover>
                     <thead>
-                    <tr>
-                        <th><HeartFill/></th>
-                        <th>
-                            {this.renderTableHeader('Nazwa', TableHeadersUtility.sortOptions.nameUp, TableHeadersUtility.sortOptions.nameDown)}
-                        </th>
-                        <th>
-                            {this.renderTableHeader('Piosenki', TableHeadersUtility.sortOptions.songsCountUp, TableHeadersUtility.sortOptions.songsCountDown)}
-                        </th>
-                        <th>
-                            {this.renderTableHeader(<StarFill/>, TableHeadersUtility.sortOptions.marksUp, TableHeadersUtility.sortOptions.marksDown)}
-                        </th>
-                        <th>
-                            {this.renderTableHeader(<ChatRightDots/>, TableHeadersUtility.sortOptions.commentsUp, TableHeadersUtility.sortOptions.commentsDown)}
-                        </th>
-                        {this.props.myAlbums ? <th><Envelope/></th> : ""}
-                    </tr>
+                        <tr>
+                            <th><HeartFill/></th>
+                            <th>
+                                {this.renderTableHeader('Nazwa', TableHeadersUtility.sortOptions.nameUp, TableHeadersUtility.sortOptions.nameDown)}
+                            </th>
+                            <th>
+                                {this.renderTableHeader('Piosenki', TableHeadersUtility.sortOptions.songsCountUp, TableHeadersUtility.sortOptions.songsCountDown)}
+                            </th>
+                            <th>
+                                {this.renderTableHeader(<StarFill/>, TableHeadersUtility.sortOptions.marksUp, TableHeadersUtility.sortOptions.marksDown)}
+                            </th>
+                            <th>
+                                {this.renderTableHeader(<ChatRightDots/>, TableHeadersUtility.sortOptions.commentsUp, TableHeadersUtility.sortOptions.commentsDown)}
+                            </th>
+                            {this.props.myAlbums ? <th><Envelope/></th> : null}
+                        </tr>
                     </thead>
                     <tbody>
                     {this.state.albums.map(x =>

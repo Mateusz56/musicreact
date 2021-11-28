@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import FetchFunctions from "./FetchFunctions";
 import NavBar from "./NavBar";
 import {withCookies} from "react-cookie";
-import {CheckLg, XLg } from "react-bootstrap-icons";
+import {CheckLg, XLg} from "react-bootstrap-icons";
 import AlbumListRow from "./AlbumListRow";
 import {Table} from "react-bootstrap";
 import AlbumInvitationListRow from "./AlbumInvitationListRow";
@@ -12,6 +12,7 @@ class AlbumInvitationList extends Component {
         super(props);
         this.cookies = props.cookies
 
+        this.cancelFlag = null
         this.state = {
             userId: this.cookies.get('user_id'),
             albums: []
@@ -19,9 +20,22 @@ class AlbumInvitationList extends Component {
     }
 
     componentDidMount() {
-        FetchFunctions.Get(`album_invitation_user/${this.state.userId}`, null, (json) => this.setState({
-            albums: json.results
-        }))
+        if (this.cancelFlag)
+            this.cancelFlag.cancel = true
+
+        this.cancelFlag = FetchFunctions.Get(`album_invitation_user/${this.state.userId}`, null,
+            (json) => {
+                this.setState({
+                    albums: json.results
+                })
+                this.cancelFlag = null
+            }
+        )
+    }
+
+    componentWillUnmount() {
+        if (this.cancelFlag)
+            this.cancelFlag.cancel = true
     }
 
     render() {
@@ -41,7 +55,8 @@ class AlbumInvitationList extends Component {
                     </thead>
                     <tbody>
                     {this.state.albums.map(x =>
-                        <AlbumInvitationListRow id={x.id} key={x.album} albumName={x.album_name} songsCount={x.songs_count} mark={x.marks_avg}
+                        <AlbumInvitationListRow id={x.id} key={x.album} albumName={x.album_name}
+                                                songsCount={x.songs_count} mark={x.marks_avg}
                                                 commentsCount={x.comments_count} albumId={x.album}/>)}
                     </tbody>
                 </Table>

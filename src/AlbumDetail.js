@@ -11,6 +11,7 @@ class AlbumDetail extends Component {
     constructor(props) {
         super(props);
         this.cookies = props.cookies;
+        this.cancelFlag = null
 
         this.state = {
             token: this.cookies.get('token'),
@@ -24,9 +25,21 @@ class AlbumDetail extends Component {
     }
 
     componentDidMount() {
-        FetchFunctions.Get(`album/${this.props.match.params.id}`, null, (json) => this.setState({
-            albumName: json.name,
-        }))
+        if(this.cancelFlag)
+            this.cancelFlag.cancel = true
+        
+        this.cancelFlag = FetchFunctions.Get(`album/${this.props.match.params.id}`, null,
+            (json) => {
+            this.cancelFlag = null
+            this.setState({
+                albumName: json.name,
+            })
+        })
+    }
+
+    componentWillUnmount() {
+        if(this.cancelFlag)
+            this.cancelFlag.cancel = true
     }
 
     render() {

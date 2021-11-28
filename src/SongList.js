@@ -10,6 +10,7 @@ class SongList extends Component {
     constructor(props) {
         super(props);
         this.cookies = props.cookies
+        this.cancelFlag = null
 
         this.state = {
             songs: [],
@@ -29,6 +30,11 @@ class SongList extends Component {
 
     componentDidMount() {
         this.fetchData()
+    }
+
+    componentWillUnmount() {
+        if(this.cancelFlag)
+            this.cancelFlag.cancel = true
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -89,6 +95,7 @@ class SongList extends Component {
     }
 
     handleFetch(json) {
+        this.cancelFlag = null
         this.setState((state) => {
             let songsCount = state.songs.length
             let newSongsArray = state.songs.concat(json)
@@ -105,7 +112,9 @@ class SongList extends Component {
     }
 
     fetchData() {
-        FetchFunctions.Get("song", this.prepareParams(), this.handleFetch)
+        if(this.cancelFlag)
+            this.cancelFlag.cancel = true
+        this.cancelFlag = FetchFunctions.Get("song", this.prepareParams(), this.handleFetch)
     }
 
     loadMore() {

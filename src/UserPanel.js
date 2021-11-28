@@ -2,12 +2,34 @@ import React, {Component} from 'react';
 import FetchFunctions from "./FetchFunctions";
 import MessageBar from "./MessageBar";
 import {Button, Form} from "react-bootstrap";
+import Modal from "./Modal";
+import AddSong from "./AddSong";
+import ConfirmPassword from "./ConfirmPassword";
 
 class UserPanel extends Component {
     constructor(props) {
         super(props);
 
+        this.cancelFlag = null
+        this.state = {
+            first_name_placeholder: '',
+            last_name_placeholder: '',
+            email_placeholder: ''
+        }
+
         this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.cancelFlag = FetchFunctions.Get('user_info', null,
+            (json) => {
+                this.setState({
+                    first_name_placeholder: json.first_name,
+                    last_name_placeholder: json.last_name,
+                    email_placeholder: json.email
+                })
+                this.cancelFlag = null
+            })
     }
 
     handleInputChange(event) {
@@ -20,16 +42,59 @@ class UserPanel extends Component {
         });
     }
 
-    handleSubmit(event) {
+    handleSubmitPassword(event) {
+        event.preventDefault()
+
+        if (!this.state.newPassword || this.state.newPassword !== this.state.newPasswordConfirm) {
+            MessageBar.ShowError('Hasła różnią się.')
+            return
+        }
+
+        let body = {
+            password: this.state.newPassword,
+        }
+
+        this.setState({
+            passwordCallback: (body) => FetchFunctions.Put('user_detail', body, (response) => this.successCallback('Zmieniono hasło.')),
+            showModal: true,
+            body: body
+        })
+    }
+
+    handleSubmitNames(event) {
         event.preventDefault()
 
         let body = {
-            title: this.state.title,
-            performer: this.state.performer,
-            year: this.state.year,
-            genre: this.state.genre,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name
         }
-        FetchFunctions.Post('song', body, (response) => MessageBar.ShowMessage('Dodano piosenkę.'))
+
+        this.setState({
+            passwordCallback: (body) => FetchFunctions.Put('user_detail', body, (response) => this.successCallback('Zmieniono dane.')),
+            showModal: true,
+            body: body
+        })
+    }
+
+    handleSubmitEmail(event) {
+        event.preventDefault()
+
+        let body = {
+            email: this.state.email,
+        }
+
+        this.setState({
+            passwordCallback: (body) => FetchFunctions.Put('user_detail', body, (response) => this.successCallback('Zmieniono adres e-mail.')),
+            showModal: true,
+            body: body
+        })
+    }
+
+    successCallback(message) {
+        MessageBar.ShowMessage(message)
+        this.setState({
+            showModal: false
+        })
     }
 
     marginLeft10px = {
@@ -38,65 +103,65 @@ class UserPanel extends Component {
 
     render() {
         return (
-            <div align='left' style={this.marginLeft10px}>
+            <div style={{marginTop: '30px'}}>
                 <h3>Zmień hasło</h3>
-                <Form onSubmit={this.handleSubmit.bind(this)}>
+                <Form onSubmit={this.handleSubmitPassword.bind(this)}>
                     <Form.Label>
                         Nowe hasło:
                         <Form.Control
-                            name="performer"
-                            type="text"
-                            onChange={this.handleInputChange} />
+                            name="newPassword"
+                            type="password"
+                            onChange={this.handleInputChange}/>
                     </Form.Label>
                     <Form.Label style={this.marginLeft10px}>
                         Powtórz nowe hasło:
                         <Form.Control
-                            name="performer"
-                            type="text"
-                            onChange={this.handleInputChange} />
+                            name="newPasswordConfirm"
+                            type="password"
+                            onChange={this.handleInputChange}/>
                     </Form.Label>
                     <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>Zmień</Button>
                 </Form>
                 <br/>
                 <br/>
                 <h3>Zmień dane</h3>
-                <Form onSubmit={this.handleSubmit.bind(this)}>
+                <Form onSubmit={this.handleSubmitNames.bind(this)}>
                     <Form.Label>
                         Imię:
                         <Form.Control
-                            name="title"
+                            placeholder={this.state.first_name_placeholder}
+                            name="first_name"
                             type="text"
-                            onChange={this.handleInputChange} />
+                            onChange={this.handleInputChange}/>
                     </Form.Label>
                     <Form.Label style={this.marginLeft10px}>
                         Nazwisko:
                         <Form.Control
-                            name="performer"
+                            placeholder={this.state.last_name_placeholder}
+                            name="last_name"
                             type="text"
-                            onChange={this.handleInputChange} />
+                            onChange={this.handleInputChange}/>
                     </Form.Label>
                     <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>Zmień</Button>
                 </Form>
                 <br/>
                 <br/>
                 <h3>Zmień adres e-mail</h3>
-                <Form onSubmit={this.handleSubmit.bind(this)}>
+                <Form onSubmit={this.handleSubmitEmail.bind(this)}>
                     <Form.Label>
-                        Imię:
+                        E-mail:
                         <Form.Control
-                            name="title"
+                            placeholder={this.state.email_placeholder}
+                            name="email"
                             type="text"
-                            onChange={this.handleInputChange} />
-                    </Form.Label>
-                    <Form.Label style={this.marginLeft10px}>
-                        Nazwisko:
-                        <Form.Control
-                            name="performer"
-                            type="text"
-                            onChange={this.handleInputChange} />
+                            onChange={this.handleInputChange}/>
                     </Form.Label>
                     <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>Zmień</Button>
                 </Form>
+
+                <Modal enabled={this.state.showModal} hideModal={() => this.setState({showModal: false})}>
+                    <ConfirmPassword callback={this.state.passwordCallback} callbackParam={this.state.body}/>
+                </Modal>
             </div>
         );
     }

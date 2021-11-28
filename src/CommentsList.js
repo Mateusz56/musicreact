@@ -7,6 +7,7 @@ class CommentsList extends Component {
     constructor(props) {
         super(props);
 
+        this.cancelFlag = null
         this.state = {
             comments: [],
             offset: 0,
@@ -21,6 +22,11 @@ class CommentsList extends Component {
         this.fetchData()
     }
 
+    componentWillUnmount() {
+        if(this.cancelFlag)
+            this.cancelFlag.cancel = true
+    }
+
     loadMoreComments() {
         this.setState((state) => {
             return {
@@ -30,6 +36,9 @@ class CommentsList extends Component {
     }
 
     handleFetch(json) {
+        if(this.cancelFlag)
+            this.cancelFlag = null
+
         this.setState((state) => {
             let commentsCount = state.comments.length
             let fetchedData = json
@@ -52,7 +61,10 @@ class CommentsList extends Component {
             targetId: this.props.targetId,
             offset: this.state.offset
         }
-        FetchFunctions.Get(this.props.commentAPILink, params, this.handleFetch)
+        if(this.cancelFlag)
+            this.cancelFlag.cancel = true
+
+        this.cancelFlag = FetchFunctions.Get(this.props.commentAPILink, params, this.handleFetch)
     }
 
     render() {
@@ -69,7 +81,12 @@ class CommentsList extends Component {
                                 Załaduj więcej komentarzy
                             </td>
                         </tr>
-                        : ""}
+                        :
+                        <tr>
+                            <td onClick={this.loadMoreComments}>
+                                Załadowano wszystkie komentarze
+                            </td>
+                        </tr>}
                     </tbody>
                 </Table>
             </div>
