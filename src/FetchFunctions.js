@@ -2,8 +2,8 @@ import MessageBar from "./MessageBar";
 import AuthToken from "./AuthToken";
 
 class FetchFunctions {
-    static backendUrl = 'http://127.0.0.1:8000/'
-    //static backendUrl = 'https://inzynierka.bieda.it/'
+    //static backendUrl = 'http://127.0.0.1:8000/'
+    static backendUrl = 'https://musicback.toadres.pl/'
 
     static async GetExecute(route, params, successCallback, cancelFlag) {
         try {
