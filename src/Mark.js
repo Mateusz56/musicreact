@@ -33,7 +33,6 @@ class Mark extends Component {
         if(this.props.token)
         {
             let params = {
-                token: this.props.token,
                 targetId: this.props.targetId
             }
             if(this.cancelFlagAuthor)

@@ -30,10 +30,10 @@ class Songs extends Component {
     componentDidMount() {
         this.cancelFlag = FetchFunctions.Get("genres", null,
             (json) => {
+                this.cancelFlag = null
                 this.setState({
                     genres: json
                 })
-                this.cancelFlag = null
             });
     }
 

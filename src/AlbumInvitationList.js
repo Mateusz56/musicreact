@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import FetchFunctions from "./FetchFunctions";
-import {withCookies} from "react-cookie";
 import {CheckLg, XLg} from "react-bootstrap-icons";
 import {Table} from "react-bootstrap";
 import AlbumInvitationListRow from "./AlbumInvitationListRow";
@@ -8,11 +7,9 @@ import AlbumInvitationListRow from "./AlbumInvitationListRow";
 class AlbumInvitationList extends Component {
     constructor(props) {
         super(props);
-        this.cookies = props.cookies
 
         this.cancelFlag = null
         this.state = {
-            userId: this.cookies.get('user_id'),
             albums: []
         }
     }
@@ -21,7 +18,7 @@ class AlbumInvitationList extends Component {
         if (this.cancelFlag)
             this.cancelFlag.cancel = true
 
-        this.cancelFlag = FetchFunctions.Get(`album_invitation_user/${this.state.userId}`, null,
+        this.cancelFlag = FetchFunctions.Get(`album_invitation_user`, null,
             (json) => {
                 this.setState({
                     albums: json.results
@@ -63,4 +60,4 @@ class AlbumInvitationList extends Component {
     }
 }
 
-export default withCookies(AlbumInvitationList);
+export default AlbumInvitationList;

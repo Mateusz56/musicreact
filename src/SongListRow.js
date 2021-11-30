@@ -12,10 +12,9 @@ class SongListRow extends Component {
     }
 
     setFavourite() {
-        if(!this.props.userId) return;
+        if(sessionStorage.getItem('userLoggedIn') !== 'true') return;
         if(!this.state.favourite)
             FetchFunctions.Post('favourite_song', {
-                author: this.props.userId,
                 song: this.props.songId,
             }, (response) => response.json()
                 .then((json) =>

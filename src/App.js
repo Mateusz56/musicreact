@@ -10,6 +10,8 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import MessageBar from "./MessageBar";
 import PageNotFound from "./PageNotFound";
 import UserPanel from "./UserPanel";
+import UserLoginPermission from "./UserLoginPermission";
+import Error403 from "./Error403";
 
 function App() {
   return (
@@ -25,17 +27,16 @@ function App() {
                 <Route path="/albums" render={(props) => (
                     <Albums {...props} myAlbums={false} />
                 )}/>
-                <Route path="/my_albums" render={(props) => (
-                    <Albums {...props} myAlbums={true} />
-                )}/>
+                <Route path="/my_albums" render={(props) =>
+                    <UserLoginPermission component={<Albums {...props} myAlbums={true}/>}/>}/>
                 <Route path="/album/:id" component={AlbumDetail}/>
                 <Route path="/register" component={Registration}/>
-                <Route path="/user" component={UserPanel}/>
+                <Route path="/user" render={() => <UserLoginPermission component={<UserPanel/>}/>}/>
                 <Route exact path="/" component={Songs}/>
+                <Route path="/error403" component={Error403}/>
                 <Route component={PageNotFound} />
             </Switch>
         </BrowserRouter>
-
     </div>
   );
 }

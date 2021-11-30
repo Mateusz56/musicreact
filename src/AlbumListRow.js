@@ -12,11 +12,10 @@ class AlbumListRow extends Component {
     }
 
     setFavourite() {
-        if(!this.props.userId) return;
+        if(sessionStorage.getItem('userLoggedIn') !== 'true') return
         if(!this.state.favourite)
         {
             let body = {
-                author: this.props.userId,
                 album: this.props.albumId,
             }
             FetchFunctions.Post('favourite_album', body, (response) => response.json()

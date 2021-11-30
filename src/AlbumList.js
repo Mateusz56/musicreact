@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Table} from "react-bootstrap";
 import {HeartFill, StarFill, ChatRightDots, Envelope } from 'react-bootstrap-icons';
 import AlbumListRow from "./AlbumListRow";
-import {withCookies} from "react-cookie";
 import Modal from "./Modal";
 import AlbumInvitation from "./AlbumInvitation";
 import FetchFunctions from "./FetchFunctions";
@@ -12,7 +11,6 @@ import TableHeadersUtility from "./TableHeadersUtility";
 class AlbumList extends Component {
     constructor(props) {
         super(props);
-        this.cookies = props.cookies
         this.cancelFlag = null
 
         this.state = {
@@ -20,7 +18,6 @@ class AlbumList extends Component {
             page: 0,
             loadMoreButtonText: 'Załaduj kolejne',
             canLoadMoreAlbums: true,
-            userId: this.cookies.get('user_id'),
             showModal: false,
             sortMode: '',
         }
@@ -60,7 +57,6 @@ class AlbumList extends Component {
         params.name = this.props.name;
         params.page = this.state.page;
         params.favourite = this.props.favourite;
-        params.user = this.state.userId;
         params.private = this.props.myAlbums;
         params.sortMode = this.state.sortMode;
 
@@ -128,7 +124,7 @@ class AlbumList extends Component {
                     {this.state.albums.map(x =>
                         <AlbumListRow key={x.id} albumName={x.name} songsCount={x.songs_count} mark={x.marks_avg}
                                       commentsCount={x.comments_count} albumId={x.id} history={this.props.history}
-                                      favourite={x.favourite} userId={this.state.userId} showModal={this.props.myAlbums ? () => this.setState({showModal: true, albumId: x.id}) : null}/>)}
+                                      favourite={x.favourite} showModal={this.props.myAlbums ? () => this.setState({showModal: true, albumId: x.id}) : null}/>)}
                     <tr>
                         <td colSpan={6} onClick={this.loadMore.bind(this)}>
                             {this.state.loadMoreButtonText}
@@ -142,4 +138,4 @@ class AlbumList extends Component {
     }
 }
 
-export default withCookies(AlbumList);
+export default AlbumList;

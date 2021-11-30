@@ -6,6 +6,8 @@ import MessageBar from "./MessageBar";
 class AddSong extends Component {
     constructor(props) {
         super(props);
+        this.cancelFlag = null
+
         this.state = {
             genres: []
         };
@@ -14,9 +16,14 @@ class AddSong extends Component {
     }
 
     componentDidMount() {
-        FetchFunctions.Get('genres', null, (json) => this.setState({
+        this.cancelFlag = FetchFunctions.Get('genres', null, (json) => this.setState({
             genres: json
         }))
+    }
+
+    componentWillUnmount() {
+        if (this.cancelFlag)
+            this.cancelFlag.cancel = true
     }
 
     handleInputChange(event) {

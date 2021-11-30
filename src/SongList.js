@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import { Table } from "react-bootstrap";
 import { HeartFill, StarFill, ChatRightDots } from 'react-bootstrap-icons';
 import SongListRow from "./SongListRow";
-import {withCookies} from "react-cookie";
 import FetchFunctions from "./FetchFunctions";
 import TableHeadersUtility from "./TableHeadersUtility";
 
 class SongList extends Component {
     constructor(props) {
         super(props);
-        this.cookies = props.cookies
         this.cancelFlag = null
 
         this.state = {
@@ -17,7 +15,6 @@ class SongList extends Component {
             offset: 0,
             loadMoreButtonText: 'Załaduj kolejne',
             canLoadMoreSongs: true,
-            userId: this.cookies.get('user_id'),
             sortMode: ''
         }
 
@@ -79,7 +76,6 @@ class SongList extends Component {
         params.yearSince = this.props.yearSince;
         params.yearTo = this.props.yearTo;
         params.albumId = this.props.albumId;
-        params.user = this.state.userId;
         params.favourite = this.props.favourite;
         params.offset = this.state.offset;
         params.sortMode = this.state.sortMode;
@@ -155,7 +151,7 @@ class SongList extends Component {
                     </thead>
                     <tbody>
                     {this.state.songs.map(x =>
-                        <SongListRow key={x.id} userId={this.state.userId} songId={x.id} songName={x.title} performer={x.performer}
+                        <SongListRow key={x.id} songId={x.id} songName={x.title} performer={x.performer}
                                      genre={x.genre} year={x.year} mark={x.marks_avg ? x.marks_avg.toPrecision(2) : '-'}
                                      commentsCount={x.comments_count} favourite={x.favourite} history={this.props.history}/>)}
                     <tr>
@@ -170,4 +166,4 @@ class SongList extends Component {
     }
 }
 
-export default withCookies(SongList);
+export default SongList;

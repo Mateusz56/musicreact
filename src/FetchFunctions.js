@@ -32,7 +32,7 @@ class FetchFunctions {
             if(cancelFlag.cancel)
                 return
 
-            successCallback(json)
+            successCallback(json, response)
         }
         catch {
             MessageBar.ShowError(`Coś poszło nie tak! GET ${route}`)

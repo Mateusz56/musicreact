@@ -25,20 +25,28 @@ class AlbumDetail extends Component {
     }
 
     componentDidMount() {
-        if(this.cancelFlag)
+        if (this.cancelFlag)
             this.cancelFlag.cancel = true
-        
+
         this.cancelFlag = FetchFunctions.Get(`album/${this.props.match.params.id}`, null,
-            (json) => {
-            this.cancelFlag = null
-            this.setState({
-                albumName: json.name,
+            (json, response) => {
+                this.cancelFlag = null
+                if(response.status == 403) {
+                    this.props.history.push('/error403')
+                    return
+                }
+                if(response.status == 404) {
+                    this.props.history.push('/error404')
+                    return
+                }
+                this.setState({
+                    albumName: json.name,
+                })
             })
-        })
     }
 
     componentWillUnmount() {
-        if(this.cancelFlag)
+        if (this.cancelFlag)
             this.cancelFlag.cancel = true
     }
 
@@ -47,13 +55,17 @@ class AlbumDetail extends Component {
             <div>
                 <Table striped bordered hover>
                     <tbody>
-                    <tr><td align={"left"} colSpan={5}>{this.state.albumName}</td></tr>
-                    <Mark targetId={this.props.match.params.id} token={this.state.token} markAPILink={"album_mark"} markAuthorAPILink={"album_mark_author"}/>
+                    <tr>
+                        <td align={"left"} colSpan={5}>{this.state.albumName}</td>
+                    </tr>
+                    <Mark targetId={this.props.match.params.id} token={this.state.token} markAPILink={"album_mark"}
+                          markAuthorAPILink={"album_mark_author"}/>
                     </tbody>
                 </Table>
                 <SongList albumId={this.props.match.params.id} history={this.props.history}/>
                 {this.state.token ?
-                    <AddCommentBox commentAPILink={"album_comment"} albumId={this.props.match.params.id} token={this.state.token}/>
+                    <AddCommentBox commentAPILink={"album_comment"} albumId={this.props.match.params.id}
+                                   token={this.state.token}/>
                     : "Zaloguj się, żeby dodać komentarz"}
                 <CommentsList commentAPILink={"album_comment"} targetId={this.props.match.params.id}/>
             </div>
