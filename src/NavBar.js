@@ -109,7 +109,6 @@ class NavBar extends Component {
 
     logout() {
         this.cookies.remove("token")
-        this.cookies.remove("user_id")
         sessionStorage.removeItem('userLoggedIn')
         this.setState({
             token: null,
