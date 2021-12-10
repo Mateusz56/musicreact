@@ -78,7 +78,7 @@ class FetchFunctions {
         }).then(() => successCallback()).catch(() => MessageBar.ShowError(`Coś poszło nie tak! DELETE ${route}`))
     }
 
-    static Put(route, body, successCallback) {
+    static Put(route, body, successCallback, failCallback = null) {
         fetch(`${this.backendUrl}${route}/`, {
             method: "PUT",
             headers: {
@@ -89,8 +89,12 @@ class FetchFunctions {
         }).then((response) => {
             if(response.status >= 200 && response.status <= 299)
                 response.json().then((json) => successCallback(json))
-            else
-                throw new Error('Wrong status')
+            else if (failCallback != null) {
+                failCallback(response)
+            }
+            else {
+                MessageBar.ShowError(`Coś poszło nie tak! PUT ${route}`)
+            }
         }).catch(() => MessageBar.ShowError(`Coś poszło nie tak! PUT ${route}`))
     }
 }

@@ -54,7 +54,9 @@ class UserPanel extends Component {
         }
 
         this.setState({
-            passwordCallback: (body) => FetchFunctions.Put('user_detail', body, (response) => this.successCallback('Zmieniono hasło.')),
+            passwordCallback: (body) => FetchFunctions.Put('user_detail', body,
+                (response) => this.successCallback('Zmieniono hasło.'),
+                this.failCallback),
             showModal: true,
             body: body
         })
@@ -69,7 +71,9 @@ class UserPanel extends Component {
         }
 
         this.setState({
-            passwordCallback: (body) => FetchFunctions.Put('user_detail', body, (response) => this.successCallback('Zmieniono dane.')),
+            passwordCallback: (body) => FetchFunctions.Put('user_detail', body,
+                (response) => this.successCallback('Zmieniono dane.'),
+                this.failCallback),
             showModal: true,
             body: body
         })
@@ -83,7 +87,9 @@ class UserPanel extends Component {
         }
 
         this.setState({
-            passwordCallback: (body) => FetchFunctions.Put('user_detail', body, (response) => this.successCallback('Zmieniono adres e-mail.')),
+            passwordCallback: (body) => FetchFunctions.Put('user_detail', body,
+                (response) => this.successCallback('Zmieniono adres e-mail.'),
+                this.failCallback),
             showModal: true,
             body: body
         })
@@ -94,6 +100,20 @@ class UserPanel extends Component {
         this.setState({
             showModal: false
         })
+    }
+
+    failCallback(response) {
+        if(response.status == 403) {
+            MessageBar.ShowError('Podano błędne hasło.')
+        } else if (response.status == 400) {
+            response.json().then(json => {
+                let errorMessage = json.password || json.first_name || json.last_name || json.email
+                if(errorMessage)
+                    MessageBar.ShowError(errorMessage)
+                else
+                    throw Error
+            })
+        }
     }
 
     marginLeft10px = {

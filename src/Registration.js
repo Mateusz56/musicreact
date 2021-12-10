@@ -7,7 +7,12 @@ class Registration extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            usernameErrors: [],
+            passwordErrors: [],
+            firstNameErrors: [],
+            lastNameErrors: [],
+            emailErrors: [],
+            repeatPasswordErrors: []
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,6 +31,10 @@ class Registration extends Component {
     handleSubmit(event) {
         event.preventDefault()
 
+        this.setState({
+            repeatPasswordErrors: this.state.password !== this.state.repeatpassword ? ['Hasła różnią się.'] : []
+        })
+
         let body = {
             username: this.state.username,
             password: this.state.password,
@@ -33,7 +42,18 @@ class Registration extends Component {
             first_name: this.state.name,
             last_name: this.state.surname
         }
-        FetchFunctions.Post('user', body, (json) => MessageBar.ShowMessage('Zarejestrowano użytkownika.'))
+        FetchFunctions.Post('user', body, (json) => MessageBar.ShowMessage('Zarejestrowano użytkownika.'),
+            (response) => response.json().then(json => this.setState({
+                usernameErrors: json.username || [],
+                passwordErrors: json.password || [],
+                firstNameErrors: json.first_name || [],
+                lastNameErrors: json.last_name || [],
+                emailErrors: json.email || []
+        })))
+    }
+
+    showError(error) {
+        return error.map(x => [<br/>, <sub style={{color: 'red'}}>{x}</sub>])
     }
 
     render() {
@@ -41,6 +61,7 @@ class Registration extends Component {
             <Form onSubmit={this.handleSubmit.bind(this)}>
                 <Form.Label>
                     Nazwa użytkownika:
+                    {this.showError(this.state.usernameErrors)}
                     <Form.Control
                         name="username"
                         type="text"
@@ -49,6 +70,7 @@ class Registration extends Component {
                 <br />
                 <Form.Label>
                     Hasło:
+                    {this.showError(this.state.passwordErrors)}
                     <Form.Control
                         name="password"
                         type="password"
@@ -57,6 +79,7 @@ class Registration extends Component {
                 <br />
                 <Form.Label>
                     Powtórz hasło:
+                    {this.showError(this.state.repeatPasswordErrors)}
                     <Form.Control
                         name="repeatpassword"
                         type="password"
@@ -65,6 +88,7 @@ class Registration extends Component {
                 <br />
                 <Form.Label>
                     Imię:
+                    {this.showError(this.state.firstNameErrors)}
                     <Form.Control
                         name="name"
                         type="text"
@@ -73,6 +97,7 @@ class Registration extends Component {
                 <br />
                 <Form.Label>
                     Nazwisko:
+                    {this.showError(this.state.lastNameErrors)}
                     <Form.Control
                         name="surname"
                         type="text"
@@ -81,6 +106,7 @@ class Registration extends Component {
                 <br />
                 <Form.Label>
                     E-mail:
+                    {this.showError(this.state.emailErrors)}
                     <Form.Control
                         name="email"
                         type="text"
