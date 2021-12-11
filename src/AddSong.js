@@ -9,7 +9,11 @@ class AddSong extends Component {
         this.cancelFlag = null
 
         this.state = {
-            genres: []
+            genres: [],
+            titleErrors: [],
+            performerErrors: [],
+            yearErrors: [],
+            genreErrors: []
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -45,7 +49,17 @@ class AddSong extends Component {
             year: this.state.year,
             genre: this.state.genre,
         }
-        FetchFunctions.Post('song', body, (response) => MessageBar.ShowMessage('Dodano piosenkę.'))
+        FetchFunctions.Post('song', body, (response) => MessageBar.ShowMessage('Dodano piosenkę.'),
+            (response) => response.json().then(json => this.setState({
+                titleErrors: json.title || [],
+                performerErrors: json.performer || [],
+                yearErrors: json.year || [],
+                genreErrors: json.genre || []
+            })))
+    }
+
+    showError(error) {
+        return error.map(x => [<br/>, <sub style={{color: 'red'}}>{x}</sub>])
     }
 
     render() {
@@ -53,6 +67,7 @@ class AddSong extends Component {
             <Form onSubmit={this.handleSubmit.bind(this)}>
                 <Form.Label>
                     Tytuł:
+                    {this.showError(this.state.titleErrors)}
                     <Form.Control
                         name="title"
                         type="text"
@@ -61,6 +76,7 @@ class AddSong extends Component {
                 <br />
                 <Form.Label>
                     Wykonawca:
+                    {this.showError(this.state.performerErrors)}
                     <Form.Control
                         name="performer"
                         type="text"
@@ -69,6 +85,7 @@ class AddSong extends Component {
                 <br />
                 <Form.Label>
                     Rok:
+                    {this.showError(this.state.yearErrors)}
                     <Form.Control
                         name="year"
                         type="number"
@@ -78,6 +95,7 @@ class AddSong extends Component {
                 <br />
                 <Form.Label>
                     Gatunek:
+                    {this.showError(this.state.genreErrors)}
                     <select className="form-control" name="genre" value={this.state.genre} onChange={this.handleInputChange}>
                         {this.state.genres.map(x => <option key={x} value={x}>{x}</option>)}
                     </select>

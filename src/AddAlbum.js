@@ -36,7 +36,13 @@ class AddAlbum extends Component {
             public: this.state.isPublic,
             owners: [this.state.userId]
         }
-        FetchFunctions.Post("album", body, (response) => MessageBar.ShowMessage('Dodano album.'))
+        FetchFunctions.Post("album", body, (response) => MessageBar.ShowMessage('Dodano album.'),
+            (response) => response.json().then(json => {
+                if(json.name)
+                    MessageBar.ShowError(json.name)
+                else
+                    throw Error
+            }))
     }
 
     render() {

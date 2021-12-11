@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
 import FetchFunctions from "./FetchFunctions";
+import MessageBar from "./MessageBar";
 
 class AddCommentBox extends Component {
     constructor(props) {
@@ -22,7 +23,13 @@ class AddCommentBox extends Component {
             content: this.state.textboxContent
         }
 
-        FetchFunctions.Post(this.props.commentAPILink, body, () => window.location.reload())
+        FetchFunctions.Post(this.props.commentAPILink, body, () => window.location.reload(),
+            (response) => response.json().then(json => {
+                if(json.content)
+                    MessageBar.ShowError(json.content)
+                else
+                    throw Error
+            }))
     }
 
     handleOnChange(event) {
