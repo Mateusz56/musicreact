@@ -77,7 +77,7 @@ class CommentsList extends Component {
                     })}
                     {this.state.canLoadMoreComments ?
                         <tr>
-                            <td onClick={this.loadMoreComments}>
+                            <td className={'clickable'} onClick={this.loadMoreComments}>
                                 Załaduj więcej komentarzy
                             </td>
                         </tr>

@@ -14,8 +14,8 @@ class AlbumInvitationListRow extends Component {
                 <td>{this.props.songsCount}</td>
                 <td>{this.props.mark}</td>
                 <td>{this.props.commentsCount}</td>
-                <td onClick={() => this.answerInvitation(true)}><CheckLg color={'green'}/></td>
-                <td onClick={() => this.answerInvitation(false)}><XLg color={'red'}/></td>
+                <td className={'clickable'} onClick={() => this.answerInvitation(true)}><CheckLg color={'green'}/></td>
+                <td className={'clickable'} onClick={() => this.answerInvitation(false)}><XLg color={'red'}/></td>
             </tr>
         );
     }

@@ -34,8 +34,8 @@ class SongListRow extends Component {
     render() {
         return (
             <tr>
-                <td><HeartFill color={this.state.favourite ? "red" : "black"} onClick={this.setFavourite.bind(this)}/></td>
-                <td onClick={() => this.navigateToSongDetail(this.props.songId)}>{this.props.songName}</td>
+                <td><HeartFill className={'clickable'} color={this.state.favourite ? "red" : "black"} onClick={this.setFavourite.bind(this)}/></td>
+                <td className={'clickableTd'} onClick={() => this.navigateToSongDetail(this.props.songId)}>{this.props.songName}</td>
                 <td>{this.props.performer}</td>
                 <td>{this.props.genre}</td>
                 <td>{this.props.year}</td>

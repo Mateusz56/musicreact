@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { EnvelopeFill, HeartFill} from "react-bootstrap-icons";
+import {EnvelopeFill, HeartFill, StarFill} from "react-bootstrap-icons";
 import FetchFunctions from "./FetchFunctions";
 
 class AlbumListRow extends Component {
@@ -36,12 +36,12 @@ class AlbumListRow extends Component {
     render() {
         return (
             <tr>
-                <td><HeartFill color={this.state.favourite ? "red" : "black"} onClick={this.setFavourite.bind(this)}/></td>
-                <td onClick={() => this.navigateToAlbumDetail(this.props.albumId)}>{this.props.albumName}</td>
+                <td><HeartFill className={'clickable'}  color={this.state.favourite ? "red" : "black"} onClick={this.setFavourite.bind(this)}/></td>
+                <td className={'clickableTd'} onClick={() => this.navigateToAlbumDetail(this.props.albumId)}>{this.props.albumName}</td>
                 <td>{this.props.songsCount}</td>
                 <td>{this.props.mark}</td>
                 <td>{this.props.commentsCount}</td>
-                {this.props.showModal ? <td onClick={this.props.showModal}><EnvelopeFill/></td> : null}
+                {this.props.showModal ? <td className={'clickableTd'} onClick={this.props.showModal}><EnvelopeFill/></td> : null}
             </tr>
         );
     }

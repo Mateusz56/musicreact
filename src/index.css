@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+.clickableTd:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+tr:nth-child(even) > .clickableTd:hover {
+  background-color: rgb(200, 200, 200);
+}
+
+tr:nth-child(odd) > .clickableTd:hover {
+  background-color: rgb(185, 185, 185);
+}

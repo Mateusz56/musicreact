@@ -126,7 +126,7 @@ class AlbumList extends Component {
                                       commentsCount={x.comments_count} albumId={x.id} history={this.props.history}
                                       favourite={x.favourite} showModal={this.props.myAlbums ? () => this.setState({showModal: true, albumId: x.id}) : null}/>)}
                     <tr>
-                        <td colSpan={6} onClick={this.loadMore.bind(this)}>
+                        <td className={'clickable'} colSpan={6} onClick={this.loadMore.bind(this)}>
                             {this.state.loadMoreButtonText}
                         </td>
                     </tr>
