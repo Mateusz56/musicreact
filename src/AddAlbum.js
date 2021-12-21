@@ -3,6 +3,7 @@ import {Button, Col, Form} from "react-bootstrap";
 import {withCookies} from "react-cookie";
 import FetchFunctions from "./FetchFunctions";
 import MessageBar from "./MessageBar";
+import GlobalSettings from "./GlobalSettings";
 
 class AddAlbum extends Component {
     constructor(props) {

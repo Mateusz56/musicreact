@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { Table } from "react-bootstrap";
-import { HeartFill, StarFill, ChatRightDots } from 'react-bootstrap-icons';
+import { HeartFill, StarFill, ChatRightDots, BrightnessHigh } from 'react-bootstrap-icons';
 import SongListRow from "./SongListRow";
 import FetchFunctions from "./FetchFunctions";
 import TableHeadersUtility from "./TableHeadersUtility";
+import GlobalSettings from "./GlobalSettings";
 
 class SongList extends Component {
     constructor(props) {
@@ -15,7 +16,8 @@ class SongList extends Component {
             offset: 0,
             loadMoreButtonText: 'Załaduj kolejne',
             canLoadMoreSongs: true,
-            sortMode: ''
+            sortMode: '',
+            skinMode: GlobalSettings.skinMode
         }
 
         this.fetchData = this.fetchData.bind(this)
@@ -27,11 +29,14 @@ class SongList extends Component {
 
     componentDidMount() {
         this.fetchData()
+        GlobalSettings.SubscribeSkinModeChange(this)
     }
 
     componentWillUnmount() {
         if(this.cancelFlag)
             this.cancelFlag.cancel = true
+
+        GlobalSettings.UnsubscribeSkinModeChange(this)
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -125,10 +130,10 @@ class SongList extends Component {
     render() {
         return (
             <div>
-                <Table striped bordered hover>
+                <Table striped bordered hover variant={this.state.skinMode}>
                     <thead>
                     <tr>
-                        <th><HeartFill/></th>
+                        <th><HeartFill color={'black'}/></th>
                         <th>
                             {this.renderTableHeader('Nazwa', TableHeadersUtility.sortOptions.titleUp, TableHeadersUtility.sortOptions.titleDown)}
                         </th>

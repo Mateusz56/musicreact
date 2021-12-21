@@ -7,6 +7,7 @@ import AlbumInvitation from "./AlbumInvitation";
 import FetchFunctions from "./FetchFunctions";
 import AlbumInvitationList from "./AlbumInvitationList";
 import TableHeadersUtility from "./TableHeadersUtility";
+import GlobalSettings from "./GlobalSettings";
 
 class AlbumList extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class AlbumList extends Component {
             canLoadMoreAlbums: true,
             showModal: false,
             sortMode: '',
+            skinMode: GlobalSettings.skinMode
         }
 
         this.fetchData = this.fetchData.bind(this)
@@ -32,11 +34,14 @@ class AlbumList extends Component {
 
     componentDidMount() {
         this.fetchData()
+        GlobalSettings.SubscribeSkinModeChange(this)
     }
 
     componentWillUnmount() {
         if(this.cancelFlag)
             this.cancelFlag.cancel = true
+
+        GlobalSettings.UnsubscribeSkinModeChange(this)
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -101,10 +106,10 @@ class AlbumList extends Component {
                 <Modal enabled={this.state.showModal} hideModal={() => this.setState({showModal: false})}>
                     <AlbumInvitation albumId = {this.state.albumId}/>
                 </Modal>
-                <Table striped bordered hover>
+                <Table striped bordered hover variant={this.state.skinMode}>
                     <thead>
                         <tr>
-                            <th><HeartFill/></th>
+                            <th><HeartFill color={'black'}/></th>
                             <th>
                                 {this.renderTableHeader('Nazwa', TableHeadersUtility.sortOptions.nameUp, TableHeadersUtility.sortOptions.nameDown)}
                             </th>

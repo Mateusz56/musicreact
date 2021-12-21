@@ -3,6 +3,7 @@ import FetchFunctions from "./FetchFunctions";
 import {CheckLg, XLg} from "react-bootstrap-icons";
 import {Table} from "react-bootstrap";
 import AlbumInvitationListRow from "./AlbumInvitationListRow";
+import GlobalSettings from "./GlobalSettings";
 
 class AlbumInvitationList extends Component {
     constructor(props) {
@@ -10,11 +11,14 @@ class AlbumInvitationList extends Component {
 
         this.cancelFlag = null
         this.state = {
-            albums: []
+            albums: [],
+            skinMode: GlobalSettings.skinMode
         }
     }
 
     componentDidMount() {
+        GlobalSettings.SubscribeSkinModeChange(this)
+
         if (this.cancelFlag)
             this.cancelFlag.cancel = true
 
@@ -29,6 +33,8 @@ class AlbumInvitationList extends Component {
     }
 
     componentWillUnmount() {
+        GlobalSettings.UnsubscribeSkinModeChange(this)
+
         if (this.cancelFlag)
             this.cancelFlag.cancel = true
     }
@@ -37,7 +43,7 @@ class AlbumInvitationList extends Component {
         return (
             <div>
                 <h2 style={{textAlign: 'left', marginLeft: '15px'}}>Zaproszenia</h2>
-                <Table striped bordered hover>
+                <Table striped bordered hover variant={this.state.skinMode}>
                     <thead>
                     <tr>
                         <th>Nazwa</th>

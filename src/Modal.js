@@ -33,7 +33,6 @@ class Modal extends Component {
 
     innerDivStyle = {
         position: 'fixed',
-        background: 'white',
         height: 'auto',
         top: '50%',
         left: '50%',
@@ -49,7 +48,7 @@ class Modal extends Component {
                     if(event.currentTarget === event.target) this.props.hideModal()
                     }
                 }>
-                    <div style={this.innerDivStyle}>
+                    <div className={'Modal'} style={this.innerDivStyle}>
                         {this.props.children}
                     </div>
                 </div>

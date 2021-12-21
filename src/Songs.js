@@ -3,6 +3,7 @@ import {Col, Dropdown, Form} from "react-bootstrap";
 import SongList from "./SongList";
 import DropdownMenu from "react-bootstrap/DropdownMenu";
 import FetchFunctions from "./FetchFunctions";
+import GlobalSettings from "./GlobalSettings";
 
 class Songs extends Component {
     constructor(props) {
@@ -93,7 +94,7 @@ class Songs extends Component {
     render() {
         return (
             <div>
-                <Form style={{marginBottom: 20}}>
+                <Form className={GlobalSettings.skinMode} style={{marginBottom: 20}}>
                     <Form.Row className="align-items-center">
                         <Col md={2}>
                             <Form.Control onChange={this.handleInputChange} name={'nameInput'}

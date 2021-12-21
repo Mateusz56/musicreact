@@ -6,6 +6,7 @@ import CommentsList from "./CommentsList";
 import {withCookies} from "react-cookie";
 import SongList from "./SongList";
 import FetchFunctions from "./FetchFunctions";
+import GlobalSettings from "./GlobalSettings";
 
 class AlbumDetail extends Component {
     constructor(props) {
@@ -20,11 +21,14 @@ class AlbumDetail extends Component {
             mark: "",
             songs: "",
             canLoadMoreSongs: true,
-            comments: []
+            comments: [],
+            skinMode: GlobalSettings.skinMode
         }
     }
 
     componentDidMount() {
+        GlobalSettings.SubscribeSkinModeChange(this)
+
         if (this.cancelFlag)
             this.cancelFlag.cancel = true
 
@@ -48,12 +52,14 @@ class AlbumDetail extends Component {
     componentWillUnmount() {
         if (this.cancelFlag)
             this.cancelFlag.cancel = true
+
+        GlobalSettings.UnsubscribeSkinModeChange(this)
     }
 
     render() {
         return (
             <div>
-                <Table striped bordered hover>
+                <Table striped bordered hover variant={this.state.skinMode}>
                     <tbody>
                     <tr>
                         <td align={"left"} colSpan={5}>{this.state.albumName}</td>

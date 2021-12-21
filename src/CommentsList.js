@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Table} from "react-bootstrap";
 import Comment from "./Comment";
 import FetchFunctions from "./FetchFunctions";
+import GlobalSettings from "./GlobalSettings";
 
 class CommentsList extends Component {
     constructor(props) {
@@ -70,7 +71,7 @@ class CommentsList extends Component {
     render() {
         return (
             <div style={{marginTop: 60}}>
-                <Table striped hover>
+                <Table striped hover variant={GlobalSettings.skinMode}>
                     <tbody>
                     {this.state.comments.map(x => {
                         return <Comment key={x.id} username={x.username} text={x.content} date={x.date.toLocaleString()}/>

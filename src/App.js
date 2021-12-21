@@ -13,32 +13,54 @@ import UserPanel from "./UserPanel";
 import UserLoginPermission from "./UserLoginPermission";
 import Error403 from "./Error403";
 
-function App() {
-  return (
-    <div className="App">
-        <BrowserRouter>
-            <MessageBar/>
-            <NavBar/>
-            <br/>
-            <Switch>
-                <Route path="/songs" component={Songs}/>
-                <Route path="/register" component={Registration}/>
-                <Route path="/song/:id" component={SongDetail}/>
-                <Route path="/albums" render={(props) => (
-                    <Albums {...props} myAlbums={false} />
-                )}/>
-                <Route path="/my_albums" render={(props) =>
-                    <UserLoginPermission component={<Albums {...props} myAlbums={true}/>}/>}/>
-                <Route path="/album/:id" component={AlbumDetail}/>
-                <Route path="/register" component={Registration}/>
-                <Route path="/user" render={() => <UserLoginPermission component={<UserPanel/>}/>}/>
-                <Route exact path="/" component={Songs}/>
-                <Route path="/error403" component={Error403}/>
-                <Route component={PageNotFound} />
-            </Switch>
-        </BrowserRouter>
-    </div>
-  );
+import React, {Component} from 'react';
+import GlobalSettings from "./GlobalSettings";
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+
+        GlobalSettings.InitializeSkinMode()
+        this.state = {
+            skinMode: GlobalSettings.skinMode
+        }
+    }
+
+    componentDidMount() {
+        GlobalSettings.SubscribeSkinModeChange(this)
+    }
+
+    componentWillUnmount() {
+        GlobalSettings.UnsubscribeSkinModeChange(this)
+    }
+
+    render() {
+        return (
+            <div className={"App " + this.state.skinMode}>
+                <BrowserRouter>
+                    <MessageBar/>
+                    <NavBar/>
+                    <br/>
+                    <Switch>
+                        <Route path="/songs" component={Songs}/>
+                        <Route path="/register" component={Registration}/>
+                        <Route path="/song/:id" component={SongDetail}/>
+                        <Route path="/albums" render={(props) => (
+                            <Albums {...props} myAlbums={false} />
+                        )}/>
+                        <Route path="/my_albums" render={(props) =>
+                            <UserLoginPermission component={<Albums {...props} myAlbums={true}/>}/>}/>
+                        <Route path="/album/:id" component={AlbumDetail}/>
+                        <Route path="/register" component={Registration}/>
+                        <Route path="/user" render={() => <UserLoginPermission component={<UserPanel/>}/>}/>
+                        <Route exact path="/" component={Songs}/>
+                        <Route path="/error403" component={Error403}/>
+                        <Route component={PageNotFound} />
+                    </Switch>
+                </BrowserRouter>
+            </div>
+        );
+    }
 }
 
 export default App;

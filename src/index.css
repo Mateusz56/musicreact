@@ -28,3 +28,93 @@ tr:nth-child(even) > .clickableTd:hover {
 tr:nth-child(odd) > .clickableTd:hover {
   background-color: rgb(185, 185, 185);
 }
+
+.dark tr:nth-child(even) > .clickableTd:hover {
+  background-color: #232930
+}
+
+.dark tr:nth-child(odd) > .clickableTd:hover {
+  background-color: #232930
+}
+
+.dark .table-dark button {
+  background-color: #343a40 !important;
+}
+
+.dark {
+  background-color: #454d55;
+  color: white;
+}
+
+.Modal {
+  background-color: white;
+}
+
+.dark .Modal {
+  background-color: #343a40;
+}
+
+.dark button {
+  background-color: #d4a122;
+  border-color: #d4a122;
+  color: white;
+}
+
+.dark button:hover, .dark button:active, .dark button:focus {
+  background-color: #c39011 !important;
+  border-color: #c39011 !important;
+  box-shadow: none !important;
+}
+
+.dark input, .dark select, .dark textarea {
+  background-color: #454d55;
+  color: white;
+}
+
+.dark input:active, .dark select:active, .dark textarea:active, .dark input:focus, .dark select:focus, .dark textarea:focus {
+  background-color: #454d55;
+  color: white;
+  border-color: #d4a122;
+  box-shadow: none;
+}
+
+.dark input:checked {
+  background: #d4a122 !important;
+  color: red !important;
+}
+
+.dark option:focus {
+  background-color: #c39011;
+}
+
+.dark a {
+  color: #d4a122;
+}
+
+.dark a:hover {
+  color: white;
+}
+
+.dark .btn-outline-info {
+  border-color: #d4a122;
+  box-shadow: none !important;
+}
+
+.dark a.btn-outline-info:hover, .dark a.btn-outline-info:active, .dark a.btn-outline-info:focus {
+  border-color: #d4a122 !important;
+  background-color: #d4a122 !important;
+  box-shadow: none !important;
+  color: white;
+}
+
+.dark .btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show>.btn-outline-primary.dropdown-toggle {
+  border-color: #d4a122 !important;
+  background-color: #d4a122 !important;
+  box-shadow: none !important;
+  color: white;
+}
+
+input:checked + label .Indicator-sc-1airx73-0 {
+  background-color: #169b45;
+  border-width: 0px;
+}

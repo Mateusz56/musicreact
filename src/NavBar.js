@@ -9,6 +9,9 @@ import AddAlbum from "./AddAlbum";
 import FetchFunctions from "./FetchFunctions";
 import MessageBar from "./MessageBar";
 import AuthToken from "./AuthToken";
+import { BrightnessHigh, Moon } from 'react-bootstrap-icons';
+import GlobalSettings from "./GlobalSettings";
+
 class NavBar extends Component {
     constructor(props) {
         super(props);
@@ -19,18 +22,25 @@ class NavBar extends Component {
             user_id: '',
             showAddSongModal: false,
             username: '',
-            password: ''
+            password: '',
+            skinMode: GlobalSettings.skinMode
         };
 
         AuthToken.token = this.cookies.get('token')
     }
 
     componentDidMount() {
+        GlobalSettings.SubscribeSkinModeChange(this)
+
         if(this.state.token)
             FetchFunctions.Get('user_info', null, (json) => this.setState({
                 displayName: json.username,
                 user_id: json.id,
             }))
+    }
+
+    componentWillUnmount() {
+        GlobalSettings.UnsubscribeSkinModeChange(this)
     }
 
     navBarLoggedIn() {
@@ -50,7 +60,12 @@ class NavBar extends Component {
                         <Nav.Link onClick={() => this.setState({showAddSongModal: true, showAddAlbumModal: false})}>Dodaj piosenkę</Nav.Link>
                         <Nav.Link onClick={() => this.setState({showAddAlbumModal: true, showAddSongModal: false})}>Dodaj album</Nav.Link>
                     </Nav>
+
+                    {this.state.skinMode === 'dark' ?
+                        <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('')} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/> :
+                        <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark')} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/>}
                     <Nav.Link as={Link} to="/user">{this.state.displayName}</Nav.Link>
+
                     <Button onClick={this.logout.bind(this)} variant="outline-info">Wyloguj</Button>
                 </Navbar>
             </div>
@@ -66,6 +81,10 @@ class NavBar extends Component {
                             <Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>
                             <Nav.Link as={Link} to="/albums">Albumy</Nav.Link>
                         </Nav>
+
+                        {this.state.skinMode === 'dark' ?
+                            <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('')} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/> :
+                            <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark')} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/>}
                         <Form inline>
                             <FormControl type="text" value={this.state.username}
                                          onChange={e => this.setState({username: e.target.value})}

@@ -5,6 +5,8 @@ import CommentsList from "./CommentsList";
 import {withCookies} from "react-cookie";
 import Mark from "./Mark";
 import FetchFunctions from "./FetchFunctions";
+import GlobalSettings from "./GlobalSettings";
+import MessageBar from "./MessageBar";
 
 class SongDetail extends Component {
     constructor(props) {
@@ -22,6 +24,7 @@ class SongDetail extends Component {
             songGenre: "Gatunek",
             userId: this.cookies.get('user_id'),
             albumId: 0,
+            skinMode: GlobalSettings.skinMode
         }
 
         this.submitAddToAlbum = this.submitAddToAlbum.bind(this)
@@ -31,6 +34,8 @@ class SongDetail extends Component {
     componentDidMount() {
         if (this.cancelFlag)
             this.cancelFlag.cancel = true
+
+        GlobalSettings.SubscribeSkinModeChange(this)
 
         this.cancelFlag = FetchFunctions.Get(`song/${this.props.match.params.id}`, null, (json, response) => {
                 if (response.status == 404) {
@@ -70,6 +75,8 @@ class SongDetail extends Component {
 
         if (this.cancelFlag2)
             this.cancelFlag2.cancel = true
+
+        GlobalSettings.UnsubscribeSkinModeChange(this)
     }
 
     handleInputChange(event) {
@@ -87,7 +94,7 @@ class SongDetail extends Component {
 
         FetchFunctions.Put(`album/${this.state.albumId}`, {
             add_song: this.props.match.params.id
-        }, (response) => alert(response))
+        }, (response) => MessageBar.ShowMessage('Dodano do albumu'))
     }
 
     renderAddToAlbum() {
@@ -110,7 +117,7 @@ class SongDetail extends Component {
     render() {
         return (
             <div>
-                <Table striped bordered hover>
+                <Table striped bordered hover variant={this.state.skinMode}>
                     <tbody>
                     <tr>
                         <td align={"left"} colSpan={5}>{this.state.songName}</td>
