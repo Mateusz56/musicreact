@@ -1,4 +1,5 @@
 import Cookies from "./Cookies";
+import FetchFunctions from "./FetchFunctions";
 
 class GlobalSettings {
     static skinMode = ''
@@ -7,7 +8,7 @@ class GlobalSettings {
     static objectToChangeOnSkinModeChange = []
 
     static InitializeSkinMode() {
-        this.ChangeSkinMode(Cookies.getCookie('skinMode'))
+        this.ChangeSkinMode(Cookies.getCookie('skinMode'), false)
     }
 
     static SubscribeSkinModeChange(object) {
@@ -22,14 +23,19 @@ class GlobalSettings {
         }
     }
 
-    static ChangeSkinMode(value) {
+    static ChangeSkinMode(value, saveData) {
         GlobalSettings.skinMode = value
         GlobalSettings.objectToChangeOnSkinModeChange.forEach(x => x.setState({
             skinMode: value
         }))
 
         document.querySelector('html').classList = [value]
-        Cookies.setCookie('skinMode', value)
+        if(Cookies.cookieExists('skinMode') || value !== '')
+            Cookies.setCookie('skinMode', value)
+
+        if(saveData) {
+            FetchFunctions.Put('user_skin_mode', {skin_mode: value}, () => {})
+        }
     }
 }
 

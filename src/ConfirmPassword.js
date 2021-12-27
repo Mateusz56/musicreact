@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
 import MessageBar from "./MessageBar";
+import Translations from "./Translations";
 
 class ConfirmPassword extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class ConfirmPassword extends Component {
         event.preventDefault()
 
         if(!this.state.password) {
-            MessageBar.ShowError('Podaj hasło')
+            MessageBar.ShowError(Translations.GetText('givePassword'))
             return
         }
 
@@ -42,13 +43,13 @@ class ConfirmPassword extends Component {
             <div>
                 <Form onSubmit={this.handleSubmit.bind(this)}>
                     <Form.Label>
-                        Podaj hasło:
+                        {Translations.GetText('givePassword')}:
                         <Form.Control
                             name="password"
                             type="password"
                             onChange={this.handleInputChange} />
                     </Form.Label>
-                    <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>Zmień</Button>
+                    <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>{Translations.GetText('change')}</Button>
                 </Form>
             </div>
         );

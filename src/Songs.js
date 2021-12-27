@@ -4,6 +4,7 @@ import SongList from "./SongList";
 import DropdownMenu from "react-bootstrap/DropdownMenu";
 import FetchFunctions from "./FetchFunctions";
 import GlobalSettings from "./GlobalSettings";
+import Translations from "./Translations";
 
 class Songs extends Component {
     constructor(props) {
@@ -98,12 +99,12 @@ class Songs extends Component {
                     <Form.Row className="align-items-center">
                         <Col md={2}>
                             <Form.Control onChange={this.handleInputChange} name={'nameInput'}
-                                          placeholder="Nazwa piosenki lub wykonawcy"/>
+                                          placeholder={Translations.GetText('nameOfSongOrPerformer')}/>
                         </Col>
                         <Col md={0.5} style={{marginLeft: 10, marginRight: 30}}>
                             <Dropdown>
                                 <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
-                                    Gatunki
+                                    {Translations.GetText('genres')}
                                 </Dropdown.Toggle>
                                 <DropdownMenu style={{margin: '100'}}>
                                     {this.state.genres.map(x => <Form.Check onChange={this.handleGenreCheckboxChange}
@@ -113,21 +114,21 @@ class Songs extends Component {
                             </Dropdown>
                         </Col>
                         <Col md={0.5}>
-                            Rok od
+                            {Translations.GetText('yearSince')}
                         </Col>
                         <Col md={0.5}>
                             <Form.Control onChange={this.handleInputChange} name={'yearSince'} type={'number'}
                                           value={this.state.yearSince} min={1900} max={2021}/>
                         </Col>
                         <Col md={0.5}>
-                            do
+                            {Translations.GetText('to')}
                         </Col>
                         <Col md={0.5}>
                             <Form.Control onChange={this.handleInputChange} name={'yearTo'} type={'number'}
                                           value={this.state.yearTo} min={1900} max={2021}/>
                         </Col>
                         <Col md={0.5} style={{marginLeft: 30}}>
-                            Ocena
+                            {Translations.GetText('mark')}
                         </Col>
                         <Col md={0.25}>
                             <Form.Control onChange={this.handleInputChange} name={'markInput'} type={'number'}
@@ -135,15 +136,15 @@ class Songs extends Component {
                         </Col>
                         <Col md={0.25}>
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}}
-                                        label={"Mniejsza"} name={'markLess'} checked={this.state.markLess} id={1}/>
+                                        label={Translations.GetText('lesser')} name={'markLess'} checked={this.state.markLess} id={1}/>
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}}
-                                        label={"Większa"} name={'markMore'} checked={this.state.markMore} id={2}/>
+                                        label={Translations.GetText('higher')} name={'markMore'} checked={this.state.markMore} id={2}/>
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}}
-                                        label={"Równa"} name={'markEqual'} checked={this.state.markEqual} id={3}/>
+                                        label={Translations.GetText('equal')} name={'markEqual'} checked={this.state.markEqual} id={3}/>
                         </Col>
                         <Col md={0.25}>
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 20}}
-                                        label={"Ulubione"} name={"favourite"} checked={this.state.favourite} id={4}/>
+                                        label={Translations.GetText('favourite')} name={"favourite"} checked={this.state.favourite} id={4}/>
                         </Col>
                     </Form.Row>
                 </Form>

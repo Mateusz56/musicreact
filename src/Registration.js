@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
 import FetchFunctions from "./FetchFunctions";
 import MessageBar from "./MessageBar";
+import Translations from "./Translations";
 
 class Registration extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class Registration extends Component {
         event.preventDefault()
 
         this.setState({
-            repeatPasswordErrors: this.state.password !== this.state.repeatpassword ? ['Hasła różnią się.'] : []
+            repeatPasswordErrors: this.state.password !== this.state.repeatpassword ? [`${Translations.GetText('passwordAreDifferent')}.`] : []
         })
 
         let body = {
@@ -42,7 +43,7 @@ class Registration extends Component {
             first_name: this.state.name,
             last_name: this.state.surname
         }
-        FetchFunctions.Post('user', body, (json) => MessageBar.ShowMessage('Zarejestrowano użytkownika.'),
+        FetchFunctions.Post('user', body, (json) => MessageBar.ShowMessage(`${Translations.GetText('userRegistered')}.`),
             (response) => response.json().then(json => this.setState({
                 usernameErrors: json.username || [],
                 passwordErrors: json.password || [],
@@ -60,7 +61,7 @@ class Registration extends Component {
         return (
             <Form onSubmit={this.handleSubmit.bind(this)}>
                 <Form.Label>
-                    Nazwa użytkownika:
+                    {Translations.GetText('username')}:
                     {this.showError(this.state.usernameErrors)}
                     <Form.Control
                         name="username"
@@ -69,7 +70,7 @@ class Registration extends Component {
                 </Form.Label>
                 <br />
                 <Form.Label>
-                    Hasło:
+                    {Translations.GetText('password')}:
                     {this.showError(this.state.passwordErrors)}
                     <Form.Control
                         name="password"
@@ -78,7 +79,7 @@ class Registration extends Component {
                 </Form.Label>
                 <br />
                 <Form.Label>
-                    Powtórz hasło:
+                    {Translations.GetText('repeatPassword')}:
                     {this.showError(this.state.repeatPasswordErrors)}
                     <Form.Control
                         name="repeatpassword"
@@ -87,7 +88,7 @@ class Registration extends Component {
                 </Form.Label>
                 <br />
                 <Form.Label>
-                    Imię:
+                    {Translations.GetText('firstName')}:
                     {this.showError(this.state.firstNameErrors)}
                     <Form.Control
                         name="name"
@@ -96,7 +97,7 @@ class Registration extends Component {
                 </Form.Label>
                 <br />
                 <Form.Label>
-                    Nazwisko:
+                    {Translations.GetText('lastName')}:
                     {this.showError(this.state.lastNameErrors)}
                     <Form.Control
                         name="surname"
@@ -105,7 +106,7 @@ class Registration extends Component {
                 </Form.Label>
                 <br />
                 <Form.Label>
-                    E-mail:
+                    {Translations.GetText('email')}:
                     {this.showError(this.state.emailErrors)}
                     <Form.Control
                         name="email"
@@ -113,7 +114,7 @@ class Registration extends Component {
                         onChange={this.handleInputChange} />
                 </Form.Label>
                 <br />
-                <Button type={'submit'}>Wyślij</Button>
+                <Button type={'submit'}>{Translations.GetText('send')}</Button>
             </Form>
         );
     }

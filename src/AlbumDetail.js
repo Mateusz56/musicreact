@@ -7,6 +7,7 @@ import {withCookies} from "react-cookie";
 import SongList from "./SongList";
 import FetchFunctions from "./FetchFunctions";
 import GlobalSettings from "./GlobalSettings";
+import Translations from "./Translations";
 
 class AlbumDetail extends Component {
     constructor(props) {
@@ -72,7 +73,7 @@ class AlbumDetail extends Component {
                 {this.state.token ?
                     <AddCommentBox commentAPILink={"album_comment"} albumId={this.props.match.params.id}
                                    token={this.state.token}/>
-                    : "Zaloguj się, żeby dodać komentarz"}
+                    : Translations.GetText('loginToComment')}
                 <CommentsList commentAPILink={"album_comment"} targetId={this.props.match.params.id}/>
             </div>
         );

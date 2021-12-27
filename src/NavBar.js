@@ -11,6 +11,8 @@ import MessageBar from "./MessageBar";
 import AuthToken from "./AuthToken";
 import { BrightnessHigh, Moon } from 'react-bootstrap-icons';
 import GlobalSettings from "./GlobalSettings";
+import Translations from "./Translations";
+import Cookies from "./Cookies";
 
 class NavBar extends Component {
     constructor(props) {
@@ -32,11 +34,19 @@ class NavBar extends Component {
     componentDidMount() {
         GlobalSettings.SubscribeSkinModeChange(this)
 
-        if(this.state.token)
+        if(this.state.token) {
             FetchFunctions.Get('user_info', null, (json) => this.setState({
                 displayName: json.username,
                 user_id: json.id,
             }))
+
+            if (!Cookies.cookieExists('skinMode')) {
+                FetchFunctions.Get('user_skin_mode', null, (json) => {
+                    console.log(json);
+                    GlobalSettings.ChangeSkinMode(json.skin_mode, false)
+                })
+            }
+        }
     }
 
     componentWillUnmount() {
@@ -54,19 +64,19 @@ class NavBar extends Component {
                 </Modal>
                 <Navbar bg="dark" variant="dark">
                     <Nav className="mr-auto">
-                        <Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>
-                        <Nav.Link as={Link} to="/albums">Albumy</Nav.Link>
-                        <Nav.Link as={Link} to="/my_albums">Moje albumy</Nav.Link>
-                        <Nav.Link onClick={() => this.setState({showAddSongModal: true, showAddAlbumModal: false})}>Dodaj piosenkę</Nav.Link>
-                        <Nav.Link onClick={() => this.setState({showAddAlbumModal: true, showAddSongModal: false})}>Dodaj album</Nav.Link>
+                        <Nav.Link as={Link} to="/songs">{Translations.GetText('songs')}</Nav.Link>
+                        <Nav.Link as={Link} to="/albums">{Translations.GetText('albums')}</Nav.Link>
+                        <Nav.Link as={Link} to="/my_albums">{Translations.GetText('myAlbums')}</Nav.Link>
+                        <Nav.Link onClick={() => this.setState({showAddSongModal: true, showAddAlbumModal: false})}>{Translations.GetText('addSong')}</Nav.Link>
+                        <Nav.Link onClick={() => this.setState({showAddAlbumModal: true, showAddSongModal: false})}>{Translations.GetText('addAlbum')}</Nav.Link>
                     </Nav>
 
                     {this.state.skinMode === 'dark' ?
-                        <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('')} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/> :
-                        <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark')} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/>}
+                        <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('', true)} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/> :
+                        <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark', true)} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/>}
                     <Nav.Link as={Link} to="/user">{this.state.displayName}</Nav.Link>
 
-                    <Button onClick={this.logout.bind(this)} variant="outline-info">Wyloguj</Button>
+                    <Button onClick={this.logout.bind(this)} variant="outline-info">{Translations.GetText('logout')}</Button>
                 </Navbar>
             </div>
         )
@@ -78,24 +88,24 @@ class NavBar extends Component {
                     <Navbar bg="dark" variant="dark">
                         {/*<Navbar.Brand href="#home">Navbar</Navbar.Brand>*/}
                         <Nav className="mr-auto">
-                            <Nav.Link as={Link} to="/songs">Piosenki</Nav.Link>
-                            <Nav.Link as={Link} to="/albums">Albumy</Nav.Link>
+                            <Nav.Link as={Link} to="/songs">{Translations.GetText('songs')}</Nav.Link>
+                            <Nav.Link as={Link} to="/albums">{Translations.GetText('albums')}</Nav.Link>
                         </Nav>
 
                         {this.state.skinMode === 'dark' ?
-                            <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('')} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/> :
-                            <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark')} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/>}
+                            <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('', false)} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/> :
+                            <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark', false)} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/>}
                         <Form inline>
                             <FormControl type="text" value={this.state.username}
                                          onChange={e => this.setState({username: e.target.value})}
-                                         placeholder="Nazwa użytkownika" className="mr-sm-2"/>
+                                         placeholder={Translations.GetText('username')} className="mr-sm-2"/>
                             <FormControl type="password" value={this.state.password}
-                                         onChange={e => this.setState({password: e.target.value})} placeholder="Hasło"
+                                         onChange={e => this.setState({password: e.target.value})} placeholder={Translations.GetText('password')}
                                          className="mr-sm-2"/>
                             <Button onClick={() => this.login(this.state.username, this.state.password)}
-                                    variant="outline-success">Zaloguj</Button>
+                                    variant="outline-success">{Translations.GetText('login')}</Button>
                         </Form>
-                        <Button href={"/register"} variant="outline-info">Zarejestruj</Button>
+                        <Button href={"/register"} variant="outline-info">{Translations.GetText('register')}</Button>
                     </Navbar>
             </div>
         )
@@ -115,7 +125,7 @@ class NavBar extends Component {
                 window.location.reload()
             }),
             () => {
-                MessageBar.ShowError("Błąd logowania")
+                MessageBar.ShowError(Translations.GetText('loginError'))
                 this.setState(
                     {
                         token: "",

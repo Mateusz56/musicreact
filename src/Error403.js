@@ -1,10 +1,11 @@
 import React from 'react';
+import Translations from "./Translations";
 
 const Error403 = () => {
     return (
         <div>
-            <h1>Błąd 403</h1>
-            <h3>Nie masz uprawnień, aby wyświetlić tą stronę.</h3>
+            <h1>{Translations.GetText('error403')}</h1>
+            <h3>{Translations.GetText('noPermissions')}</h3>
         </div>
     );
 };

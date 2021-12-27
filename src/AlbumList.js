@@ -8,6 +8,7 @@ import FetchFunctions from "./FetchFunctions";
 import AlbumInvitationList from "./AlbumInvitationList";
 import TableHeadersUtility from "./TableHeadersUtility";
 import GlobalSettings from "./GlobalSettings";
+import Translations from "./Translations";
 
 class AlbumList extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class AlbumList extends Component {
         this.state = {
             albums: [],
             page: 0,
-            loadMoreButtonText: 'Załaduj kolejne',
+            loadMoreButtonText: Translations.GetText('loadMore'),
             canLoadMoreAlbums: true,
             showModal: false,
             sortMode: '',
@@ -50,7 +51,7 @@ class AlbumList extends Component {
             this.setState({
                 page: 0,
                 albums: [],
-                loadMoreButtonText: 'Załaduj kolejne',
+                loadMoreButtonText: Translations.GetText('loadMore'),
                 canLoadMoreAlbums: true
             }, this.fetchData)
         }
@@ -81,7 +82,7 @@ class AlbumList extends Component {
             let newAlbumsArray = state.albums.concat(json)
             if(albumsCount === newAlbumsArray.length)
                 return {
-                    loadMoreButtonText: 'Załadowano wszystkie albumy spełniające warunki wyszukiwania',
+                    loadMoreButtonText: Translations.GetText('allAlbumsLoaded'),
                     canLoadMoreAlbums: false
                 }
 
@@ -111,10 +112,10 @@ class AlbumList extends Component {
                         <tr>
                             <th><HeartFill color={'black'}/></th>
                             <th>
-                                {this.renderTableHeader('Nazwa', TableHeadersUtility.sortOptions.nameUp, TableHeadersUtility.sortOptions.nameDown)}
+                                {this.renderTableHeader(Translations.GetText('name'), TableHeadersUtility.sortOptions.nameUp, TableHeadersUtility.sortOptions.nameDown)}
                             </th>
                             <th>
-                                {this.renderTableHeader('Piosenki', TableHeadersUtility.sortOptions.songsCountUp, TableHeadersUtility.sortOptions.songsCountDown)}
+                                {this.renderTableHeader(Translations.GetText('songs'), TableHeadersUtility.sortOptions.songsCountUp, TableHeadersUtility.sortOptions.songsCountDown)}
                             </th>
                             <th>
                                 {this.renderTableHeader(<StarFill/>, TableHeadersUtility.sortOptions.marksUp, TableHeadersUtility.sortOptions.marksDown)}

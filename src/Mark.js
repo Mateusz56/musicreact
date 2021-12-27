@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StarFill} from "react-bootstrap-icons";
 import FetchFunctions from "./FetchFunctions";
+import Translations from "./Translations";
 
 class Mark extends Component {
     constructor(props) {
@@ -27,7 +28,7 @@ class Mark extends Component {
 
         this.cancelFlagMarks = FetchFunctions.Get(this.props.markAPILink, params, (json) =>
             this.setState({
-                mark: json.avg ? json.avg.toPrecision(2) : "Brak ocen"
+                mark: json.avg ? json.avg.toPrecision(2) : Translations.GetText('noMarks')
             }))
 
         if(this.props.token)
@@ -80,7 +81,7 @@ class Mark extends Component {
     render() {
         return (
             <tr>
-                <td width={250} align={"left"} colSpan={1} className={'m-auto'}>Ocena: {this.state.mark}<br/>Twoja ocena: {this.state.myMark}</td>
+                <td width={250} align={"left"} colSpan={1} className={'m-auto'}>{Translations.GetText('mark')}: {this.state.mark}<br/>{Translations.GetText('yourMark')}: {this.state.myMark}</td>
                 {this.props.token ?
                     <td width={200} align={"left"} colSpan={1}
                         onMouseLeave={() => this.onMouseEnterStar(typeof this.state.myMark == 'number' ? this.state.myMark - 1 : -1)}>
@@ -97,7 +98,7 @@ class Mark extends Component {
                     </td>
                     :
                     <td>
-                        Zaloguj się, żeby ocenić.
+                        {Translations.GetText('loginToMark')}
                     </td>
                 }
                 <td></td>

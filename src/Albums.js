@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Col, Form} from "react-bootstrap";
 import AlbumList from "./AlbumList";
+import Translations from "./Translations";
 
 class Albums extends Component {
     constructor(props) {
@@ -35,10 +36,10 @@ class Albums extends Component {
                 <Form style={{marginBottom: 20}}>
                     <Form.Row className="align-items-center">
                         <Col md={2}>
-                            <Form.Control onChange={this.handleInputChange} name={'nameInput'} placeholder="Nazwa albumu" />
+                            <Form.Control onChange={this.handleInputChange} name={'nameInput'} placeholder={Translations.GetText('albumName')} />
                         </Col>
                         <Col md={0.25}>
-                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={"Ulubione"} name={'favourite'} checked={this.state.favourite} id={0}/>
+                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={Translations.GetText('favourite')} name={'favourite'} checked={this.state.favourite} id={0}/>
                         </Col>
                     </Form.Row>
                 </Form>

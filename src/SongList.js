@@ -5,6 +5,7 @@ import SongListRow from "./SongListRow";
 import FetchFunctions from "./FetchFunctions";
 import TableHeadersUtility from "./TableHeadersUtility";
 import GlobalSettings from "./GlobalSettings";
+import Translations from "./Translations";
 
 class SongList extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class SongList extends Component {
         this.state = {
             songs: [],
             offset: 0,
-            loadMoreButtonText: 'Załaduj kolejne',
+            loadMoreButtonText: Translations.GetText('loadMore'),
             canLoadMoreSongs: true,
             sortMode: '',
             skinMode: GlobalSettings.skinMode
@@ -48,7 +49,7 @@ class SongList extends Component {
             this.setState({
                 offset: 0,
                 songs: [],
-                loadMoreButtonText: 'Załaduj kolejne',
+                loadMoreButtonText: Translations.GetText('loadMore'),
                 canLoadMoreSongs: true
             }, this.fetchData)
         }
@@ -102,7 +103,7 @@ class SongList extends Component {
             let newSongsArray = state.songs.concat(json)
             if (songsCount === newSongsArray.length)
                 return {
-                    loadMoreButtonText: 'Załadowano wszystkie piosenki spełniające warunki wyszukiwania',
+                    loadMoreButtonText: Translations.GetText('allSongsLoaded'),
                     canLoadMoreSongs: false
                 }
 
@@ -135,16 +136,16 @@ class SongList extends Component {
                     <tr>
                         <th><HeartFill color={'black'}/></th>
                         <th>
-                            {this.renderTableHeader('Nazwa', TableHeadersUtility.sortOptions.titleUp, TableHeadersUtility.sortOptions.titleDown)}
+                            {this.renderTableHeader(Translations.GetText('title'), TableHeadersUtility.sortOptions.titleUp, TableHeadersUtility.sortOptions.titleDown)}
                         </th>
                         <th>
-                            {this.renderTableHeader('Wykonawca', TableHeadersUtility.sortOptions.performerUp, TableHeadersUtility.sortOptions.performerDown)}
+                            {this.renderTableHeader(Translations.GetText('performer'), TableHeadersUtility.sortOptions.performerUp, TableHeadersUtility.sortOptions.performerDown)}
                         </th>
                         <th>
-                            {this.renderTableHeader('Gatunek', TableHeadersUtility.sortOptions.genreUp, TableHeadersUtility.sortOptions.genreDown)}
+                            {this.renderTableHeader(Translations.GetText('genre'), TableHeadersUtility.sortOptions.genreUp, TableHeadersUtility.sortOptions.genreDown)}
                         </th>
                         <th>
-                            {this.renderTableHeader('Rok', TableHeadersUtility.sortOptions.yearUp, TableHeadersUtility.sortOptions.yearDown)}
+                            {this.renderTableHeader(Translations.GetText('year'), TableHeadersUtility.sortOptions.yearUp, TableHeadersUtility.sortOptions.yearDown)}
                         </th>
                         <th>
                             {this.renderTableHeader(<StarFill/>, TableHeadersUtility.sortOptions.marksUp, TableHeadersUtility.sortOptions.marksDown)}

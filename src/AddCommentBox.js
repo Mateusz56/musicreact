@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
 import FetchFunctions from "./FetchFunctions";
 import MessageBar from "./MessageBar";
+import Translations from "./Translations";
 
 class AddCommentBox extends Component {
     constructor(props) {
@@ -42,9 +43,9 @@ class AddCommentBox extends Component {
         return (
             <div>
                 <Form style={{textAlign: 'left'}} onSubmit={this.sendComment}>
-                    <Form.Label style={{paddingLeft: 10}}>Dodaj komentarz:</Form.Label>
+                    <Form.Label style={{paddingLeft: 10}}>{Translations.GetText('addComment')}:</Form.Label>
                     <Form.Control as={'textarea'} rows={5} value={this.state.textboxContent} onChange={this.handleOnChange.bind(this)}/>
-                    <Button type={'submit'} className={'float-right'}>Dodaj komentarz</Button>
+                    <Button type={'submit'} className={'float-right'}>{Translations.GetText('addComment')}</Button>
                 </Form>
             </div>
         );

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, Form} from "react-bootstrap";
 import FetchFunctions from "./FetchFunctions";
+import Translations from "./Translations";
 
 class AlbumInvitation extends Component {
     constructor(props) {
@@ -35,7 +36,7 @@ class AlbumInvitation extends Component {
         FetchFunctions.Post('album_invitation', body,
             () => this.setState({
                 errorMessage: '',
-                successMessage: 'Wysłano zaproszenie.'
+                successMessage: `${Translations.GetText('inviteSent')}.`
             }),
             (response) => {
                 response.json().then((json) => this.setState(
@@ -50,14 +51,14 @@ class AlbumInvitation extends Component {
     render() {
         return (
             <div>
-                <h4>Zaproś do albumu</h4>
+                <h4>{Translations.GetText('invites')}</h4>
                 <br/>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Row className="align-items-center">
                         <Col>
-                            <Form.Control onChange={this.handleInputChange} name={'username'} placeholder="Nazwa użytkownika" />
+                            <Form.Control onChange={this.handleInputChange} name={'username'} placeholder={Translations.GetText('username')} />
                         </Col>
-                        <Button type={'submit'}>Zaproś</Button>
+                        <Button type={'submit'}>{Translations.GetText('invite')}</Button>
                     </Form.Row>
                 </Form>
                 <br/>

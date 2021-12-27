@@ -7,6 +7,7 @@ import Mark from "./Mark";
 import FetchFunctions from "./FetchFunctions";
 import GlobalSettings from "./GlobalSettings";
 import MessageBar from "./MessageBar";
+import Translations from "./Translations";
 
 class SongDetail extends Component {
     constructor(props) {
@@ -94,21 +95,21 @@ class SongDetail extends Component {
 
         FetchFunctions.Put(`album/${this.state.albumId}`, {
             add_song: this.props.match.params.id
-        }, (response) => MessageBar.ShowMessage('Dodano do albumu'))
+        }, (response) => MessageBar.ShowMessage(Translations.GetText('addedToAlbum')))
     }
 
     renderAddToAlbum() {
         return (
             <Form style={{marginBottom: 20, marginLeft: 8, marginRight: 20}} onSubmit={this.submitAddToAlbum}>
                 <Form.Row style={{paddingLeft: 4}}>
-                    <Form.Label>Nazwa albumu:</Form.Label>
+                    <Form.Label>{Translations.GetText('albumName')}:</Form.Label>
                 </Form.Row>
                 <Form.Row>
                     <select className="form-control" style={{width: '25%'}} name="albumId" value={this.state.albumId}
                             onChange={this.handleInputChange}>
                         {this.state.albums.map((x, i) => <option key={x.id} value={x.id}>{x.name}</option>)}
                     </select>
-                    <Button type={'submit'}>Dodaj do album</Button>
+                    <Button type={'submit'}>{Translations.GetText('addToAlbum')}</Button>
                 </Form.Row>
             </Form>
         )
@@ -139,7 +140,7 @@ class SongDetail extends Component {
                 {this.state.token ?
                     <AddCommentBox commentAPILink={"song_comment"} songId={this.props.match.params.id}
                                    token={this.state.token}/>
-                    : "Zaloguj się, żeby dodać komentarz"}
+                    : Translations.GetText('loginToComment')}
                 <CommentsList commentAPILink={"song_comment"} targetId={this.props.match.params.id}/>
             </div>
         );

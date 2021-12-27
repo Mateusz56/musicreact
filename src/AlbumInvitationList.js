@@ -4,6 +4,7 @@ import {CheckLg, XLg} from "react-bootstrap-icons";
 import {Table} from "react-bootstrap";
 import AlbumInvitationListRow from "./AlbumInvitationListRow";
 import GlobalSettings from "./GlobalSettings";
+import Translations from "./Translations";
 
 class AlbumInvitationList extends Component {
     constructor(props) {
@@ -42,14 +43,14 @@ class AlbumInvitationList extends Component {
     render() {
         return (
             <div>
-                <h2 style={{textAlign: 'left', marginLeft: '15px'}}>Zaproszenia</h2>
+                <h2 style={{textAlign: 'left', marginLeft: '15px'}}>{Translations.GetText('invites')}</h2>
                 <Table striped bordered hover variant={this.state.skinMode}>
                     <thead>
                     <tr>
-                        <th>Nazwa</th>
-                        <th>Piosenki</th>
-                        <th>Ocena</th>
-                        <th>Komentarze</th>
+                        <th>{Translations.GetText('name')}</th>
+                        <th>{Translations.GetText('songs')}</th>
+                        <th>{Translations.GetText('mark')}</th>
+                        <th>{Translations.GetText('comments')}</th>
                         <th><CheckLg/></th>
                         <th><XLg/></th>
                     </tr>

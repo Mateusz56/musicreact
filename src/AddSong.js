@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Form} from "react-bootstrap";
 import FetchFunctions from "./FetchFunctions";
 import MessageBar from "./MessageBar";
+import Translations from "./Translations";
 
 class AddSong extends Component {
     constructor(props) {
@@ -49,7 +50,7 @@ class AddSong extends Component {
             year: this.state.year,
             genre: this.state.genre,
         }
-        FetchFunctions.Post('song', body, (response) => MessageBar.ShowMessage('Dodano piosenkę.'),
+        FetchFunctions.Post('song', body, (response) => MessageBar.ShowMessage(`${Translations.GetText('songAdded')}.`),
             (response) => response.json().then(json => this.setState({
                 titleErrors: json.title || [],
                 performerErrors: json.performer || [],
@@ -66,7 +67,7 @@ class AddSong extends Component {
         return (
             <Form onSubmit={this.handleSubmit.bind(this)}>
                 <Form.Label>
-                    Tytuł:
+                    {Translations.GetText('title')}:
                     {this.showError(this.state.titleErrors)}
                     <Form.Control
                         name="title"
@@ -75,7 +76,7 @@ class AddSong extends Component {
                 </Form.Label>
                 <br />
                 <Form.Label>
-                    Wykonawca:
+                    {Translations.GetText('performer')}:
                     {this.showError(this.state.performerErrors)}
                     <Form.Control
                         name="performer"
@@ -84,7 +85,7 @@ class AddSong extends Component {
                 </Form.Label>
                 <br />
                 <Form.Label>
-                    Rok:
+                    {Translations.GetText('year')}:
                     {this.showError(this.state.yearErrors)}
                     <Form.Control
                         name="year"
@@ -94,14 +95,14 @@ class AddSong extends Component {
                 </Form.Label>
                 <br />
                 <Form.Label>
-                    Gatunek:
+                    {Translations.GetText('genre')}:
                     {this.showError(this.state.genreErrors)}
                     <select className="form-control" name="genre" value={this.state.genre} onChange={this.handleInputChange}>
                         {this.state.genres.map(x => <option key={x} value={x}>{x}</option>)}
                     </select>
                 </Form.Label>
                 <br />
-                <Button type={'submit'}>Wyślij</Button>
+                <Button type={'submit'}>{Translations.GetText('send')}</Button>
             </Form>
         );
     }

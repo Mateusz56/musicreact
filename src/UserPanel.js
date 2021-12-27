@@ -4,6 +4,7 @@ import MessageBar from "./MessageBar";
 import {Button, Form} from "react-bootstrap";
 import Modal from "./Modal";
 import ConfirmPassword from "./ConfirmPassword";
+import Translations from "./Translations";
 
 class UserPanel extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ class UserPanel extends Component {
         event.preventDefault()
 
         if (!this.state.newPassword || this.state.newPassword !== this.state.newPasswordConfirm) {
-            MessageBar.ShowError('Hasła różnią się.')
+            MessageBar.ShowError(Translations.GetText('passwordsAreDifferent'))
             return
         }
 
@@ -55,7 +56,7 @@ class UserPanel extends Component {
 
         this.setState({
             passwordCallback: (body) => FetchFunctions.Put('user_detail', body,
-                (response) => this.successCallback('Zmieniono hasło.'),
+                (response) => this.successCallback(`${Translations.GetText('passwordChanged')}.`),
                 this.failCallback),
             showModal: true,
             body: body
@@ -72,7 +73,7 @@ class UserPanel extends Component {
 
         this.setState({
             passwordCallback: (body) => FetchFunctions.Put('user_detail', body,
-                (response) => this.successCallback('Zmieniono dane.'),
+                (response) => this.successCallback(`${Translations.GetText('userDataChanged')}.`),
                 this.failCallback),
             showModal: true,
             body: body
@@ -88,7 +89,7 @@ class UserPanel extends Component {
 
         this.setState({
             passwordCallback: (body) => FetchFunctions.Put('user_detail', body,
-                (response) => this.successCallback('Zmieniono adres e-mail.'),
+                (response) => this.successCallback(`${Translations.GetText('emailChanged')}.`),
                 this.failCallback),
             showModal: true,
             body: body
@@ -104,7 +105,7 @@ class UserPanel extends Component {
 
     failCallback(response) {
         if(response.status == 403) {
-            MessageBar.ShowError('Podano błędne hasło.')
+            MessageBar.ShowError(`${Translations.GetText('wrongPassword')}.`)
         } else if (response.status == 400) {
             response.json().then(json => {
                 let errorMessage = json.password || json.first_name || json.last_name || json.email
@@ -123,30 +124,30 @@ class UserPanel extends Component {
     render() {
         return (
             <div style={{marginTop: '30px'}}>
-                <h3>Zmień hasło</h3>
+                <h3>{Translations.GetText('changePassword')}</h3>
                 <Form onSubmit={this.handleSubmitPassword.bind(this)}>
                     <Form.Label>
-                        Nowe hasło:
+                        {Translations.GetText('newPassword')}:
                         <Form.Control
                             name="newPassword"
                             type="password"
                             onChange={this.handleInputChange}/>
                     </Form.Label>
                     <Form.Label style={this.marginLeft10px}>
-                        Powtórz nowe hasło:
+                        {Translations.GetText('repeatNewPassword')}:
                         <Form.Control
                             name="newPasswordConfirm"
                             type="password"
                             onChange={this.handleInputChange}/>
                     </Form.Label>
-                    <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>Zmień</Button>
+                    <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>{Translations.GetText('change')}</Button>
                 </Form>
                 <br/>
                 <br/>
-                <h3>Zmień dane</h3>
+                <h3>{Translations.GetText('changeData')}</h3>
                 <Form onSubmit={this.handleSubmitNames.bind(this)}>
                     <Form.Label>
-                        Imię:
+                        {Translations.GetText('firstName')}:
                         <Form.Control
                             placeholder={this.state.first_name_placeholder}
                             name="first_name"
@@ -154,7 +155,7 @@ class UserPanel extends Component {
                             onChange={this.handleInputChange}/>
                     </Form.Label>
                     <Form.Label style={this.marginLeft10px}>
-                        Nazwisko:
+                        {Translations.GetText('lastName')}:
                         <Form.Control
                             placeholder={this.state.last_name_placeholder}
                             name="last_name"
@@ -165,7 +166,7 @@ class UserPanel extends Component {
                 </Form>
                 <br/>
                 <br/>
-                <h3>Zmień adres e-mail</h3>
+                <h3>{Translations.GetText('changeEmail')}</h3>
                 <Form onSubmit={this.handleSubmitEmail.bind(this)}>
                     <Form.Label>
                         E-mail:
@@ -175,7 +176,7 @@ class UserPanel extends Component {
                             type="text"
                             onChange={this.handleInputChange}/>
                     </Form.Label>
-                    <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>Zmień</Button>
+                    <Button type={'submit'} style={{...this.marginLeft10px, marginBottom: '7px'}}>{Translations.GetText('change')}</Button>
                 </Form>
 
                 <Modal enabled={this.state.showModal} hideModal={() => this.setState({showModal: false})}>

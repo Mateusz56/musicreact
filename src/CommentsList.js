@@ -3,6 +3,7 @@ import {Table} from "react-bootstrap";
 import Comment from "./Comment";
 import FetchFunctions from "./FetchFunctions";
 import GlobalSettings from "./GlobalSettings";
+import Translations from "./Translations";
 
 class CommentsList extends Component {
     constructor(props) {
@@ -79,13 +80,13 @@ class CommentsList extends Component {
                     {this.state.canLoadMoreComments ?
                         <tr>
                             <td className={'clickable'} onClick={this.loadMoreComments}>
-                                Załaduj więcej komentarzy
+                                {Translations.GetText('loadMoreComments')}
                             </td>
                         </tr>
                         :
                         <tr>
                             <td onClick={this.loadMoreComments}>
-                                Załadowano wszystkie komentarze
+                                {Translations.GetText('allCommentsLoaded')}
                             </td>
                         </tr>}
                     </tbody>
