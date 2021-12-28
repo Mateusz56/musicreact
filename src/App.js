@@ -15,6 +15,7 @@ import Error403 from "./Error403";
 
 import React, {Component} from 'react';
 import GlobalSettings from "./GlobalSettings";
+import Translations from "./Translations";
 
 class App extends Component {
     constructor(props) {
@@ -24,6 +25,8 @@ class App extends Component {
         this.state = {
             skinMode: GlobalSettings.skinMode
         }
+
+        document.querySelector('title').text = Translations.GetText('pageTitle')
     }
 
     componentDidMount() {

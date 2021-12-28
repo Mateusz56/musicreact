@@ -1,5 +1,6 @@
 class Translations {
     static language = navigator.language || navigator.userLanguage || 'en'
+
     static GetText(textId) {
         if(!this.texts.hasOwnProperty(this.language))
             this.language = 'en'
@@ -84,6 +85,7 @@ class Translations {
             loginError: 'Błąd logowania',
             addComment: 'Dodaj komentarz',
             imageUrl: 'Adres url obrazka',
+            pageTitle: 'Archiwum albumów muzycznych'
         },
         en: {
             name: 'Name',
@@ -159,6 +161,7 @@ class Translations {
             userDataChanged: 'User data changed',
             albumNameOrPerformer: 'Album name or performer',
             imageUrl: 'Image url address',
+            pageTitle: 'Archive of music albums'
         }
     }
 }
