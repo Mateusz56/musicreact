@@ -14,7 +14,10 @@ class AddAlbum extends Component {
         this.state = {
             albumName: "",
             isPublic: false,
-            userId: this.cookies.get('user_id')
+            userId: this.cookies.get('user_id'),
+            nameErrors: [],
+            artistErrors: [],
+            imageErrors: []
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
@@ -36,32 +39,63 @@ class AddAlbum extends Component {
         let body = {
             name: this.state.albumName,
             public: this.state.isPublic,
+            artist: this.state.artist,
+            image_url: this.state.imageUrl,
             owners: [this.state.userId]
         }
         FetchFunctions.Post("album", body, (response) => MessageBar.ShowMessage(`${Translations.GetText('albumAdded')}.`),
-            (response) => response.json().then(json => {
-                if(json.name)
-                    MessageBar.ShowError(json.name)
-                else
-                    throw Error
-            }))
+            (response) => response.json().then(json => this.setState({
+                nameErrors: json.name || [],
+                artistErrors: json.artist || [],
+                imageErrors: json.image_url || [],
+            })))
+    }
+
+    showError(error) {
+        return error.map(x => [<br/>, <sub style={{color: 'red'}}>{x}</sub>])
     }
 
     render() {
-        return (
-            <div style={{width: '600px'}}>
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Row className="align-items-center">
-                        <Col>
-                            <Form.Control onChange={this.handleInputChange} name={'albumName'} placeholder={Translations.GetText('albumName')} />
-                        </Col>
-                        <Col>
-                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={Translations.GetText('public')} name={'isPublic'} checked={this.state.public} id={0}/>
-                        </Col>
-                        <Button type={'submit'}>{Translations.GetText('addAlbum')}</Button>
-                    </Form.Row>
-                </Form>
-            </div>
+        return(
+            <Form onSubmit={this.handleSubmit.bind(this)}>
+                <Form.Label>
+                    {Translations.GetText('name')}:
+                    {this.showError(this.state.nameErrors)}
+                    <Form.Control
+                        name="albumName"
+                        type="text"
+                        onChange={this.handleInputChange} />
+                </Form.Label>
+                <br />
+                <Form.Label>
+                    {Translations.GetText('performer')}:
+                    {this.showError(this.state.artistErrors)}
+                    <Form.Control
+                        name="artist"
+                        type="text"
+                        onChange={this.handleInputChange} />
+                </Form.Label>
+                <br />
+                <Form.Label>
+                    {Translations.GetText('imageUrl')}:
+                    {this.showError(this.state.imageErrors)}
+                    <Form.Control
+                        name="imageUrl"
+                        type="text"
+                        onChange={this.handleInputChange} />
+                </Form.Label>
+                <br />
+                <Form.Label>
+                    {Translations.GetText('public')}:
+                    <Form.Check
+                        name="isPublic"
+                        onChange={this.handleInputChange}
+                        checked={this.state.public}
+                    />
+                </Form.Label>
+                <br />
+                <Button type={'submit'}>{Translations.GetText('send')}</Button>
+            </Form>
         )
     }
 }

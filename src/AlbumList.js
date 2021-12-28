@@ -115,6 +115,9 @@ class AlbumList extends Component {
                                 {this.renderTableHeader(Translations.GetText('name'), TableHeadersUtility.sortOptions.nameUp, TableHeadersUtility.sortOptions.nameDown)}
                             </th>
                             <th>
+                                {this.renderTableHeader(Translations.GetText('performer'), TableHeadersUtility.sortOptions.artistUp, TableHeadersUtility.sortOptions.artistDown)}
+                            </th>
+                            <th>
                                 {this.renderTableHeader(Translations.GetText('songs'), TableHeadersUtility.sortOptions.songsCountUp, TableHeadersUtility.sortOptions.songsCountDown)}
                             </th>
                             <th>
@@ -130,7 +133,8 @@ class AlbumList extends Component {
                     {this.state.albums.map(x =>
                         <AlbumListRow key={x.id} albumName={x.name} songsCount={x.songs_count} mark={x.marks_avg}
                                       commentsCount={x.comments_count} albumId={x.id} history={this.props.history}
-                                      favourite={x.favourite} showModal={this.props.myAlbums ? () => this.setState({showModal: true, albumId: x.id}) : null}/>)}
+                                      favourite={x.favourite} artist={x.artist}
+                                      showModal={this.props.myAlbums ? () => this.setState({showModal: true, albumId: x.id}) : null}/>)}
                     <tr>
                         <td className={'clickable'} colSpan={6} onClick={this.loadMore.bind(this)}>
                             {this.state.loadMoreButtonText}

@@ -31,6 +31,7 @@ class Translations {
             username: 'Nazwa użytkownika',
             password: 'Hasło',
             albumName: 'Nazwa albumu',
+            albumNameOrPerformer: 'Nazwa albumu lub wykonawcy',
             loadMore: 'Załaduj kolejne',
             allSongsLoaded: 'Załadowano wszystkie piosenki spełniające warunki wyszukiwania',
             allAlbumsLoaded: 'Załadowano wszystkie albumy spełniające warunki wyszukiwania',
@@ -82,6 +83,7 @@ class Translations {
             repeatPassword: 'Powtórz hasło',
             loginError: 'Błąd logowania',
             addComment: 'Dodaj komentarz',
+            imageUrl: 'Adres url obrazka',
         },
         en: {
             name: 'Name',
@@ -102,7 +104,7 @@ class Translations {
             nameOfSongOrPerformer: 'Name of song or performer',
             username: 'Username',
             password: 'Password',
-            albumName: 'Album name',
+            albumName: 'Album name or performer',
             loadMore: 'Load more',
             allSongsLoaded: 'All songs meeting requirements are loaded',
             allAlbumsLoaded: 'All albums meeting requirements are loaded',
@@ -155,6 +157,8 @@ class Translations {
             loginError: 'Login error',
             addComment: 'Add comment',
             userDataChanged: 'User data changed',
+            albumNameOrPerformer: 'Album name or performer',
+            imageUrl: 'Image url address',
         }
     }
 }

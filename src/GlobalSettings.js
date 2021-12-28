@@ -3,7 +3,6 @@ import FetchFunctions from "./FetchFunctions";
 
 class GlobalSettings {
     static skinMode = ''
-    static language = ''
 
     static objectToChangeOnSkinModeChange = []
 

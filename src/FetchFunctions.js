@@ -3,7 +3,7 @@ import AuthToken from "./AuthToken";
 
 class FetchFunctions {
     static backendUrl = 'https://musicback.toadres.pl/'
-    //backendUrl = 'http://127.0.0.1:8000/'
+    //static backendUrl = 'http://127.0.0.1:8000/'
 
     static async GetExecute(route, params, successCallback, cancelFlag) {
         try {

@@ -36,11 +36,14 @@ class Albums extends Component {
                 <Form style={{marginBottom: 20}}>
                     <Form.Row className="align-items-center">
                         <Col md={2}>
-                            <Form.Control onChange={this.handleInputChange} name={'nameInput'} placeholder={Translations.GetText('albumName')} />
+                            <Form.Control onChange={this.handleInputChange} name={'nameInput'} placeholder={Translations.GetText('albumNameOrPerformer')} />
                         </Col>
+                        {sessionStorage.getItem('userLoggedIn') ?
                         <Col md={0.25}>
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}} label={Translations.GetText('favourite')} name={'favourite'} checked={this.state.favourite} id={0}/>
                         </Col>
+                            :
+                            ''}
                     </Form.Row>
                 </Form>
                 <AlbumList name={this.state.nameInput} history={this.props.history} favourite={this.state.favourite} myAlbums={this.state.myAlbums}/>

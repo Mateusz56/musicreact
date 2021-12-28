@@ -48,6 +48,8 @@ class TableHeadersUtility {
         marksDown: '-marks_avg',
         commentsUp: 'comments_count',
         commentsDown: '-comments_count',
+        artistUp: 'artist',
+        artistDown: '-artist'
     }
 
     static getSortButtonVariant(sortOption) {

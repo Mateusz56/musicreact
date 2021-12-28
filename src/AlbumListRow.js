@@ -38,6 +38,7 @@ class AlbumListRow extends Component {
             <tr>
                 <td><HeartFill className={'clickable'}  color={this.state.favourite ? "red" : "black"} onClick={this.setFavourite.bind(this)}/></td>
                 <td className={'clickableTd'} onClick={() => this.navigateToAlbumDetail(this.props.albumId)}>{this.props.albumName}</td>
+                <td>{this.props.artist}</td>
                 <td>{this.props.songsCount}</td>
                 <td>{this.props.mark}</td>
                 <td>{this.props.commentsCount}</td>

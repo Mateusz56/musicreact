@@ -142,10 +142,13 @@ class Songs extends Component {
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}}
                                         label={Translations.GetText('equal')} name={'markEqual'} checked={this.state.markEqual} id={3}/>
                         </Col>
+                        {sessionStorage.getItem('userLoggedIn') ?
                         <Col md={0.25}>
                             <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 20}}
                                         label={Translations.GetText('favourite')} name={"favourite"} checked={this.state.favourite} id={4}/>
                         </Col>
+                            :
+                            ''}
                     </Form.Row>
                 </Form>
                 <SongList name={this.state.nameInput} genres={this.state.genresText} yearSince={this.state.yearSince}

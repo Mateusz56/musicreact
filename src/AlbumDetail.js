@@ -46,6 +46,8 @@ class AlbumDetail extends Component {
                 }
                 this.setState({
                     albumName: json.name,
+                    albumUrl: json.image_url,
+                    artist: json.artist,
                 })
             })
     }
@@ -60,10 +62,17 @@ class AlbumDetail extends Component {
     render() {
         return (
             <div>
+
                 <Table striped bordered hover variant={this.state.skinMode}>
                     <tbody>
                     <tr>
+                        <td rowSpan={3} width={'300px'}>
+                            <img src={this.state.albumUrl}/>
+                        </td>
                         <td align={"left"} colSpan={5}>{this.state.albumName}</td>
+                    </tr>
+                    <tr>
+                        <td align={"left"} colSpan={5}>{this.state.artist}</td>
                     </tr>
                     <Mark targetId={this.props.match.params.id} token={this.state.token} markAPILink={"album_mark"}
                           markAuthorAPILink={"album_mark_author"}/>
