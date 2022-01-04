@@ -130,27 +130,27 @@ class SongList extends Component {
 
     render() {
         return (
-            <div>
+            <div className={'overflowXMobile'}>
                 <Table striped bordered hover variant={this.state.skinMode}>
                     <thead>
                     <tr>
-                        <th><HeartFill color={'black'}/></th>
-                        <th>
+                        <th style={{minWidth: '100px'}}><HeartFill color={'black'}/></th>
+                        <th style={{minWidth: '250px'}}>
                             {this.renderTableHeader(Translations.GetText('title'), TableHeadersUtility.sortOptions.titleUp, TableHeadersUtility.sortOptions.titleDown)}
                         </th>
-                        <th>
+                        <th style={{minWidth: '250px'}}>
                             {this.renderTableHeader(Translations.GetText('performer'), TableHeadersUtility.sortOptions.performerUp, TableHeadersUtility.sortOptions.performerDown)}
                         </th>
-                        <th>
+                        <th style={{minWidth: '150px'}}>
                             {this.renderTableHeader(Translations.GetText('genre'), TableHeadersUtility.sortOptions.genreUp, TableHeadersUtility.sortOptions.genreDown)}
                         </th>
-                        <th>
+                        <th style={{minWidth: '150px'}}>
                             {this.renderTableHeader(Translations.GetText('year'), TableHeadersUtility.sortOptions.yearUp, TableHeadersUtility.sortOptions.yearDown)}
                         </th>
-                        <th>
+                        <th style={{minWidth: '100px'}}>
                             {this.renderTableHeader(<StarFill/>, TableHeadersUtility.sortOptions.marksUp, TableHeadersUtility.sortOptions.marksDown)}
                         </th>
-                        <th>
+                        <th style={{minWidth: '100px'}}>
                             {this.renderTableHeader(<ChatRightDots/>, TableHeadersUtility.sortOptions.commentsUp, TableHeadersUtility.sortOptions.commentsDown)}
                         </th>
                     </tr>

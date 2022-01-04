@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Table} from "react-bootstrap";
-import {HeartFill, StarFill, ChatRightDots, Envelope } from 'react-bootstrap-icons';
+import {HeartFill, StarFill, ChatRightDots, Envelope, MusicNote } from 'react-bootstrap-icons';
 import AlbumListRow from "./AlbumListRow";
 import Modal from "./Modal";
 import AlbumInvitation from "./AlbumInvitation";
@@ -103,30 +103,30 @@ class AlbumList extends Component {
 
     render() {
         return (
-            <div>
+            <div className={'overflowXMobile'}>
                 <Modal enabled={this.state.showModal} hideModal={() => this.setState({showModal: false})}>
                     <AlbumInvitation albumId = {this.state.albumId}/>
                 </Modal>
                 <Table striped bordered hover variant={this.state.skinMode}>
                     <thead>
                         <tr>
-                            <th><HeartFill color={'black'}/></th>
-                            <th>
+                            <th style={{minWidth: '100px'}}><HeartFill color={'black'}/></th>
+                            <th style={{minWidth: '250px'}}>
                                 {this.renderTableHeader(Translations.GetText('name'), TableHeadersUtility.sortOptions.nameUp, TableHeadersUtility.sortOptions.nameDown)}
                             </th>
-                            <th>
+                            <th style={{minWidth: '250px'}}>
                                 {this.renderTableHeader(Translations.GetText('performer'), TableHeadersUtility.sortOptions.artistUp, TableHeadersUtility.sortOptions.artistDown)}
                             </th>
-                            <th>
-                                {this.renderTableHeader(Translations.GetText('songs'), TableHeadersUtility.sortOptions.songsCountUp, TableHeadersUtility.sortOptions.songsCountDown)}
+                            <th style={{minWidth: '100px'}}>
+                                {this.renderTableHeader(<MusicNote/>, TableHeadersUtility.sortOptions.songsCountUp, TableHeadersUtility.sortOptions.songsCountDown)}
                             </th>
-                            <th>
+                            <th style={{minWidth: '100px'}}>
                                 {this.renderTableHeader(<StarFill/>, TableHeadersUtility.sortOptions.marksUp, TableHeadersUtility.sortOptions.marksDown)}
                             </th>
-                            <th>
+                            <th style={{minWidth: '100px'}}>
                                 {this.renderTableHeader(<ChatRightDots/>, TableHeadersUtility.sortOptions.commentsUp, TableHeadersUtility.sortOptions.commentsDown)}
                             </th>
-                            {this.props.myAlbums ? <th><Envelope/></th> : null}
+                            {this.props.myAlbums ? <th style={{minWidth: '100px'}}><Envelope/></th> : null}
                         </tr>
                     </thead>
                     <tbody>
@@ -136,7 +136,7 @@ class AlbumList extends Component {
                                       favourite={x.favourite} artist={x.artist}
                                       showModal={this.props.myAlbums ? () => this.setState({showModal: true, albumId: x.id}) : null}/>)}
                     <tr>
-                        <td className={'clickable'} colSpan={6} onClick={this.loadMore.bind(this)}>
+                        <td className={'clickable mobileDontScrollHorizontal'} colSpan={7} onClick={this.loadMore.bind(this)}>
                             {this.state.loadMoreButtonText}
                         </td>
                     </tr>

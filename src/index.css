@@ -118,3 +118,23 @@ input:checked + label .Indicator-sc-1airx73-0 {
   background-color: #169b45;
   border-width: 0px;
 }
+
+.topMarginIfMobile {
+  margin-left: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .overflowXMobile {
+    overflow-x: scroll;
+  }
+
+  .mobileDontScrollHorizontal {
+    width: 100% !important;
+    column-span: 1 !important;
+  }
+
+  .topMarginIfMobile {
+    margin-top: 15px;
+    margin-left: 0px;
+  }
+}

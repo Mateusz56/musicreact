@@ -62,7 +62,9 @@ class NavBar extends Component {
                 <Modal enabled={this.state.showAddAlbumModal} hideModal={() => this.setState({showAddAlbumModal: false})}>
                     <AddAlbum/>
                 </Modal>
-                <Navbar bg="dark" variant="dark">
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link as={Link} to="/songs">{Translations.GetText('songs')}</Nav.Link>
                         <Nav.Link as={Link} to="/albums">{Translations.GetText('albums')}</Nav.Link>
@@ -72,11 +74,12 @@ class NavBar extends Component {
                     </Nav>
 
                     {this.state.skinMode === 'dark' ?
-                        <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('', true)} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/> :
-                        <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark', true)} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/>}
+                        <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('', true)} className={'clickable'} color={'white'} size={20}/> :
+                        <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark', true)} className={'clickable'} color={'white'} size={20} />}
                     <Nav.Link as={Link} to="/user">{this.state.displayName}</Nav.Link>
 
                     <Button onClick={this.logout.bind(this)} variant="outline-info">{Translations.GetText('logout')}</Button>
+                    </Navbar.Collapse>
                 </Navbar>
             </div>
         )
@@ -85,27 +88,30 @@ class NavBar extends Component {
     navBarLoggedOut() {
         return (
             <div>
-                    <Navbar bg="dark" variant="dark">
+                    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                         {/*<Navbar.Brand href="#home">Navbar</Navbar.Brand>*/}
-                        <Nav className="mr-auto">
-                            <Nav.Link as={Link} to="/songs">{Translations.GetText('songs')}</Nav.Link>
-                            <Nav.Link as={Link} to="/albums">{Translations.GetText('albums')}</Nav.Link>
-                        </Nav>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="mr-auto">
+                                <Nav.Link as={Link} to="/songs">{Translations.GetText('songs')}</Nav.Link>
+                                <Nav.Link as={Link} to="/albums">{Translations.GetText('albums')}</Nav.Link>
+                            </Nav>
 
-                        {this.state.skinMode === 'dark' ?
-                            <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('', false)} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/> :
-                            <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark', false)} className={'clickable'} color={'white'} size={20} style={{marginRight: '15px'}}/>}
-                        <Form inline>
-                            <FormControl type="text" value={this.state.username}
-                                         onChange={e => this.setState({username: e.target.value})}
-                                         placeholder={Translations.GetText('username')} className="mr-sm-2"/>
-                            <FormControl type="password" value={this.state.password}
-                                         onChange={e => this.setState({password: e.target.value})} placeholder={Translations.GetText('password')}
-                                         className="mr-sm-2"/>
-                            <Button onClick={() => this.login(this.state.username, this.state.password)}
-                                    variant="outline-success">{Translations.GetText('login')}</Button>
-                        </Form>
-                        <Button href={"/register"} variant="outline-info">{Translations.GetText('register')}</Button>
+                            {this.state.skinMode === 'dark' ?
+                                <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('', false)} className={'clickable'} color={'white'} size={20}/> :
+                                <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark', false)} className={'clickable'} color={'white'} size={20}/>}
+                            <Form inline className={'topMarginIfMobile'}>
+                                <FormControl type="text" value={this.state.username}
+                                             onChange={e => this.setState({username: e.target.value})}
+                                             placeholder={Translations.GetText('username')} className="mr-sm-2"/>
+                                <FormControl type="password" value={this.state.password}
+                                             onChange={e => this.setState({password: e.target.value})} placeholder={Translations.GetText('password')}
+                                             className="mr-sm-2"/>
+                                <Button onClick={() => this.login(this.state.username, this.state.password)}
+                                        variant="outline-success">{Translations.GetText('login')}</Button>
+                            </Form>
+                            <Button href={"/register"} variant="outline-info">{Translations.GetText('register')}</Button>
+                        </Navbar.Collapse>
                     </Navbar>
             </div>
         )
