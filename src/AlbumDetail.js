@@ -62,11 +62,11 @@ class AlbumDetail extends Component {
     render() {
         return (
             <div>
-
+                <img className={'mobileOnly'} src={this.state.albumUrl}/>
                 <Table striped bordered hover variant={this.state.skinMode}>
                     <tbody>
                     <tr>
-                        <td rowSpan={3} width={'300px'}>
+                        <td className={'hideIfMobile'} rowSpan={3} width={'300px'}>
                             <img src={this.state.albumUrl}/>
                         </td>
                         <td align={"left"} colSpan={5}>{this.state.albumName}</td>

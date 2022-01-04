@@ -85,15 +85,15 @@ class Mark extends Component {
                 {this.props.token ?
                     <td width={200} align={"left"} colSpan={1}
                         onMouseLeave={() => this.onMouseEnterStar(typeof this.state.myMark == 'number' ? this.state.myMark - 1 : -1)}>
-                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(0)} onClick={() => this.sendMark(1)} size={35}
+                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(0)} onClick={() => this.sendMark(1)} size={'20%'}
                                   color={this.state.starsColor[0]}/>
-                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(1)} onClick={() => this.sendMark(2)} size={35}
+                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(1)} onClick={() => this.sendMark(2)} size={'20%'}
                                   color={this.state.starsColor[1]}/>
-                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(2)} onClick={() => this.sendMark(3)} size={35}
+                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(2)} onClick={() => this.sendMark(3)} size={'20%'}
                                   color={this.state.starsColor[2]}/>
-                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(3)} onClick={() => this.sendMark(4)} size={35}
+                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(3)} onClick={() => this.sendMark(4)} size={'20%'}
                                   color={this.state.starsColor[3]}/>
-                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(4)} onClick={() => this.sendMark(5)} size={35}
+                        <StarFill className={'clickable'} onMouseEnter={() => this.onMouseEnterStar(4)} onClick={() => this.sendMark(5)} size={'20%'}
                                   color={this.state.starsColor[4]}/>
                     </td>
                     :
@@ -101,7 +101,7 @@ class Mark extends Component {
                         {Translations.GetText('loginToMark')}
                     </td>
                 }
-                <td></td>
+                <td style={{padding: 0}}></td>
             </tr>
         );
     }

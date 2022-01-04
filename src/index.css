@@ -123,7 +123,17 @@ input:checked + label .Indicator-sc-1airx73-0 {
   margin-left: 15px;
 }
 
+@media only screen and (min-width: 600px) {
+  .mobileOnly {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 600px) {
+  .hideIfMobile {
+    display: none;
+  }
+
   .overflowXMobile {
     overflow-x: scroll;
   }
