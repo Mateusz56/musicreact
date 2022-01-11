@@ -33,7 +33,7 @@ class Albums extends Component {
     render() {
         return (
             <div>
-                <Form style={{marginBottom: 20}}>
+                <Form style={{marginBottom: '10px', marginTop: '10px'}}>
                     <Form.Row className="align-items-center">
                         <Col md={2}>
                             <Form.Control onChange={this.handleInputChange} name={'nameInput'} placeholder={Translations.GetText('albumNameOrPerformer')} />

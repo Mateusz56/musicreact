@@ -35,10 +35,12 @@ class NavBar extends Component {
         GlobalSettings.SubscribeSkinModeChange(this)
 
         if(this.state.token) {
-            FetchFunctions.Get('user_info', null, (json) => this.setState({
+            FetchFunctions.Get('user_info', null, (json) => {this.setState({
                 displayName: json.username,
                 user_id: json.id,
-            }))
+                })
+                sessionStorage.setItem('userLoggedIn', 'true')
+            })
 
             if (!Cookies.cookieExists('skinMode')) {
                 FetchFunctions.Get('user_skin_mode', null, (json) => {
@@ -62,7 +64,7 @@ class NavBar extends Component {
                 <Modal enabled={this.state.showAddAlbumModal} hideModal={() => this.setState({showAddAlbumModal: false})}>
                     <AddAlbum/>
                 </Modal>
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
@@ -88,7 +90,7 @@ class NavBar extends Component {
     navBarLoggedOut() {
         return (
             <div>
-                    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
                         {/*<Navbar.Brand href="#home">Navbar</Navbar.Brand>*/}
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Dropdown, Form} from "react-bootstrap";
+import {Col, Container, Dropdown, Form} from "react-bootstrap";
 import SongList from "./SongList";
 import DropdownMenu from "react-bootstrap/DropdownMenu";
 import FetchFunctions from "./FetchFunctions";
@@ -95,13 +95,13 @@ class Songs extends Component {
     render() {
         return (
             <div>
-                <Form className={GlobalSettings.skinMode} style={{marginBottom: 20}}>
-                    <Form.Row className="align-items-center">
-                        <Col md={2}>
+                <Form className={GlobalSettings.skinMode} style={{marginBottom: '10px', marginTop: '10px'}}>
+                    <Form.Row className={'songFormRow'}>
+                        <Col xs={9} sm={4} md={4} xl={'auto'} style={{width: '260px'}}>
                             <Form.Control onChange={this.handleInputChange} name={'nameInput'}
                                           placeholder={Translations.GetText('nameOfSongOrPerformer')}/>
                         </Col>
-                        <Col md={0.5} style={{marginLeft: 10, marginRight: 30}}>
+                        <Col xs={3} sm={2} md={2} xl={'auto'}>
                             <Dropdown>
                                 <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
                                     {Translations.GetText('genres')}
@@ -113,38 +113,38 @@ class Songs extends Component {
                                 </DropdownMenu>
                             </Dropdown>
                         </Col>
-                        <Col md={0.5}>
+                        <Col xs={3} sm={1} md={1} xl={'auto'} className={'marginIfDesktop'}>
                             {Translations.GetText('yearSince')}
                         </Col>
-                        <Col md={0.5}>
+                        <Col xs={3} sm={2} md={2} xl={'auto'}>
                             <Form.Control onChange={this.handleInputChange} name={'yearSince'} type={'number'}
                                           value={this.state.yearSince} min={1900} max={2021}/>
                         </Col>
-                        <Col md={0.5}>
+                        <Col xs={2} sm={1} md={1} xl={'auto'}>
                             {Translations.GetText('to')}
                         </Col>
-                        <Col md={0.5}>
+                        <Col xs={4} sm={2} md={2} xl={'auto'}>
                             <Form.Control onChange={this.handleInputChange} name={'yearTo'} type={'number'}
                                           value={this.state.yearTo} min={1900} max={2021}/>
                         </Col>
-                        <Col md={0.5} style={{marginLeft: 30}}>
+                        <Col xs={3} sm={1} md={1} xl={'auto'} className={'marginIfDesktop'}>
                             {Translations.GetText('mark')}
                         </Col>
-                        <Col md={0.25}>
+                        <Col xs={9} sm={4} md={4} xl={'auto'}>
                             <Form.Control onChange={this.handleInputChange} name={'markInput'} type={'number'}
                                           value={this.state.markInput} step={0.1} min={1} max={5}/>
                         </Col>
-                        <Col md={0.25}>
-                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}}
+                        <Col xs={12} sm={5} md={5} xl={'auto'}>
+                            <Form.Check onChange={this.handleInputChange} inline
                                         label={Translations.GetText('lesser')} name={'markLess'} checked={this.state.markLess} id={1}/>
-                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}}
+                            <Form.Check onChange={this.handleInputChange} inline
                                         label={Translations.GetText('higher')} name={'markMore'} checked={this.state.markMore} id={2}/>
-                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 10}}
+                            <Form.Check onChange={this.handleInputChange} inline
                                         label={Translations.GetText('equal')} name={'markEqual'} checked={this.state.markEqual} id={3}/>
                         </Col>
                         {sessionStorage.getItem('userLoggedIn') ?
-                        <Col md={0.25}>
-                            <Form.Check onChange={this.handleInputChange} inline style={{marginLeft: 20}}
+                        <Col xs={12} sm={2} md={2} xl={'auto'} className={'marginIfDesktop'}>
+                            <Form.Check onChange={this.handleInputChange}
                                         label={Translations.GetText('favourite')} name={"favourite"} checked={this.state.favourite} id={4}/>
                         </Col>
                             :

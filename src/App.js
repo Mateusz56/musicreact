@@ -43,7 +43,6 @@ class App extends Component {
                 <BrowserRouter>
                     <MessageBar/>
                     <NavBar/>
-                    <br/>
                     <Switch>
                         <Route path="/songs" component={Songs}/>
                         <Route path="/register" component={Registration}/>

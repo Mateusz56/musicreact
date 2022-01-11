@@ -122,14 +122,25 @@ input:checked + label .Indicator-sc-1airx73-0 {
 .topMarginIfMobile {
   margin-left: 15px;
 }
+.noMaxWidth {
+  max-width: none !important;
+}
 
-@media only screen and (min-width: 600px) {
+.songFormRow {
+  align-items: center;
+}
+
+@media only screen and (min-width: 1200px) {
   .mobileOnly {
     display: none;
   }
+
+  .marginIfDesktop {
+    margin-left: 15px;
+  }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
   .hideIfMobile {
     display: none;
   }
@@ -146,5 +157,9 @@ input:checked + label .Indicator-sc-1airx73-0 {
   .topMarginIfMobile {
     margin-top: 15px;
     margin-left: 0px;
+  }
+
+  .songFormRow div {
+    margin-bottom: 5px;
   }
 }
