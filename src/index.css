@@ -116,12 +116,9 @@ tr:nth-child(odd) > .clickableTd:hover {
 
 input:checked + label .Indicator-sc-1airx73-0 {
   background-color: #169b45;
-  border-width: 0px;
+  border-width: 0;
 }
 
-.topMarginIfMobile {
-  margin-left: 15px;
-}
 .noMaxWidth {
   max-width: none !important;
 }
@@ -154,12 +151,19 @@ input:checked + label .Indicator-sc-1airx73-0 {
     column-span: 1 !important;
   }
 
-  .topMarginIfMobile {
-    margin-top: 15px;
-    margin-left: 0px;
-  }
-
   .songFormRow div {
     margin-bottom: 5px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .changeSkinModeIconLoggedOut {
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .changeSkinModeIconLoggedOut {
+    margin-right: 15px;
   }
 }

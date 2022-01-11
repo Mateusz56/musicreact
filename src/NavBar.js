@@ -90,7 +90,7 @@ class NavBar extends Component {
     navBarLoggedOut() {
         return (
             <div>
-                    <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
+                    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                         {/*<Navbar.Brand href="#home">Navbar</Navbar.Brand>*/}
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
@@ -100,9 +100,9 @@ class NavBar extends Component {
                             </Nav>
 
                             {this.state.skinMode === 'dark' ?
-                                <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('', false)} className={'clickable'} color={'white'} size={20}/> :
-                                <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark', false)} className={'clickable'} color={'white'} size={20}/>}
-                            <Form inline className={'topMarginIfMobile'}>
+                                <BrightnessHigh onClick={() => GlobalSettings.ChangeSkinMode('', false)} className={'clickable changeSkinModeIconLoggedOut'} color={'white'} size={20}/> :
+                                <Moon onClick={() => GlobalSettings.ChangeSkinMode('dark', false)} className={'clickable changeSkinModeIconLoggedOut'} color={'white'} size={20}/>}
+                            <Form inline>
                                 <FormControl type="text" value={this.state.username}
                                              onChange={e => this.setState({username: e.target.value})}
                                              placeholder={Translations.GetText('username')} className="mr-sm-2"/>
@@ -111,8 +111,8 @@ class NavBar extends Component {
                                              className="mr-sm-2"/>
                                 <Button onClick={() => this.login(this.state.username, this.state.password)}
                                         variant="outline-success">{Translations.GetText('login')}</Button>
+                                <Button href={"/register"} variant="outline-info">{Translations.GetText('register')}</Button>
                             </Form>
-                            <Button href={"/register"} variant="outline-info">{Translations.GetText('register')}</Button>
                         </Navbar.Collapse>
                     </Navbar>
             </div>
