@@ -66,6 +66,11 @@ class UserPanel extends Component {
     handleSubmitNames(event) {
         event.preventDefault()
 
+        if(!this.state.first_name && !this.state.last_name) {
+            MessageBar.ShowError('Podaj imię lub nazwisko do zmiany.')
+            return
+        }
+
         let body = {
             first_name: this.state.first_name,
             last_name: this.state.last_name
