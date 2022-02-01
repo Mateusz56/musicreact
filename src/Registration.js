@@ -33,7 +33,7 @@ class Registration extends Component {
         event.preventDefault()
 
         this.setState({
-            repeatPasswordErrors: this.state.password !== this.state.repeatpassword ? [`${Translations.GetText('passwordAreDifferent')}.`] : []
+            repeatPasswordErrors: this.state.password !== this.state.repeatpassword ? [`${Translations.GetText('passwordsAreDifferent')}.`] : []
         })
 
         let body = {
