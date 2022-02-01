@@ -88,6 +88,11 @@ class UserPanel extends Component {
     handleSubmitEmail(event) {
         event.preventDefault()
 
+        if(!this.state.email) {
+            MessageBar.ShowError('Podaj adres e-mail.')
+            return
+        }
+
         let body = {
             email: this.state.email,
         }
